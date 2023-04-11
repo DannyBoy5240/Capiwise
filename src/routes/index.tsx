@@ -12,9 +12,9 @@ const Router: FC = () => {
     <BrowserRouter>
       <div className="flex flex-col h-screen">
         <Routes>
-          <Route path="/" element={<></>} />
+          {/* <Route path="/" element={<></>} /> */}
           <Route
-            path="/searchstock"
+            path="/"
             element={
               <div className="self-end m-4">
                 <MenuProfileSettings />
@@ -23,10 +23,10 @@ const Router: FC = () => {
           />
         </Routes>
 
-        <div className="grow flex flex-col justify-center mb-8">
+        <div className="grow flex flex-col justify-center mb-48">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/searchstock" element={<SearchStock />} />
+            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/" element={<SearchStock />} />
           </Routes>
         </div>
 
