@@ -8,6 +8,7 @@ const SearchStock: FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [searchBoxFlag, setSearchBoxFlag] = useState(false);
 
   useEffect(() => {
     if (searchTerm === "") setShowDropdown(false);
@@ -51,7 +52,9 @@ const SearchStock: FC = () => {
     const fetchURL =
       "https://eodhistoricaldata.com/api/search/" +
       searchTerm +
-      "?api_token=6435bbe50defe3.67824491&limit=10";
+      // "?api_token=6435bbe50defe3.67824491&limit=10";
+      "?api_token=6435b956f047a5.63342983&limit=10";
+
     console.log(fetchURL);
 
     // const result = await fetch(fetchURL, { mode: "no-cors" });
@@ -72,8 +75,16 @@ const SearchStock: FC = () => {
   const handleSearchFocus = () => {
     if (searchTerm != "" && filteredOptions.length > 0) {
       setShowDropdown(true);
-      document.getElementById("search_box")?.classList.add("bg-[#0B1620]");
       document.getElementById("search_box")?.classList.remove("bg-transparent");
+      if (
+        !document
+          .getElementById("search_box")
+          ?.classList.contains("bg-[#0B1620]")
+      ) {
+        document.getElementById("search_box")?.classList.add("bg-[#0B1620]");
+        // document.getElementById("search_box")?.classList.add("rounded-bl-none");
+        // document.getElementById("search_box")?.classList.add("rounded-br-none");
+      }
     }
   };
 
@@ -106,20 +117,25 @@ const SearchStock: FC = () => {
             onBlur={() => handleSearchBlur()}
           />
           <span className="absolute inset-y-0 right-0 flex items-center pl-2">
-            <button onClick={() => clearSearchBox()}>
-              <svg
-                width="20"
-                height="12"
-                viewBox="0 0 20 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2.94531 0.625L5.08594 4.59375L7.22656 0.625H9.90625L6.60156 6.26562L9.99219 12H7.28906L5.08594 7.95312L2.88281 12H0.164062L3.5625 6.26562L0.25 0.625H2.94531ZM19.2443 0.625V12H17.7365V0.625H19.2443Z"
-                  fill="#979797"
-                />
-              </svg>
-            </button>
+            {searchTerm !== "" ? (
+              <button onClick={() => clearSearchBox()}>
+                <svg
+                  width="20"
+                  height="12"
+                  viewBox="0 0 20 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2.94531 0.625L5.08594 4.59375L7.22656 0.625H9.90625L6.60156 6.26562L9.99219 12H7.28906L5.08594 7.95312L2.88281 12H0.164062L3.5625 6.26562L0.25 0.625H2.94531ZM19.2443 0.625V12H17.7365V0.625H19.2443Z"
+                    fill="#979797"
+                  />
+                </svg>
+              </button>
+            ) : (
+              <></>
+            )}
+
             <button
               className="p-1 ml-2 pr-5 focus:outline-none focus:shadow-outline"
               onClick={(e) => startSearch()}
