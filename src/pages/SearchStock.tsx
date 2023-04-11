@@ -70,7 +70,7 @@ const SearchStock: FC = () => {
   };
 
   const handleSearchFocus = () => {
-    if (searchTerm != "") {
+    if (searchTerm != "" && filteredOptions.length > 0) {
       setShowDropdown(true);
       document.getElementById("search_box")?.classList.add("bg-[#0B1620]");
       document.getElementById("search_box")?.classList.remove("bg-transparent");
@@ -81,6 +81,11 @@ const SearchStock: FC = () => {
     setShowDropdown(false);
     document.getElementById("search_box")?.classList.add("bg-transparent");
     document.getElementById("search_box")?.classList.remove("bg-[#0B1620]");
+  };
+
+  const clearSearchBox = () => {
+    setSearchTerm("");
+    setShowDropdown(false);
   };
 
   return (
@@ -101,7 +106,7 @@ const SearchStock: FC = () => {
             onBlur={() => handleSearchBlur()}
           />
           <span className="absolute inset-y-0 right-0 flex items-center pl-2">
-            <button>
+            <button onClick={() => clearSearchBox()}>
               <svg
                 width="20"
                 height="12"
