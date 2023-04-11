@@ -51,7 +51,7 @@ const SearchStock: FC = () => {
     const fetchURL =
       "https://eodhistoricaldata.com/api/search/" +
       searchTerm +
-      "?api_token=6435b956f047a5.63342983&limit=10";
+      "?api_token=6435bbe50defe3.67824491&limit=10";
     console.log(fetchURL);
 
     // const result = await fetch(fetchURL, { mode: "no-cors" });
@@ -97,7 +97,7 @@ const SearchStock: FC = () => {
       <div className="flex items-center justify-center">
         <div className="relative border-2 rounded-full w-11/12 md:w-7/12 lg:w-5/12">
           <input
-            className="py-2 text-base text-white bg-transparent focus:outline-none w-full rounded-full pl-5 pr-10"
+            className="py-2 text-base text-white bg-transparent focus:outline-none w-full rounded-full pl-5 pr-20"
             id="search_box"
             placeholder="Search Symbols or Company Name"
             value={searchTerm}
