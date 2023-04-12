@@ -6,7 +6,7 @@ import EthPriceSummary from "../components/EthSummary/EthPriceSummary";
 
 const EthSummary = () => {
   const location = useLocation();
-  let ethContext = location.state.item;
+  const ethContext = location.state.item;
 
   return (
     <div className="p-6">
