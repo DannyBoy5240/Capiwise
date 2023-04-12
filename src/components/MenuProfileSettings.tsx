@@ -3,7 +3,7 @@ import { FC } from "react";
 const MenuProfileSettings: FC = () => {
   return (
     <div className="flex items-center">
-      <div className="p-2.5">
+      <div className="p-2.5 rounded-full bg-[#040B11]">
         <p className="text-[#2EBD85] font-bold text-base">JA</p>
       </div>
       <div className="flex items-center">

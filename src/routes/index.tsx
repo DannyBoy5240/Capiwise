@@ -3,9 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Footer from "../components/Footer";
 import MenuProfileSettings from "../components/MenuProfileSettings";
+import Logo from "../components/Logo";
+import SearchBox from "../components/SearchBox";
 
 import Home from "pages/Home";
 import SearchStock from "pages/SearchStock";
+import EthSummary from "pages/EthSummary";
 
 const Router: FC = () => {
   return (
@@ -21,12 +24,25 @@ const Router: FC = () => {
               </div>
             }
           />
+          <Route
+            path="/ethsummary"
+            element={
+              <div className="flex bg-[#0B1620] justify-between items-center p-6">
+                <div className="">
+                  <Logo />
+                </div>
+                <SearchBox />
+                <MenuProfileSettings />
+              </div>
+            }
+          />
         </Routes>
 
         <div className="grow flex flex-col justify-center mb-48">
           <Routes>
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/" element={<SearchStock />} />
+            <Route path="/ethsummary" element={<EthSummary />} />
           </Routes>
         </div>
 

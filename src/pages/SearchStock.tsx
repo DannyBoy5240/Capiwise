@@ -3,6 +3,7 @@ import { FC } from "react";
 import axios from "axios";
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchStock: FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -10,15 +11,22 @@ const SearchStock: FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchBoxFlag, setSearchBoxFlag] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (searchTerm === "") setShowDropdown(false);
-    // startSearch();
+    // else startSearch();
   }, [searchTerm]);
 
-  const handleSelect = () => {
-    // onSelect(option);
+  const handleSelect = (option: any) => {
     setSearchTerm("");
     setShowDropdown(false);
+
+    navigate("/ethsummary", {
+      state: {
+        item: option,
+      },
+    });
   };
 
   const startSearch = async () => {
@@ -44,21 +52,16 @@ const SearchStock: FC = () => {
     //     console.error(error);
     //   });
 
-    // const fetchURL =
-    //   "https://28luwm78o9.execute-api.eu-central-1.amazonaws.com/default/stockSearch?ticker=" +
-    //   searchTerm +
-    //   "&token=64341125263079.62800631&limit=30";
-
     const fetchURL =
       "https://eodhistoricaldata.com/api/search/" +
       searchTerm +
       // "?api_token=6435bbe50defe3.67824491&limit=10";
       "?api_token=6435b956f047a5.63342983&limit=10";
 
-    console.log(fetchURL);
-
-    // const result = await fetch(fetchURL, { mode: "no-cors" });
-    // const data = await result.json();
+    // const fetchURL =
+    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSearch?ticker=" +
+    //   searchTerm +
+    //   "&token=64341125263079.62800631&limit=20";
 
     const response = await fetch(fetchURL);
     const jsonData = await response.json();
@@ -69,7 +72,6 @@ const SearchStock: FC = () => {
       setFilteredOptions([]);
       setShowDropdown(false);
     }
-    console.log(jsonData);
   };
 
   const handleSearchFocus = () => {
@@ -82,8 +84,6 @@ const SearchStock: FC = () => {
           ?.classList.contains("bg-[#0B1620]")
       ) {
         document.getElementById("search_box")?.classList.add("bg-[#0B1620]");
-        // document.getElementById("search_box")?.classList.add("rounded-bl-none");
-        // document.getElementById("search_box")?.classList.add("rounded-br-none");
       }
     }
   };
@@ -161,17 +161,25 @@ const SearchStock: FC = () => {
               <ul>
                 {filteredOptions.map((option: any) => (
                   <li
-                    key={option.Code}
-                    // onClick={() => handleSelect(option)}
+                    key={
+                      option.Code + option.Name + option.Type + option.Exchange
+                    }
+                    onClick={() => handleSelect(option)}
                     className="p-3 cursor-pointer hover:bg-[#040B11]"
                   >
                     <div className="flex text-sm w-full items-center">
-                      <div className="w-1/6 text-left">{option.Code}</div>
-                      <div className="w-4/6 text-left text-xs">
+                      <div className="w-3/12 text-left font-bold">
+                        {option.Code}
+                      </div>
+                      <div className="w-7/12 text-left text-xs font-bold">
                         {option.Name}
                       </div>
-                      <div className="w-1/6 text-right text-xs">
-                        {option.Country}
+                      <div className="w-2/12 text-right text-xs">
+                        {(option.Type === "Common Stock"
+                          ? "Equity"
+                          : option.Type) +
+                          " - " +
+                          option.Exchange}
                       </div>
                     </div>
                   </li>
