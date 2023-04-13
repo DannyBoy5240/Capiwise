@@ -38,15 +38,19 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
           NasdaqGS - NasdaqGS Real Time Price. Currency in USD
         </div>
       </div>
-      <div className="py-6 flex justify-between w-full">
-        <div className="border-l-4 px-4 border-[#2EBD85]">
-          <div className="text-2xl font-bold">$315.50</div>
-          <div className="text-[#2EBD85] text-xl">+0.07 (+0.02%)</div>
-          <div className="font-bold">Market Opn: Mar 10.2021, 2:25 PM EST</div>
+      <div className="flex py-6 flex justify-between w-full">
+        <div className="border-l-4 px-3 border-[#2EBD85]">
+          <div className="flex flex-col">
+            <div className="text-2xl font-bold">$315.50</div>
+            <div className="text-[#2EBD85] text-xl">+0.07 (+0.02%)</div>
+            <div className="font-bold">
+              Market Opn: Mar 10.2021, 2:25 PM EST
+            </div>
+          </div>
         </div>
-        <div className="flex">
-          {/*  */}
-          <div className="flex flex-col border-l px-4 border-[#252A2D] text-sm">
+        {/*  */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Price Day Range</div>
               <div className="flex justify-between text-white">
@@ -75,7 +79,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div className="flex">
                 <div>Net Assets</div>
@@ -91,7 +95,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>NAV (Previous Day)</div>
               <div className="text-white font-bold">320.65</div>
@@ -104,7 +108,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>30-Day SEC Yeld</div>
               <div className="text-white font-bold">0.53%</div>
@@ -115,7 +119,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Price Performance (52-Wk)</div>
               <div className="text-white font-bold">+89.36%</div>
