@@ -18,36 +18,28 @@ const LineChartBisector = (props: ILineChartProps) => {
     // draw chart
     const linesGenerator = d3
       .line()
-      // @ts-ignore
       .x((d) => scales.xScale(helper.xAccessor(d)))
-      // @ts-ignore
       .y((d) => scales.yScale(helper.yAccessor(d)));
 
     d3.select("#path")
       .attr("fill", "none")
       .attr("stroke", "#2EBD85")
-      // @ts-ignore
       .attr("d", linesGenerator(props.data));
 
     // Peripherals
 
     // yAxis
     const yAxisGenerator = d3.axisLeft(scales.yScale);
-    bounds
-      .select("#y-axis")
-      // @ts-ignore
-      .call(yAxisGenerator);
+    bounds.select("#y-axis").call(yAxisGenerator);
 
     // xAxis
     const xAxisGenerator = d3.axisBottom(scales.xScale);
     bounds
       .select("#x-axis")
-      // @ts-ignore
       .call(xAxisGenerator)
       .style("transform", `translateY(${props.dimensions.boundedHeight}px)`);
 
     const bisect = d3.bisector((d) => {
-      // @ts-ignore
       return d.x;
     }).left;
 

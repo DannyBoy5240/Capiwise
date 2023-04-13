@@ -8,10 +8,8 @@ export default class LineChartHelper {
     this.metric = metric;
   }
 
-  // @ts-ignore
   public xAccessor = (d: Types.Data) => d[this.metric[0]];
 
-  // @ts-ignore
   public yAccessor = (d: Types.Data) => d[this.metric[1]];
 
   static getDimensions = (
