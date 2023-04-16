@@ -18,3 +18,42 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.full-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+/* Classes for Gradient Slider */
+.apporoval-progress1 {
+  background: linear-gradient(90deg, #1ca65e 0%, #f5a623 50.52%, #d0021b 100%);
+  border-radius: 50px;
+  height: 100%;
+  -webkit-animation: growLineHFull 0.5s;
+  -moz-animation: growLineHFull 0.5s;
+  animation: growLineHFull 0.5s;
+}
+.apporoval-progress2 {
+  background: linear-gradient(90deg, #d0021b 0%, #f5a623 50.52%, #1ca65e 100%);
+  border-radius: 50px;
+  height: 100%;
+  -webkit-animation: growLineHFull 0.5s;
+  -moz-animation: growLineHFull 0.5s;
+  animation: growLineHFull 0.5s;
+}
+
+.vertical-line {
+  position: absolute;
+  z-index: 5;
+  top: 0px;
+  bottom: 0px;
+  border-right: 2px solid white;
+  width: 0;
+  -webkit-animation: hideLineHFull 1s;
+  -moz-animation: hideLineHFull 1s;
+  animation: hideLineHFull 1s;
+}

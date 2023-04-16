@@ -1,5 +1,7 @@
 import { FC } from "react";
 
+import GradientSlider from "../atom/GradientSlider";
+
 interface AnalysisDetailsProps {
   code: string;
 }
@@ -7,7 +9,7 @@ interface AnalysisDetailsProps {
 const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
   return (
     <div className="bg-[#0B1620] text-white md:ml-6 mt-6 md:mt-0 p-5 w-full md:w-1/2 lg:w-1/4 flex flex-col justify-between">
-      <div>
+      {/* <div>
         <div className="text-base font-bold pb-3 border-b-2 border-b-[#252A2D]">
           Valuation
         </div>
@@ -88,6 +90,35 @@ const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
                   Significantly Below Fair Value:{" "}
                 </span>
                 AAPL is trading above our estimate of fair value of 4.4%.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+      <div>
+        <div className="text-base font-bold">Risk-Return Valuation</div>
+        <div>
+          <div className="font-medium py-3 border-t-2 border-t-[#252A2D] mt-2">
+            Risk vs. Index
+          </div>
+          <GradientSlider progress={73} mode={1} />
+          <div className="font-medium py-3 border-t-2 border-t-[#040B11] mt-2">
+            Return vs. Index
+          </div>
+          <GradientSlider progress={94} mode={2} />
+          <div className="text-xs">
+            <div className="flex py-1">
+              <div>
+                <span className="font-bold">Above Average Risk Value: </span>
+                {code} is trading above our estimate of average risk value.
+              </div>
+            </div>
+            <div className="flex py-1">
+              <div>
+                <span className="font-bold">
+                  Significantly High Return Value:
+                </span>
+                {code} is trading in our estimate of High value.
               </div>
             </div>
           </div>

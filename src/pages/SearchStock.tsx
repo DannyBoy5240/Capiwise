@@ -30,38 +30,10 @@ const SearchStock: FC = () => {
   };
 
   const startSearch = async () => {
-    // axios
-    //   .get(
-    //     "https://28luwm78o9.execute-api.eu-central-1.amazonaws.com/default/stockSearch",
-    //     {
-    //       params: {
-    //         ticker: searchTerm,
-    //         token: "64341125263079.62800631",
-    //         limit: 30,
-    //       },
-    //     }
-    //   )
-    //   .then((response: any) => {
-    //     // Do something with the JSON data
-    //     console.log(response.data);
-    //     setShowDropdown(true);
-    //     setFilteredOptions(response.data);
-    //   })
-    //   .catch((error: any) => {
-    //     // Handle any errors that occur during the fetch request
-    //     console.error(error);
-    //   });
-
     const fetchURL =
-      "https://eodhistoricaldata.com/api/search/" +
+      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSearch?ticker=" +
       searchTerm +
-      // "?api_token=6435bbe50defe3.67824491&limit=10";
-      "?api_token=6435b956f047a5.63342983&limit=10";
-
-    // const fetchURL =
-    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSearch?ticker=" +
-    //   searchTerm +
-    //   "&token=64341125263079.62800631&limit=20";
+      "&limit=10";
 
     const response = await fetch(fetchURL);
     const jsonData = await response.json();

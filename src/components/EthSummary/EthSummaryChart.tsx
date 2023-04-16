@@ -1,39 +1,73 @@
 import { FC } from "react";
 
-import LineChartBisectorWidget from "../../widgets/LineChartBisectorWidget/LineChartBisectorWidget";
+import { useState, useEffect } from "react";
+
+import ETFChart from "./ETFChart";
 
 interface EthSummaryChartProps {
   code: string;
 }
 
 const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
+  const [viewMode, setViewMode] = useState(1);
+
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const handleToogleScreen = () => {
+    setIsFullScreen(true);
+  };
+  const handleToogleDownScreen = () => {
+    setIsFullScreen(false);
+  };
+
   return (
     <div className="p-6 bg-[#0B1620] w-full md:w-1/2">
       <div className="flex justify-between items-center">
         <div className="text-sm mb-2">
-          <button className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5">
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={() => setViewMode(1)}
+          >
             1D
           </button>
-          <button className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5">
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={() => setViewMode(2)}
+          >
             1W
           </button>
-          <button className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5">
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={() => setViewMode(3)}
+          >
             1M
           </button>
-          <button className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5">
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={() => setViewMode(4)}
+          >
             6M
           </button>
-          <button className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5">
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={() => setViewMode(5)}
+          >
             1Y
           </button>
-          <button className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5">
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={() => setViewMode(6)}
+          >
             5Y
           </button>
-          <button className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5">
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={() => setViewMode(7)}
+          >
             MAX
           </button>
         </div>
-        <div className="flex">
+        <div className="flex" onClick={() => handleToogleScreen()}>
           <div>
             <svg
               width="20"
@@ -51,7 +85,12 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
           <div className="pl-3 text-sm font-bold">Full screen</div>
         </div>
       </div>
-      <LineChartBisectorWidget />
+      <div
+        className={`chart-container ${isFullScreen ? "full-screen" : ""}`}
+        onClick={() => handleToogleDownScreen()}
+      >
+        <ETFChart viewMode={viewMode} />
+      </div>
       <div className="border-b border-b-[#252A2D] py-1.5"></div>
       <div className="flex pt-3.5">
         <div className="flex items-center">
