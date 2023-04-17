@@ -108,14 +108,14 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen }) => {
         },
         grid: {
           lineWidth: function (context: any) {
-            if (context.tick.value < Math.min.apply(Math, data_datasets)) {
+            if (context.tick.value < Math.min(...data_datasets)) {
               return 3;
             } else {
               return 0.6;
             }
           },
           color: function (context: any) {
-            if (context.tick.value > Math.min.apply(Math, data_datasets)) {
+            if (context.tick.value > Math.min(...data_datasets)) {
               return "#FFFFFF55";
             } else {
               return "#E7EBEF";
@@ -144,9 +144,9 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen }) => {
     },
   };
 
-  const [labels, setLabels] = useState(new Array());
-  const [data_datasets, setData_Datasets] = useState(new Array());
-  const [bgcolor, setbgColor] = useState(new Array());
+  const [labels, setLabels] = useState<string[]>([]);
+  const [data_datasets, setData_Datasets] = useState<number[]>([]);
+  const [bgcolor, setbgColor] = useState<string[]>([]);
   const [posCount, setPosCount] = useState(0);
 
   const [isLoading, setIsLoading] = useState(true);
