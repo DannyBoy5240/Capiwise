@@ -52,7 +52,7 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
         <div className="text-sm mb-2" id="modeGroup">
           <button
             className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
-            // onClick={(e) => handleViewMode(e, 1)}
+            onClick={(e) => handleViewMode(e, 1)}
           >
             1D
           </button>
@@ -123,7 +123,11 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
           //   backgroundPosition: "180px 0",
           // }}
         >
-          <ETFChart viewMode={viewMode} isFullScreen={isFullScreen} />
+          <ETFChart
+            viewMode={viewMode}
+            isFullScreen={isFullScreen}
+            code={code}
+          />
         </div>
       </div>
       <div className="border-b border-b-[#252A2D] py-1.5"></div>

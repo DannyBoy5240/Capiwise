@@ -18,11 +18,12 @@ import { Line } from "react-chartjs-2";
 interface ETFChartProps {
   viewMode: number;
   isFullScreen: boolean;
+  code: string;
 }
 
 type positionType = "left" | "center" | "top" | "right" | "bottom" | undefined;
 
-const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen }) => {
+const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -167,40 +168,27 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen }) => {
   const getETFHistoryData = async () => {
     setIsLoading(true);
 
+    // const fetchURL =
+    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=AAPL.US&token=demo&period=d";
     const fetchURL =
-      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=AAPL.US&token=demo&period=d";
+      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=" +
+      code +
+      ".US&period=";
 
-    const response = await fetch(fetchURL);
+    let fperiod = "1w";
+    if (viewMode == 1) fperiod = "1d";
+    else if (viewMode == 2) fperiod = "1w";
+    else if (viewMode == 3) fperiod = "1m";
+    else if (viewMode == 4) fperiod = "6m";
+    else if (viewMode == 5) fperiod = "1y";
+    else if (viewMode == 6) fperiod = "5y";
+    else fperiod = "5y";
+
+    const response = await fetch(fetchURL + fperiod);
     const jsonData = await response.json();
     jsonData.reverse();
 
-    let count = 0;
-    switch (viewMode) {
-      case 1:
-        count = 1;
-        break;
-      case 2:
-        count = 6;
-        break;
-      case 3:
-        count = 30;
-        break;
-      case 4:
-        count = 180;
-        break;
-      case 5:
-        count = jsonData.length;
-        break;
-      case 6:
-        count = jsonData.length;
-        break;
-      case 7:
-        count = jsonData.length;
-        break;
-      default:
-        count = 1;
-        break;
-    }
+    const count = jsonData.length;
     setPosCount(count);
 
     // ChartJS information initialize
@@ -208,15 +196,9 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen }) => {
     for (let i = 0; i < count; i++) nums[i] = Number(jsonData[i].open);
     setData_Datasets(nums);
     const tlabels: string[] = new Array(count);
-    for (let i = 0; i < count; i++) tlabels[i] = String(jsonData[i].date);
+    for (let i = 0; i < count; i++) tlabels[i] = String(jsonData[i].datetime);
     tlabels[0] = "";
     setLabels(tlabels);
-    // let tbgcolor: string[] = new Array(count);
-    // for (let i = 0; i < count; i++) {
-    //   if (i % 2 == 0) tbgcolor[i] = "rgba(255, 99, 132, 0.2)";
-    //   // else tbgcolor[i] = "rgba(54, 162, 235, 0.2)";
-    // }
-    // // setbgColor(tbgcolor);
 
     setIsLoading(false);
   };

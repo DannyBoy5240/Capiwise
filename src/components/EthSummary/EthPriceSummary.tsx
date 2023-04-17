@@ -2,6 +2,8 @@ import { FC } from "react";
 
 import { useEffect, useState } from "react";
 
+import PriceBarSlider from "../atom/PriceBarSlider";
+
 interface EthPriceSummaryProps {
   code: string;
 }
@@ -48,6 +50,11 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
     setStockLiveData(jsonData2);
   };
 
+  const getNumber = (num: number) => {
+    if (num > 0) return "+" + num;
+    else return num;
+  };
+
   return (
     <div className="p-6 bg-[#0B1620] text-xs">
       <div className="border-b pb-6 border-[#252A2D]">
@@ -75,13 +82,13 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             <div className="text-[#2EBD85] text-xl">
               {stockLiveData
                 ? stockLiveData["change"]
-                  ? stockLiveData["change"]
+                  ? getNumber(stockLiveData["change"])
                   : "NA"
                 : "N/A"}{" "}
               (
               {stockLiveData
                 ? stockLiveData["change_p"]
-                  ? stockLiveData["change_p"]
+                  ? getNumber(stockLiveData["change_p"])
                   : "NA"
                 : "N/A"}{" "}
               )
@@ -96,6 +103,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
           <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Price Day Range</div>
+              <PriceBarSlider progress={52} />
               <div className="flex justify-between text-white">
                 <div>
                   {stockLiveData
@@ -119,6 +127,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             </div>
             <div className="grow text-[#979797] pt-1">
               <div>Price 52-Week Range</div>
+              <PriceBarSlider progress={76} />
               <div className="flex justify-between text-white">
                 <div>
                   {stockSummary ? stockSummary["Technicals::52WeekLow"] : "N/A"}
