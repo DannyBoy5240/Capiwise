@@ -14,7 +14,7 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
-    let obj = document
+    const obj = document
       ?.getElementById("modeGroup")
       ?.getElementsByTagName("button");
     if (obj && obj[2] && !obj[2].classList.contains("border-b-2")) {
@@ -34,7 +34,7 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
     setViewMode(mode);
 
     // remove all border style in parent element
-    let obj = document
+    const obj = document
       ?.getElementById("modeGroup")
       ?.getElementsByTagName("button");
     for (let i = 0; obj && i < obj.length; i++) {

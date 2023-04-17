@@ -56,28 +56,28 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
         display: false,
         text: "Chart.js Line Chart",
       },
-      beforeDraw: function (chart: any) {
-        console.log("Hello!!!");
-        var ctx = chart.ctx;
-        var xAxis = chart.scales["x-axis-0"];
-        var yAxis = chart.scales["y-axis-0"];
-        var labels = xAxis.ticks.map((tick: any) => tick.label);
+      // beforeDraw: function (chart: any) {
+      //   console.log("Hello!!!");
+      //   var ctx = chart.ctx;
+      //   var xAxis = chart.scales["x-axis-0"];
+      //   var yAxis = chart.scales["y-axis-0"];
+      //   var labels = xAxis.ticks.map((tick: any) => tick.label);
 
-        labels.forEach(function (label: any, index: any) {
-          var x = xAxis.getPixelForValue(label);
-          var y = yAxis.bottom;
-          var width = xAxis.width / labels.length;
-          var height = yAxis.top - yAxis.bottom;
+      //   labels.forEach(function (label: any, index: any) {
+      //     var x = xAxis.getPixelForValue(label);
+      //     var y = yAxis.bottom;
+      //     var width = xAxis.width / labels.length;
+      //     var height = yAxis.top - yAxis.bottom;
 
-          if (index % 2 === 0) {
-            ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
-          } else {
-            ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
-          }
+      //     if (index % 2 === 0) {
+      //       ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
+      //     } else {
+      //       ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
+      //     }
 
-          ctx.fillRect(x - width / 2, y, width, height);
-        });
-      },
+      //     ctx.fillRect(x - width / 2, y, width, height);
+      //   });
+      // },
       patterns: {
         stripes: pattern,
       },
@@ -202,10 +202,10 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
     setPosCount(count);
 
     // ChartJS information initialize
-    let nums: number[] = new Array(count);
+    const nums: number[] = new Array(count);
     for (let i = 0; i < count; i++) nums[i] = Number(jsonData[i].open);
     setData_Datasets(nums);
-    let tlabels: string[] = new Array(count);
+    const tlabels: string[] = new Array(count);
     for (let i = 0; i < count; i++) tlabels[i] = String(jsonData[i].date);
     setLabels(tlabels);
     // let tbgcolor: string[] = new Array(count);
