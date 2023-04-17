@@ -15,7 +15,7 @@ const SearchStock: FC = () => {
 
   useEffect(() => {
     if (searchTerm === "") setShowDropdown(false);
-    // else startSearch();
+    else startSearch();
   }, [searchTerm]);
 
   const handleSelect = (option: any) => {
@@ -71,6 +71,10 @@ const SearchStock: FC = () => {
     setShowDropdown(false);
   };
 
+  const handleKeyDown = (e: any) => {
+    if (e.key == "Enter" && searchTerm != "") startSearch();
+  };
+
   return (
     <div className="text-center">
       <p className="text-5xl font-bold">Capiwise</p>
@@ -86,7 +90,8 @@ const SearchStock: FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => handleSearchFocus()}
-            onBlur={() => handleSearchBlur()}
+            // onBlur={() => handleSearchBlur()}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
           <span className="absolute inset-y-0 right-0 flex items-center pl-2">
             {searchTerm !== "" ? (

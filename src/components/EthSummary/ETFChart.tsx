@@ -17,11 +17,12 @@ import { Line } from "react-chartjs-2";
 
 interface ETFChartProps {
   viewMode: number;
+  isFullScreen: boolean;
 }
 
 type positionType = "left" | "center" | "top" | "right" | "bottom" | undefined;
 
-const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
+const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -46,41 +47,41 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
     backgroundColor: "red",
     responsive: true,
     plugins: {
+      title: {
+        display: false,
+        text: "Chart.js Line Chart",
+      },
       legend: {
         display: false,
         // position: "top" as const,
         // usePointStyle: true,
         // pointStyle: "circle",
       },
-      title: {
-        display: false,
-        text: "Chart.js Line Chart",
+      beforeDraw: function (chart: any) {
+        console.log("Hello!!!");
+        // var ctx = chart.ctx;
+        // var xAxis = chart.scales["x-axis-0"];
+        // var yAxis = chart.scales["y-axis-0"];
+        // var labels = xAxis.ticks.map((tick: any) => tick.label);
+
+        // labels.forEach(function (label: any, index: any) {
+        //   var x = xAxis.getPixelForValue(label);
+        //   var y = yAxis.bottom;
+        //   var width = xAxis.width / labels.length;
+        //   var height = yAxis.top - yAxis.bottom;
+
+        //   if (index % 2 === 0) {
+        //     ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
+        //   } else {
+        //     ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
+        //   }
+
+        //   ctx.fillRect(x - width / 2, y, width, height);
+        // });
       },
-      // beforeDraw: function (chart: any) {
-      //   console.log("Hello!!!");
-      //   var ctx = chart.ctx;
-      //   var xAxis = chart.scales["x-axis-0"];
-      //   var yAxis = chart.scales["y-axis-0"];
-      //   var labels = xAxis.ticks.map((tick: any) => tick.label);
-
-      //   labels.forEach(function (label: any, index: any) {
-      //     var x = xAxis.getPixelForValue(label);
-      //     var y = yAxis.bottom;
-      //     var width = xAxis.width / labels.length;
-      //     var height = yAxis.top - yAxis.bottom;
-
-      //     if (index % 2 === 0) {
-      //       ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
-      //     } else {
-      //       ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
-      //     }
-
-      //     ctx.fillRect(x - width / 2, y, width, height);
-      //   });
+      // patterns: {
+      //   stripes: pattern,
       // },
-      patterns: {
-        stripes: pattern,
-      },
     },
     scales: {
       x: {
@@ -141,15 +142,14 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
         left: 10,
       },
     },
-    // chart: {
-    //   backgroundColor: ["#ecf0f1", "#bdc3c7", "#95a5a6"],
-    // },
   };
 
   const [labels, setLabels] = useState(new Array());
   const [data_datasets, setData_Datasets] = useState(new Array());
   const [bgcolor, setbgColor] = useState(new Array());
   const [posCount, setPosCount] = useState(0);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const data = {
     labels,
@@ -165,6 +165,8 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
   };
 
   const getETFHistoryData = async () => {
+    setIsLoading(true);
+
     const fetchURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=AAPL.US&token=demo&period=d";
 
@@ -207,6 +209,7 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
     setData_Datasets(nums);
     const tlabels: string[] = new Array(count);
     for (let i = 0; i < count; i++) tlabels[i] = String(jsonData[i].date);
+    tlabels[0] = "";
     setLabels(tlabels);
     // let tbgcolor: string[] = new Array(count);
     // for (let i = 0; i < count; i++) {
@@ -214,13 +217,27 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
     //   // else tbgcolor[i] = "rgba(54, 162, 235, 0.2)";
     // }
     // // setbgColor(tbgcolor);
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
     getETFHistoryData();
   }, [viewMode]);
 
-  return <Line options={options} data={data} />;
+  return isLoading == false ? (
+    <Line
+      options={options}
+      data={data}
+      className={isFullScreen ? "" : "stripes"}
+      id="chart_id"
+    />
+  ) : (
+    <div className="loading-progress">
+      <div className="spinner"></div>
+      <div className="text">Loading...</div>
+    </div>
+  );
 };
 
 export default ETFChart;

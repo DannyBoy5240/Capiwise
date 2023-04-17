@@ -123,7 +123,7 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
           //   backgroundPosition: "180px 0",
           // }}
         >
-          <ETFChart viewMode={viewMode} />
+          <ETFChart viewMode={viewMode} isFullScreen={isFullScreen} />
         </div>
       </div>
       <div className="border-b border-b-[#252A2D] py-1.5"></div>

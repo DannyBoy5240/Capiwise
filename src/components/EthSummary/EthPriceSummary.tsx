@@ -62,7 +62,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
         </div>
         {/*  */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Price Day Range</div>
               <div className="flex justify-between text-white">
@@ -74,7 +74,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
                 <div>High</div>
               </div>
             </div>
-            <div className="grow text-[#979797] pt-3">
+            <div className="grow text-[#979797] pt-1">
               <div>Price 52-Week Range</div>
               <div className="flex justify-between text-white">
                 <div>
@@ -93,7 +93,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div className="flex flex-row justify-between items-center">
                 <div>Net Assets</div>
@@ -103,7 +103,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
                 {stockSummary ? stockSummary["ETF_Data::TotalAssets"] : "N/A"}
               </div>
             </div>
-            <div className="grow text-[#979797] pt-3">
+            <div className="grow text-[#979797] pt-1">
               <div>Shares Outstanding</div>
               <div className="text-white font-bold">
                 {stockSummary
@@ -115,12 +115,12 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>NAV (Previous Day)</div>
               <div className="text-white font-bold">N/A</div>
             </div>
-            <div className="grow text-[#979797] pt-3">
+            <div className="grow text-[#979797] pt-1">
               <div>Net Expense Ratio</div>
               <div className="text-white font-bold">
                 {stockSummary
@@ -130,23 +130,23 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>30-Day SEC Yeld</div>
               <div className="text-white font-bold">N/A</div>
             </div>
-            <div className="grow text-[#979797] pt-3">
+            <div className="grow text-[#979797] pt-1">
               <div>12-Month Yield (TTM)</div>
               <div className="text-white font-bold">N/A</div>
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l py-2 px-4 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Price Performance (52-Wk)</div>
               <div className="text-white font-bold">N/A</div>
             </div>
-            <div className="grow text-[#979797] pt-3">
+            <div className="grow text-[#979797] pt-1">
               <div>Inception Date</div>
               <div className="text-white font-bold">
                 {stockSummary
