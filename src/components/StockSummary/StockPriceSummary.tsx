@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 
 import PriceBarSlider from "../atom/PriceBarSlider";
 
-interface EthPriceSummaryProps {
-  code: string;
+interface StockPriceSummaryProps {
+  context: any;
 }
 
-const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
+const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   const [stockSummary, setStockSummary] = useState(null);
   const [etfSummary, setetfSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
@@ -21,33 +21,41 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
     // Get Stock INFO
     const stockURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
-      code +
+      context.Code +
       ".US&token=demo";
 
-    const response = await fetch(stockURL);
-    const jsonData = await response.json();
-    console.log(stockURL);
-    setStockSummary(jsonData);
+    fetch(stockURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setStockSummary(data);
+      })
+      .catch((error) => console.log(error));
 
     // Get ETF INFO
     const etfURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/ETFSummary?ticker=" +
-      code +
+      context.Code +
       ".US&token=demo";
 
-    const response1 = await fetch(etfURL);
-    const jsonData1 = await response1.json();
-    setStockSummary(jsonData1);
+    fetch(etfURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setetfSummary(data);
+      })
+      .catch((error) => console.log(error));
 
     // Get Stock Live Data
     const stockLiveURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
-      code +
+      context.Code +
       ".US";
 
-    const response2 = await fetch(stockLiveURL);
-    const jsonData2 = await response2.json();
-    setStockLiveData(jsonData2);
+    fetch(stockLiveURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setStockLiveData(data);
+      })
+      .catch((error) => console.log(error));
   };
 
   const getNumber = (num: number) => {
@@ -58,14 +66,11 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
   return (
     <div className="p-6 bg-[#0B1620] text-xs">
       <div className="border-b pb-6 border-[#252A2D]">
-        <div className="flex items-center">
-          <div className="text-2xl font-bold">
-            Invesco {code} Trust ({code})
-          </div>
-          <div className="text-base bg-[#040B11] p-1 ml-2">ETF</div>
+        <div className="text-2xl font-bold">
+          {context.Name} ({context.Code})
         </div>
         <div className="text-sm">
-          NasdaqGS - NasdaqGS Real Time Price. Currency in USD
+          NasdaqGS - NasdaqGS Real Time Price. Currency in {context.Currency}
         </div>
       </div>
       <div className="flex py-6 flex justify-between w-full">
@@ -215,4 +220,4 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
   );
 };
 
-export default EthPriceSummary;
+export default StockPriceSummary;

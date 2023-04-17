@@ -8,7 +8,8 @@ import SearchBox from "../components/SearchBox";
 
 import Home from "pages/Home";
 import SearchStock from "pages/SearchStock";
-import EthSummary from "pages/EthSummary";
+import ETFSummary from "pages/ETFSummary";
+import StockSummary from "pages/StockSummary";
 
 const Router: FC = () => {
   return (
@@ -25,7 +26,19 @@ const Router: FC = () => {
             }
           />
           <Route
-            path="/ethsummary"
+            path="/etfsummary"
+            element={
+              <div className="flex bg-[#0B1620] justify-between items-center p-6">
+                <div className="">
+                  <Logo />
+                </div>
+                <SearchBox />
+                <MenuProfileSettings />
+              </div>
+            }
+          />
+          <Route
+            path="/stocksummary"
             element={
               <div className="flex bg-[#0B1620] justify-between items-center p-6">
                 <div className="">
@@ -42,7 +55,8 @@ const Router: FC = () => {
           <Routes>
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/" element={<SearchStock />} />
-            <Route path="/ethsummary" element={<EthSummary />} />
+            <Route path="/etfsummary" element={<ETFSummary />} />
+            <Route path="/stocksummary" element={<StockSummary />} />
           </Routes>
         </div>
 

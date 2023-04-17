@@ -168,8 +168,6 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
   const getETFHistoryData = async () => {
     setIsLoading(true);
 
-    // const fetchURL =
-    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=AAPL.US&token=demo&period=d";
     const fetchURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=" +
       code +

@@ -2,14 +2,14 @@ import { FC } from "react";
 
 import GradientSlider from "../atom/GradientSlider";
 
-interface AnalysisDetailsProps {
+interface StockAnalysisDetailsProps {
   code: string;
 }
 
-const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
+const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
   return (
     <div className="bg-[#0B1620] text-white md:ml-6 mt-6 md:mt-0 p-5 w-full md:w-1/2 lg:w-1/4 flex flex-col justify-between">
-      {/* <div>
+      <div>
         <div className="text-base font-bold pb-3 border-b-2 border-b-[#252A2D]">
           Valuation
         </div>
@@ -24,9 +24,17 @@ const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
           </div>
           <div className="flex justify-between text-sm">
             <div>Current Price Valuation</div>
-            <div>US$116.36</div>
+            <div>
+              4.4% <span className="text-[#2EBD85] font-bold">Unverified</span>
+            </div>
           </div>
-          <div>AAAAA</div>
+          <div className="h-[90px] mt-8">
+            <GradientSlider progress={52} mode={3} />
+            <div className="text-xs absolute z-50 mt-[-36px] ml-[20px] pl-[40px] py-1 pr-3 bg-[#0B1620AA]">
+              <div>Current Price</div>
+              <div className="font-bold">US$111.46</div>
+            </div>
+          </div>
           <div className="text-xs">
             <div className="flex py-1">
               <div>
@@ -94,35 +102,6 @@ const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
             </div>
           </div>
         </div>
-      </div> */}
-      <div>
-        <div className="text-base font-bold">Risk-Return Valuation</div>
-        <div>
-          <div className="font-medium py-3 border-t-2 border-t-[#252A2D] mt-2">
-            Risk vs. Index
-          </div>
-          <GradientSlider progress={73} mode={1} />
-          <div className="font-medium py-3 border-t-2 border-t-[#040B11] mt-2">
-            Return vs. Index
-          </div>
-          <GradientSlider progress={94} mode={2} />
-          <div className="text-xs">
-            <div className="flex py-1">
-              <div>
-                <span className="font-bold">Above Average Risk Value: </span>
-                {code} is trading above our estimate of average risk value.
-              </div>
-            </div>
-            <div className="flex py-1">
-              <div>
-                <span className="font-bold">
-                  Significantly High Return Value:
-                </span>
-                {code} is trading in our estimate of High value.
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <div className="text-sm pt-3 border-t border-t-[#252A2D]">
         Analysis details
@@ -131,4 +110,4 @@ const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
   );
 };
 
-export default AnalysisDetails;
+export default StockAnalysisDetails;

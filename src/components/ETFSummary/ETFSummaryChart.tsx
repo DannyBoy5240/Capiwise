@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 
 import ETFChart from "./ETFChart";
 
-interface EthSummaryChartProps {
+interface ETFSummaryChartProps {
   code: string;
 }
 
-const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
+const ETFSummaryChart: FC<ETFSummaryChartProps> = ({ code }) => {
   const [viewMode, setViewMode] = useState(3);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -115,14 +115,7 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
         className={`chart-container ${isFullScreen ? "full-screen" : ""}`}
         onClick={() => handleToogleDownScreen()}
       >
-        <div
-          className={isFullScreen ? "full-screen-chart" : ""}
-          // style={{
-          //   background:
-          //     "repeating-linear-gradient(90deg, rgba(4, 11, 17, 0.5), rgba(4, 11, 17, 0.5) 76px, rgb(11, 22, 32) 0px, rgb(11, 22, 32) 152px) 180px 0",
-          //   backgroundPosition: "180px 0",
-          // }}
-        >
+        <div className={isFullScreen ? "full-screen-chart" : ""}>
           <ETFChart
             viewMode={viewMode}
             isFullScreen={isFullScreen}
@@ -131,36 +124,6 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
         </div>
       </div>
       <div className="border-b border-b-[#252A2D] py-1.5"></div>
-      {/* <div className="flex pt-3.5">
-        <div className="flex items-center">
-          <div className="pr-1">
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="6" cy="6" r="6" fill="#979797" />
-            </svg>
-          </div>
-          <div className="text-xs">Intrinsic value</div>
-        </div>
-        <div className="flex items-center px-3">
-          <div className="pr-1">
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="6" cy="6" r="6" fill="#F1B90B" />
-            </svg>
-          </div>
-          <div className="text-xs">Margin of safety</div>
-        </div>
-      </div> */}
       <div className="flex items-center pt-3.5">
         <div className="pr-1">
           <svg
@@ -179,4 +142,4 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
   );
 };
 
-export default EthSummaryChart;
+export default ETFSummaryChart;

@@ -48,17 +48,16 @@ body {
   background: linear-gradient(90deg, #1ca65e 0%, #f5a623 50.52%, #d0021b 100%);
   border-radius: 50px;
   height: 100%;
-  -webkit-animation: growLineHFull 0.5s;
-  -moz-animation: growLineHFull 0.5s;
-  animation: growLineHFull 0.5s;
 }
 .apporoval-progress2 {
   background: linear-gradient(90deg, #d0021b 0%, #f5a623 50.52%, #1ca65e 100%);
   border-radius: 50px;
   height: 100%;
-  -webkit-animation: growLineHFull 0.5s;
-  -moz-animation: growLineHFull 0.5s;
-  animation: growLineHFull 0.5s;
+}
+.apporoval-progress3 {
+  background: linear-gradient(90deg, #1ca65e 0%, #f5a623 50.52%, #d0021b 100%);
+  border-radius: 10px;
+  height: 72px;
 }
 
 .vertical-line {
@@ -68,9 +67,6 @@ body {
   bottom: 0px;
   border-right: 2px solid white;
   width: 0;
-  -webkit-animation: hideLineHFull 1s;
-  -moz-animation: hideLineHFull 1s;
-  animation: hideLineHFull 1s;
 }
 
 .stripes {

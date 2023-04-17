@@ -22,11 +22,18 @@ const SearchStock: FC = () => {
     setSearchTerm("");
     setShowDropdown(false);
 
-    navigate("/ethsummary", {
-      state: {
-        item: option,
-      },
-    });
+    if (option.Type == "Common Stock")
+      navigate("/stocksummary", {
+        state: {
+          item: option,
+        },
+      });
+    else
+      navigate("/etfsummary", {
+        state: {
+          item: option,
+        },
+      });
   };
 
   const startSearch = async () => {
