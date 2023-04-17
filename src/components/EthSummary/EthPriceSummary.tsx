@@ -55,7 +55,7 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
           <div className="text-2xl font-bold">
             Invesco {code} Trust ({code})
           </div>
-          <div className="text-base bg-[#040B11] p-1 ml-2">ETH</div>
+          <div className="text-base bg-[#040B11] p-1 ml-2">ETF</div>
         </div>
         <div className="text-sm">
           NasdaqGS - NasdaqGS Real Time Price. Currency in USD
