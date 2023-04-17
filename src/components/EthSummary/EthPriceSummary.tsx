@@ -9,6 +9,7 @@ interface EthPriceSummaryProps {
 const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
   const [stockSummary, setStockSummary] = useState(null);
   const [etfSummary, setetfSummary] = useState(null);
+  const [stockLiveData, setStockLiveData] = useState(null);
 
   useEffect(() => {
     getSummaryInfo();
@@ -35,6 +36,16 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
     const response1 = await fetch(etfURL);
     const jsonData1 = await response1.json();
     setStockSummary(jsonData1);
+
+    // Get Stock Live Data
+    const stockLiveURL =
+      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
+      code +
+      ".US";
+
+    const response2 = await fetch(stockLiveURL);
+    const jsonData2 = await response2.json();
+    setStockLiveData(jsonData2);
   };
 
   return (
@@ -53,8 +64,28 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
       <div className="flex py-6 flex justify-between w-full">
         <div className="border-l-4 px-3 border-[#2EBD85]">
           <div className="flex flex-col">
-            <div className="text-2xl font-bold">$315.50</div>
-            <div className="text-[#2EBD85] text-xl">+0.07 (+0.02%)</div>
+            <div className="text-2xl font-bold">
+              $
+              {stockLiveData
+                ? stockLiveData["high"]
+                  ? stockLiveData["high"]
+                  : "NA"
+                : "N/A"}
+            </div>
+            <div className="text-[#2EBD85] text-xl">
+              {stockLiveData
+                ? stockLiveData["change"]
+                  ? stockLiveData["change"]
+                  : "NA"
+                : "N/A"}{" "}
+              (
+              {stockLiveData
+                ? stockLiveData["change_p"]
+                  ? stockLiveData["change_p"]
+                  : "NA"
+                : "N/A"}{" "}
+              )
+            </div>
             <div className="font-bold">
               Market Opn: Mar 10.2021, 2:25 PM EST
             </div>
@@ -66,8 +97,20 @@ const EthPriceSummary: FC<EthPriceSummaryProps> = ({ code }) => {
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Price Day Range</div>
               <div className="flex justify-between text-white">
-                <div>164.93</div>
-                <div>338.19</div>
+                <div>
+                  {stockLiveData
+                    ? stockLiveData["low"]
+                      ? stockLiveData["low"]
+                      : "NA"
+                    : "N/A"}{" "}
+                </div>
+                <div>
+                  {stockLiveData
+                    ? stockLiveData["high"]
+                      ? stockLiveData["high"]
+                      : "NA"
+                    : "N/A"}{" "}
+                </div>
               </div>
               <div className="flex justify-between">
                 <div>Low</div>
