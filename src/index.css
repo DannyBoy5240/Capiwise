@@ -19,12 +19,27 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+/* Full Screen Class for Chart Full Screen */
 .full-screen {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0%;
+  left: 0%;
   right: 0;
   bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background-color: black;
+}
+
+.full-screen-chart {
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  right: 0;
+  bottom: 0;
+  width: 90%;
+  height: 90%;
   z-index: 999;
 }
 

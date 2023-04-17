@@ -11,12 +11,15 @@ import {
   Title,
   Tooltip,
   Legend,
+  CartesianScaleTypeRegistry,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
 interface ETFChartProps {
   viewMode: number;
 }
+
+type positionType = "left" | "center" | "top" | "right" | "bottom" | undefined;
 
 const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
   ChartJS.register(
@@ -29,70 +32,134 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
     Legend
   );
 
+  const pattern = {
+    draw: function (ctx: any) {
+      ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(10, 10);
+      ctx.stroke();
+    },
+  };
+
   const options = {
+    backgroundColor: "red",
     responsive: true,
     plugins: {
       legend: {
-        position: "right" as const,
-        usePointStyle: true,
-        pointStyle: "circle",
+        display: false,
+        // position: "top" as const,
+        // usePointStyle: true,
+        // pointStyle: "circle",
       },
       title: {
         display: false,
         text: "Chart.js Line Chart",
       },
-      scales: {
-        yAxes: [
-          {
-            id: "y-axis-0",
-            position: "left", // Positions the axis on the right side of the chart
-            ticks: {
-              beginAtZero: true,
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Sales",
-            },
-          },
-        ],
-        xAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
+      beforeDraw: function (chart: any) {
+        console.log("Hello!!!");
+        var ctx = chart.ctx;
+        var xAxis = chart.scales["x-axis-0"];
+        var yAxis = chart.scales["y-axis-0"];
+        var labels = xAxis.ticks.map((tick: any) => tick.label);
+
+        labels.forEach(function (label: any, index: any) {
+          var x = xAxis.getPixelForValue(label);
+          var y = yAxis.bottom;
+          var width = xAxis.width / labels.length;
+          var height = yAxis.top - yAxis.bottom;
+
+          if (index % 2 === 0) {
+            ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
+          } else {
+            ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
+          }
+
+          ctx.fillRect(x - width / 2, y, width, height);
+        });
+      },
+      patterns: {
+        stripes: pattern,
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          maxTicksLimit: 6,
+          color: "white",
+        },
+        grid: {
+          lineWidth: 3,
+          color: function (context: any) {
+            // if (context.tick.value > 25) {
+            //   return "#FFFFFF";
+            // } else {
+            //   return "#00000000";
+            // }
+            return "#00000000";
+          },
+        },
+      },
+      y: {
+        position: "right" as positionType,
+        ticks: {
+          color: "white",
+        },
+        grid: {
+          lineWidth: function (context: any) {
+            if (context.tick.value < Math.min.apply(Math, data_datasets)) {
+              return 3;
+            } else {
+              return 0.6;
+            }
+          },
+          color: function (context: any) {
+            if (context.tick.value > Math.min.apply(Math, data_datasets)) {
+              return "#FFFFFF55";
+            } else {
+              return "#E7EBEF";
+            }
+          },
+        },
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+        hoverRadius: 6,
+        pointStyle: "circle",
+        backgroundColor: "#FFFFFF",
+        borderWidth: 2,
+        borderColor: "#FFFFFF",
+      },
+    },
+    layout: {
+      padding: {
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10,
+      },
+    },
+    // chart: {
+    //   backgroundColor: ["#ecf0f1", "#bdc3c7", "#95a5a6"],
+    // },
   };
 
-  const [labels, setLabels] = useState([
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "Septemeber",
-    "October",
-    "November",
-    "December",
-  ]);
-
-  const [data_datasets, setData_Datasets] = useState([
-    23, 83, 35, 45, 21, 35, 62,
-  ]);
+  const [labels, setLabels] = useState(new Array());
+  const [data_datasets, setData_Datasets] = useState(new Array());
+  const [bgcolor, setbgColor] = useState(new Array());
+  const [posCount, setPosCount] = useState(0);
 
   const data = {
     labels,
     datasets: [
       {
-        label: "",
         data: data_datasets,
         borderColor: "#2EBD85",
-        // backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "#2EBD85",
+        fill: true,
+        tension: 0.1,
       },
     ],
   };
@@ -103,52 +170,50 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode }) => {
 
     const response = await fetch(fetchURL);
     const jsonData = await response.json();
+    jsonData.reverse();
 
-    var count = 0;
-
+    let count = 0;
     switch (viewMode) {
       case 1:
-        // setCount(1);
         count = 1;
         break;
       case 2:
-        // setCount(7);
-        count = 7;
+        count = 6;
         break;
       case 3:
-        // setCount(30);
         count = 30;
         break;
       case 4:
-        // setCount(180);
         count = 180;
         break;
       case 5:
-        // setCount(jsonData.length);
         count = jsonData.length;
         break;
       case 6:
-        // setCount(jsonData.length);
         count = jsonData.length;
         break;
       case 7:
-        // setCount(jsonData.length);
         count = jsonData.length;
         break;
       default:
-        // setCount(1);
         count = 1;
         break;
     }
+    setPosCount(count);
 
-    count = 30;
-
-    var nums: number[] = new Array(jsonData.length);
-    for (var i = 0; i < count; i++) nums[i] = Number(jsonData[i].open);
+    // ChartJS information initialize
+    let nums: number[] = new Array(count);
+    for (let i = 0; i < count; i++) nums[i] = Number(jsonData[i].open);
     setData_Datasets(nums);
-    var tlabels: string[] = new Array(jsonData.length);
-    for (var i = 0; i < count; i++) tlabels[i] = String(jsonData[i].date);
+    let tlabels: string[] = new Array(count);
+    for (let i = 0; i < count; i++) tlabels[i] = String(jsonData[i].date);
     setLabels(tlabels);
+    // let tbgcolor: string[] = new Array(count);
+    // for (let i = 0; i < count; i++) {
+    //   if (i % 2 == 0) tbgcolor[i] = "rgba(255, 99, 132, 0.2)";
+    //   // else tbgcolor[i] = "rgba(54, 162, 235, 0.2)";
+    // }
+    // // setbgColor(tbgcolor);
   };
 
   useEffect(() => {

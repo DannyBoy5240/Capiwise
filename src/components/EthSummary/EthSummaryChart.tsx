@@ -9,9 +9,19 @@ interface EthSummaryChartProps {
 }
 
 const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
-  const [viewMode, setViewMode] = useState(1);
+  const [viewMode, setViewMode] = useState(3);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
+
+  useEffect(() => {
+    let obj = document
+      ?.getElementById("modeGroup")
+      ?.getElementsByTagName("button");
+    if (obj && obj[2] && !obj[2].classList.contains("border-b-2")) {
+      obj[2].classList.add("border-b-2");
+      obj[2].classList.remove("border-b-0");
+    }
+  }, []);
 
   const handleToogleScreen = () => {
     setIsFullScreen(true);
@@ -20,49 +30,65 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
     setIsFullScreen(false);
   };
 
+  const handleViewMode = (event: any, mode: number) => {
+    setViewMode(mode);
+
+    // remove all border style in parent element
+    let obj = document
+      ?.getElementById("modeGroup")
+      ?.getElementsByTagName("button");
+    for (let i = 0; obj && i < obj.length; i++) {
+      obj[i].classList.remove("border-b-2");
+      obj[i].classList.add("border-b-0");
+    }
+
+    event.target.classList.add("border-b-2");
+    event.target.classList.remove("border-b-0");
+  };
+
   return (
     <div className="p-6 bg-[#0B1620] w-full md:w-1/2">
       <div className="flex justify-between items-center">
-        <div className="text-sm mb-2">
+        <div className="text-sm mb-2" id="modeGroup">
           <button
             className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
-            onClick={() => setViewMode(1)}
+            // onClick={(e) => handleViewMode(e, 1)}
           >
             1D
           </button>
           <button
             className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
-            onClick={() => setViewMode(2)}
+            onClick={(e) => handleViewMode(e, 2)}
           >
             1W
           </button>
           <button
             className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
-            onClick={() => setViewMode(3)}
+            onClick={(e) => handleViewMode(e, 3)}
           >
             1M
           </button>
           <button
             className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
-            onClick={() => setViewMode(4)}
+            onClick={(e) => handleViewMode(e, 4)}
           >
             6M
           </button>
           <button
             className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
-            onClick={() => setViewMode(5)}
+            onClick={(e) => handleViewMode(e, 5)}
           >
             1Y
           </button>
           <button
             className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
-            onClick={() => setViewMode(6)}
+            onClick={(e) => handleViewMode(e, 6)}
           >
             5Y
           </button>
           <button
             className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
-            onClick={() => setViewMode(7)}
+            onClick={(e) => handleViewMode(e, 7)}
           >
             MAX
           </button>
@@ -89,10 +115,19 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
         className={`chart-container ${isFullScreen ? "full-screen" : ""}`}
         onClick={() => handleToogleDownScreen()}
       >
-        <ETFChart viewMode={viewMode} />
+        <div
+          className={isFullScreen ? "full-screen-chart" : ""}
+          // style={{
+          //   background:
+          //     "repeating-linear-gradient(90deg, rgba(4, 11, 17, 0.5), rgba(4, 11, 17, 0.5) 76px, rgb(11, 22, 32) 0px, rgb(11, 22, 32) 152px) 180px 0",
+          //   backgroundPosition: "180px 0",
+          // }}
+        >
+          <ETFChart viewMode={viewMode} />
+        </div>
       </div>
       <div className="border-b border-b-[#252A2D] py-1.5"></div>
-      <div className="flex pt-3.5">
+      {/* <div className="flex pt-3.5">
         <div className="flex items-center">
           <div className="pr-1">
             <svg
@@ -121,6 +156,20 @@ const EthSummaryChart: FC<EthSummaryChartProps> = ({ code }) => {
           </div>
           <div className="text-xs">Margin of safety</div>
         </div>
+      </div> */}
+      <div className="flex items-center pt-3.5">
+        <div className="pr-1">
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="6" cy="6" r="6" fill="#979797" />
+          </svg>
+        </div>
+        <div className="text-xs">Net Asset Value (NAV)</div>
       </div>
     </div>
   );
