@@ -196,15 +196,14 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
     for (let i = 0; i < count; i++) nums[i] = Number(jsonData[i].open);
     setData_Datasets(nums);
     const tlabels: string[] = new Array(count);
-    for (let i = 0; i < count; i++) tlabels[i] = String(jsonData[i].datetime);
-    tlabels[0] = "";
     for (let i = 0; i < count; i++) {
-      const date = new Date(jsonData[i].datetime);
+      const date = new Date(
+        viewMode >= 1 && viewMode <= 4 ? jsonData[i].datetime : jsonData[i].date
+      );
       if (viewMode > 1) {
         tlabels[i] = `${date.getFullYear()}-${(date.getMonth() + 1)
           .toString()
           .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-        // tlabels[i] = String(jsonData[i].datetime);
       } else {
         tlabels[i] = `${date.getHours().toString().padStart(2, "0")}:${date
           .getMinutes()
@@ -212,6 +211,7 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
           .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
       }
     }
+    tlabels[0] = "";
     setLabels(tlabels);
 
     setIsLoading(false);
