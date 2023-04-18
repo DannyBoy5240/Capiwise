@@ -186,7 +186,7 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
 
     const response = await fetch(fetchURL + fperiod);
     const jsonData = await response.json();
-    jsonData.reverse();
+    // jsonData.reverse();
 
     const count = jsonData.length;
     setPosCount(count);
@@ -198,6 +198,20 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
     const tlabels: string[] = new Array(count);
     for (let i = 0; i < count; i++) tlabels[i] = String(jsonData[i].datetime);
     tlabels[0] = "";
+    for (let i = 0; i < count; i++) {
+      const date = new Date(jsonData[i].datetime);
+      if (viewMode > 1) {
+        tlabels[i] = `${date.getFullYear()}-${(date.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+        // tlabels[i] = String(jsonData[i].datetime);
+      } else {
+        tlabels[i] = `${date.getHours().toString().padStart(2, "0")}:${date
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+      }
+    }
     setLabels(tlabels);
 
     setIsLoading(false);

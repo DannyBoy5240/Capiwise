@@ -84,12 +84,12 @@ body {
   background-image: repeating-linear-gradient(
     90deg,
     rgba(4, 11, 17, 0.5),
-    rgba(4, 11, 17, 0.5) 76px,
+    rgba(4, 11, 17, 0.5) 75px,
     rgb(11, 22, 32) 0px,
     rgb(11, 22, 32) 175px
   );
-  background-size: 195px 50px;
-  background-position: 20px 50px;
+  background-size: 200px 50px;
+  background-position: 55px 50px;
 }
 
 /* ChartJs Loading Effect */
