@@ -1,5 +1,7 @@
 import { FC } from "react";
 
+import { useState, useEffect } from "react";
+
 import GradientSlider from "../atom/GradientSlider";
 
 interface StockAnalysisDetailsProps {
@@ -7,6 +9,27 @@ interface StockAnalysisDetailsProps {
 }
 
 const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
+  const [stockLiveData, setStockLiveData] = useState(null);
+
+  useEffect(() => {
+    getAnalysticInfo();
+  }, []);
+
+  const getAnalysticInfo = async () => {
+    // Get Stock Live Data
+    const stockLiveURL =
+      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
+      code +
+      ".US";
+
+    fetch(stockLiveURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setStockLiveData(data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="bg-[#0B1620] text-white md:ml-6 mt-6 md:mt-0 p-5 w-full md:w-1/2 lg:w-1/4 flex flex-col justify-between">
       <div>
@@ -32,7 +55,14 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             <GradientSlider progress={52} mode={3} />
             <div className="text-xs absolute z-50 mt-[-36px] ml-[20px] pl-[40px] py-1 pr-3 bg-[#0B1620AA]">
               <div>Current Price</div>
-              <div className="font-bold">US$111.46</div>
+              <div className="font-bold">
+                US$
+                {stockLiveData
+                  ? stockLiveData["high"]
+                    ? stockLiveData["high"]
+                    : "NA"
+                  : "N/A"}
+              </div>
             </div>
           </div>
           <div className="text-xs">
@@ -64,7 +94,13 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               </div>
               <div className="pl-2">
                 <span className="text-[#2EBD85]">Below Fair Value: </span>AAPL
-                ($116.36) is trading above our estimate of fair value ($111,46)
+                ($116.36) is trading above our estimate of fair value ($
+                {stockLiveData
+                  ? stockLiveData["high"]
+                    ? stockLiveData["high"]
+                    : "NA"
+                  : "N/A"}
+                )
               </div>
             </div>
             <div className="flex py-1">
