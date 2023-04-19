@@ -220,13 +220,18 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
     getETFHistoryData();
   }, [viewMode]);
 
-  return isLoading == false ? (
+  return posCount != 0 && isLoading == false ? (
     <Line
       options={options}
       data={data}
       className={isFullScreen ? "" : "stripes"}
       id="chart_id"
     />
+  ) : posCount == 0 ? (
+    <div className="loading-progress">
+      <div className="">... ... ...</div>
+      <div className="text">No Data Exists...</div>
+    </div>
   ) : (
     <div className="loading-progress">
       <div className="spinner"></div>
