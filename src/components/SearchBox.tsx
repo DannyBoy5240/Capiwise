@@ -102,7 +102,7 @@ const SearchBox: FC = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onFocus={() => handleSearchFocus()}
-          onBlur={(e) => handleSearchBlur(e)}
+          // onBlur={(e) => handleSearchBlur(e)}
           onKeyDown={(e) => handleKeyDown(e)}
         />
         <span className="absolute inset-y-0 right-0 flex items-center pl-2">
