@@ -13,9 +13,9 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
   };
 
   const convertingTimestamp = (tm: number) => {
-    let timestamp: number = tm; // Unix timestamp in seconds
-    let date: Date = new Date(timestamp * 1000); // Convert seconds to milliseconds
-    let dateString: string = date.toLocaleDateString("en-US", {
+    const timestamp: number = tm; // Unix timestamp in seconds
+    const date: Date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+    const dateString: string = date.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: "numeric",

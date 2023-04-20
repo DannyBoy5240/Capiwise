@@ -66,9 +66,9 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
   };
 
   const changeDateFormat = (date: string) => {
-    let dateStr: string = date;
-    let dateArr: string[] = dateStr.split("-");
-    let formattedDate: string =
+    const dateStr: string = date;
+    const dateArr: string[] = dateStr.split("-");
+    const formattedDate: string =
       dateArr[1] + "." + dateArr[2] + "." + dateArr[0];
     return formattedDate;
   };
