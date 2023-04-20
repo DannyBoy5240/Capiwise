@@ -17,7 +17,6 @@ const SearchBox: FC = () => {
   }, [searchTerm]);
 
   const handleSelect = (option: any) => {
-    console.log("handleSelect...");
     setSearchTerm("");
     setShowDropdown(false);
 
@@ -33,6 +32,7 @@ const SearchBox: FC = () => {
           item: option,
         },
       });
+    window.location.reload();
   };
 
   const startSearch = async () => {
