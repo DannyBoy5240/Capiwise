@@ -21,7 +21,7 @@ const GradientSlider: FC<GradientSliderProps> = ({ progress, mode }) => {
         <div className="flex absolute inset-0 w-full h-full">
           {[0, 1, 2, 3, 4].map((idx) => (
             <div
-              className="grow border-r-2 border-r-[#4B4D4C] z-[2] last:border-r-0"
+              className="grow border-r border-r-[#4B4D4C88] z-[2] last:border-r-0"
               key={idx}
             ></div>
           ))}

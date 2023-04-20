@@ -3,8 +3,8 @@ import { FC } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import ETFPriceSummary from "../components/ETFSummary/ETFPriceSummary";
-import ETFSummaryChart from "../components/ETFSummary/ETFSummaryChart";
 import AnalysisDetails from "../components/ETFSummary/AnalysisDetails";
+import ETFSummaryChart from "../components/ETFSummary/ETFSummaryChart";
 
 const ETFSummary = () => {
   const location = useLocation();

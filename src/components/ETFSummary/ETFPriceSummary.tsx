@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import PriceBarSlider from "../atom/PriceBarSlider";
 
+import TotalSummaryInfo from "../molecules/TotalSummaryInfo";
+
 interface ETFPriceSummaryProps {
   context: any;
 }
@@ -58,9 +60,28 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
       .catch((error) => console.log(error));
   };
 
-  const getNumber = (num: number) => {
+  const getNumber = (num: any) => {
     if (num > 0) return "+" + num;
     else return num;
+  };
+
+  const changeDateFormat = (date: string) => {
+    let dateStr: string = date;
+    let dateArr: string[] = dateStr.split("-");
+    let formattedDate: string =
+      dateArr[1] + "." + dateArr[2] + "." + dateArr[0];
+    return formattedDate;
+  };
+
+  const formatBytes = (bytes: number, decimals = 2): string => {
+    if (bytes === 0) return "0 B";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   };
 
   return (
@@ -72,63 +93,46 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
           </div>
           <div className="text-base bg-[#040B11] p-1 ml-2">ETF</div>
         </div>
-        <div className="text-sm">
-          NasdaqGS - NasdaqGS Real Time Price. Currency in {context.Currency}
+        <div className="text-sm mt-1">
+          {etfSummary
+            ? etfSummary["General::Exchange"]
+              ? etfSummary["General::Exchange"]
+              : "NA"
+            : "N/A"}{" "}
+          -{" "}
+          {etfSummary
+            ? etfSummary["General::Exchange"]
+              ? etfSummary["General::Exchange"]
+              : "NA"
+            : "N/A"}{" "}
+          Real Time Price. Currency in {context.Currency}
         </div>
       </div>
       <div className="flex py-6 flex justify-between w-full">
-        <div className="border-l-4 px-3 border-[#2EBD85]">
-          <div className="flex flex-col">
-            <div className="text-2xl font-bold">
-              $
-              {stockLiveData
-                ? stockLiveData["high"]
-                  ? stockLiveData["high"]
-                  : "NA"
-                : "N/A"}
-            </div>
-            <div className="text-[#2EBD85] text-xl">
-              {stockLiveData
-                ? stockLiveData["change"]
-                  ? getNumber(stockLiveData["change"])
-                  : "NA"
-                : "N/A"}{" "}
-              (
-              {stockLiveData
-                ? stockLiveData["change_p"]
-                  ? getNumber(stockLiveData["change_p"])
-                  : "NA"
-                : "N/A"}{" "}
-              )
-            </div>
-            <div className="font-bold">
-              Market Opn: Mar 10.2021, 2:25 PM EST
-            </div>
-          </div>
-        </div>
+        <TotalSummaryInfo stockLiveData={stockLiveData} />
         {/*  */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Price Day Range</div>
               <PriceBarSlider progress={52} />
-              <div className="flex justify-between text-white">
+              <div className="flex justify-between text-white text-xs">
                 <div>
                   {stockLiveData
                     ? stockLiveData["low"]
-                      ? stockLiveData["low"]
+                      ? parseFloat(stockLiveData["low"]).toFixed(2)
                       : "NA"
                     : "N/A"}{" "}
                 </div>
                 <div>
                   {stockLiveData
                     ? stockLiveData["high"]
-                      ? stockLiveData["high"]
+                      ? parseFloat(stockLiveData["high"]).toFixed(2)
                       : "NA"
                     : "N/A"}{" "}
                 </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between text-[10px] text-[#979797]">
                 <div>Low</div>
                 <div>High</div>
               </div>
@@ -136,19 +140,41 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             <div className="grow text-[#979797] pt-1">
               <div>Price 52-Week Range</div>
               <PriceBarSlider progress={76} />
-              <div className="flex justify-between text-white">
+              <div className="flex justify-between text-white text-xs">
                 <div>
-                  {stockSummary ? stockSummary["Technicals::52WeekLow"] : "N/A"}
+                  {etfSummary
+                    ? etfSummary["Technicals::52WeekLow"]["price"]
+                      ? parseFloat(
+                          etfSummary["Technicals::52WeekLow"]["price"]
+                        ).toFixed(2)
+                      : "NA"
+                    : "N/A"}
                 </div>
                 <div>
-                  {stockSummary
-                    ? stockSummary["Technicals::52WeekHigh"]
+                  {etfSummary
+                    ? etfSummary["Technicals::52WeekHigh"]["price"]
+                      ? parseFloat(
+                          etfSummary["Technicals::52WeekHigh"]["price"]
+                        ).toFixed(2)
+                      : "NA"
                     : "N/A"}
                 </div>
               </div>
-              <div className="flex justify-between">
-                <div>N/A</div>
-                <div className="pl-2">N/A</div>
+              <div className="flex justify-between text-[10px] text-[#979797]">
+                <div>
+                  {etfSummary
+                    ? etfSummary["Technicals::52WeekLow"]["date"]
+                      ? etfSummary["Technicals::52WeekLow"]["date"]
+                      : "NA"
+                    : "N/A"}
+                </div>
+                <div className="pl-2">
+                  {etfSummary
+                    ? etfSummary["Technicals::52WeekHigh"]["date"]
+                      ? etfSummary["Technicals::52WeekHigh"]["date"]
+                      : "NA"
+                    : "N/A"}
+                </div>
               </div>
             </div>
           </div>
@@ -157,18 +183,20 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div className="flex flex-row justify-between items-center">
                 <div>Net Assets</div>
-                <div className="text-[10px]">AS OF 03/31/2021</div>
+                <div className="text-[10px]">AS OF N/A</div>
               </div>
               <div className="text-white font-bold">
-                {stockSummary ? stockSummary["ETF_Data::TotalAssets"] : "N/A"}
+                {etfSummary
+                  ? formatBytes(etfSummary["ETF_Data::TotalAssets"])
+                  : "N/A"}
               </div>
             </div>
             <div className="grow text-[#979797] pt-1">
               <div>Shares Outstanding</div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["SharesStats::SharesOutstanding"]
-                    ? stockSummary["SharesStats::SharesOutstanding"]
+                {etfSummary
+                  ? etfSummary["SharesStats::SharesOutstanding"]
+                    ? etfSummary["SharesStats::SharesOutstanding"]
                     : "NA"
                   : "N/A"}
               </div>
@@ -183,8 +211,8 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             <div className="grow text-[#979797] pt-1">
               <div>Net Expense Ratio</div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["ETF_Data::NetExpenseRatio"]
+                {etfSummary
+                  ? etfSummary["ETF_Data::NetExpenseRatio"] * 100 + "%"
                   : "N/A"}
               </div>
             </div>
@@ -204,14 +232,55 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
           <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Price Performance (52-Wk)</div>
-              <div className="text-white font-bold">N/A</div>
+              <div className="text-white font-bold flex items-center">
+                <span>
+                  {etfSummary && etfSummary["Price::Performance"] != "" ? (
+                    etfSummary["Price::Performance"] > 0 ? (
+                      <svg
+                        width="12"
+                        height="9"
+                        viewBox="0 0 12 9"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M6 0L11.1962 9H0.803848L6 0Z" fill="#2EBD85" />
+                      </svg>
+                    ) : (
+                      <svg
+                        width="12"
+                        height="9"
+                        viewBox="0 0 12 9"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M6 0L11.1962 9H0.803848L6 0Z" fill="#e2433b" />
+                      </svg>
+                    )
+                  ) : (
+                    <></>
+                  )}
+                </span>
+                <span
+                  className={
+                    etfSummary && etfSummary["Price::Performance"] > 0
+                      ? "text-[#2EBD85]"
+                      : "text-[#e2433b]"
+                  }
+                >
+                  {etfSummary
+                    ? etfSummary["Price::Performance"]
+                      ? getNumber(etfSummary["Price::Performance"]) + "%"
+                      : "NA"
+                    : "N/A"}
+                </span>
+              </div>
             </div>
             <div className="grow text-[#979797] pt-1">
               <div>Inception Date</div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["ETF_Date::Inception_Date"]
-                    ? stockSummary["ETF_Date::Inception_Date"]
+                {etfSummary
+                  ? etfSummary["ETF_Data::Inception_Date"]
+                    ? changeDateFormat(etfSummary["ETF_Data::Inception_Date"])
                     : "NA"
                   : "N/A"}
               </div>

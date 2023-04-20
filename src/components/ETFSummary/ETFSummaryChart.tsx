@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { useState, useEffect } from "react";
 
-import ETFChart from "./ETFChart";
+import SummaryChart from "../molecules/SummaryChart";
 
 interface ETFSummaryChartProps {
   code: string;
@@ -116,7 +116,7 @@ const ETFSummaryChart: FC<ETFSummaryChartProps> = ({ code }) => {
         onClick={() => handleToogleDownScreen()}
       >
         <div className={isFullScreen ? "full-screen-chart" : ""}>
-          <ETFChart
+          <SummaryChart
             viewMode={viewMode}
             isFullScreen={isFullScreen}
             code={code}

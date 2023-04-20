@@ -15,7 +15,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-interface ETFChartProps {
+interface SummaryChartProps {
   viewMode: number;
   isFullScreen: boolean;
   code: string;
@@ -23,7 +23,11 @@ interface ETFChartProps {
 
 type positionType = "left" | "center" | "top" | "right" | "bottom" | undefined;
 
-const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
+const SummaryChart: FC<SummaryChartProps> = ({
+  viewMode,
+  isFullScreen,
+  code,
+}) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -59,24 +63,20 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
         // pointStyle: "circle",
       },
       beforeDraw: function (chart: any) {
-        console.log("Hello!!!");
         // var ctx = chart.ctx;
         // var xAxis = chart.scales["x-axis-0"];
         // var yAxis = chart.scales["y-axis-0"];
         // var labels = xAxis.ticks.map((tick: any) => tick.label);
-
         // labels.forEach(function (label: any, index: any) {
         //   var x = xAxis.getPixelForValue(label);
         //   var y = yAxis.bottom;
         //   var width = xAxis.width / labels.length;
         //   var height = yAxis.top - yAxis.bottom;
-
         //   if (index % 2 === 0) {
         //     ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
         //   } else {
         //     ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
         //   }
-
         //   ctx.fillRect(x - width / 2, y, width, height);
         // });
       },
@@ -91,14 +91,14 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
           color: "white",
         },
         grid: {
-          lineWidth: 3,
+          lineWidth: 0.6,
           color: function (context: any) {
             // if (context.tick.value > 25) {
             //   return "#FFFFFF";
             // } else {
             //   return "#00000000";
             // }
-            return "#00000000";
+            return "#000000";
           },
         },
       },
@@ -109,18 +109,20 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
         },
         grid: {
           lineWidth: function (context: any) {
-            if (context.tick.value < Math.min(...data_datasets)) {
-              return 3;
-            } else {
-              return 0.6;
-            }
+            // if (context.tick.value < Math.min(...data_datasets)) {
+            //   return 3;
+            // } else {
+            //   return 0.6;
+            // }
+            return 0.6;
           },
           color: function (context: any) {
-            if (context.tick.value > Math.min(...data_datasets)) {
-              return "#FFFFFF55";
-            } else {
-              return "#E7EBEF";
-            }
+            // if (context.tick.value > Math.min(...data_datasets)) {
+            //   return "#FFFFFF55";
+            // } else {
+            //   return "#E7EBEF";
+            // }
+            return "#000000";
           },
         },
       },
@@ -157,9 +159,9 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
     datasets: [
       {
         data: data_datasets,
-        borderColor: "#2EBD85",
-        backgroundColor: "#2EBD85",
-        fill: true,
+        borderColor: "#FFFFFF",
+        backgroundColor: "#FFFFFF00",
+        fill: false,
         tension: 0.1,
       },
     ],
@@ -198,7 +200,6 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
       const date = new Date(
         viewMode >= 1 && viewMode <= 4 ? jsonData[i].datetime : jsonData[i].date
       );
-
       if (viewMode > 1) {
         tlabels[i] = `${date.getFullYear()}-${(date.getMonth() + 1)
           .toString()
@@ -220,18 +221,13 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
     getETFHistoryData();
   }, [viewMode]);
 
-  return posCount != 0 && isLoading == false ? (
+  return isLoading == false ? (
     <Line
       options={options}
       data={data}
       className={isFullScreen ? "" : "stripes"}
       id="chart_id"
     />
-  ) : posCount == 0 ? (
-    <div className="loading-progress">
-      <div className="">... ... ...</div>
-      <div className="text">No Data Exists...</div>
-    </div>
   ) : (
     <div className="loading-progress">
       <div className="spinner"></div>
@@ -240,4 +236,4 @@ const ETFChart: FC<ETFChartProps> = ({ viewMode, isFullScreen, code }) => {
   );
 };
 
-export default ETFChart;
+export default SummaryChart;

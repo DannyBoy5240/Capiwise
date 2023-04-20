@@ -3,8 +3,8 @@ import { FC } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import StockPriceSummary from "../components/StockSummary/StockPriceSummary";
-import StockSummaryChart from "../components/StockSummary/StockSummaryChart";
 import StockAnalysisDetails from "../components/StockSummary/StockAnalysisDetails";
+import StockSummaryChart from "../components/StockSummary/StockSummaryChart";
 
 const StockSummary = () => {
   const location = useLocation();

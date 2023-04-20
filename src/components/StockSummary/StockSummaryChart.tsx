@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { useState, useEffect } from "react";
 
-import StockChart from "./StockChart";
+import SummaryChart from "../molecules/SummaryChart";
 
 interface StockSummaryChartProps {
   code: string;
@@ -123,7 +123,7 @@ const StockSummaryChart: FC<StockSummaryChartProps> = ({ code }) => {
           //   backgroundPosition: "180px 0",
           // }}
         >
-          <StockChart
+          <SummaryChart
             viewMode={viewMode}
             isFullScreen={isFullScreen}
             code={code}
