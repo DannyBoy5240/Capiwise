@@ -58,24 +58,71 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
       .catch((error) => console.log(error));
   };
 
-  const getNumber = (num: number) => {
+  const getNumber = (num: any) => {
     if (num > 0) return "+" + num;
     else return num;
   };
 
+  const changeDateFormat = (date: string) => {
+    let dateStr: string = date;
+    let dateArr: string[] = dateStr.split("-");
+    let formattedDate: string =
+      dateArr[1] + "/" + dateArr[2] + "/" + dateArr[0];
+    return formattedDate;
+  };
+  const convertingTimestamp = (tm: number) => {
+    let timestamp: number = tm; // Unix timestamp in seconds
+    let date: Date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+    let dateString: string = date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    return dateString;
+  };
+
+  const formatBytes = (bytes: number, decimals = 2): string => {
+    if (bytes === 0) return "0 B";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  };
+
   return (
     <div className="p-6 bg-[#0B1620] text-xs">
-      <div className="border-b pb-6 border-[#252A2D]">
+      <div className="border-b-2 pb-6 border-[#040B11]">
         <div className="text-2xl font-bold">
           {context.Name} ({context.Code})
         </div>
-        <div className="text-sm">
-          NasdaqGS - NasdaqGS Real Time Price. Currency in {context.Currency}
+        <div className="text-sm mt-1">
+          {stockSummary
+            ? stockSummary["General::Exchange"]
+              ? stockSummary["General::Exchange"]
+              : "NA"
+            : "N/A"}{" "}
+          -{" "}
+          {stockSummary
+            ? stockSummary["General::Exchange"]
+              ? stockSummary["General::Exchange"]
+              : "NA"
+            : "N/A"}{" "}
+          Real Time Price. Currency in {context.Currency}
         </div>
       </div>
       <div className="flex py-6 flex justify-between w-full">
-        <div className="border-l-4 px-3 border-[#2EBD85]">
-          <div className="flex flex-col">
+        <div className="">
+          <div
+            className={
+              "flex flex-col border-l-4 pl-4 pr-1" +
+              (stockLiveData && stockLiveData["change"] > 0
+                ? " border-[#2EBD85]"
+                : " border-[#e2433b]")
+            }
+          >
             <div className="text-2xl font-bold">
               $
               {stockLiveData
@@ -84,7 +131,14 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                   : "NA"
                 : "N/A"}
             </div>
-            <div className="text-[#2EBD85] text-xl">
+            <div
+              className={
+                "text-xl" +
+                (stockLiveData && stockLiveData["change"] > 0
+                  ? " text-[#2EBD85]"
+                  : " text-[#e2433b]")
+              }
+            >
               {stockLiveData
                 ? stockLiveData["change"]
                   ? getNumber(stockLiveData["change"])
@@ -93,39 +147,48 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               (
               {stockLiveData
                 ? stockLiveData["change_p"]
-                  ? getNumber(stockLiveData["change_p"])
+                  ? getNumber(
+                      parseFloat(stockLiveData["change_p"])
+                        .toFixed(2)
+                        .toString()
+                    ) + "%"
                   : "NA"
-                : "N/A"}{" "}
+                : "N/A"}
               )
             </div>
-            <div className="font-bold">
-              Market Opn: Mar 10.2021, 2:25 PM EST
+            <div className="">
+              Data as of{" "}
+              {stockLiveData
+                ? stockLiveData["timestamp"]
+                  ? convertingTimestamp(stockLiveData["timestamp"])
+                  : "NA"
+                : "N/A"}
             </div>
           </div>
         </div>
         {/*  */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Price Day Range</div>
               <PriceBarSlider progress={52} />
-              <div className="flex justify-between text-white">
+              <div className="flex justify-between text-white text-xs">
                 <div>
                   {stockLiveData
                     ? stockLiveData["low"]
-                      ? stockLiveData["low"]
+                      ? parseFloat(stockLiveData["low"]).toFixed(2)
                       : "NA"
                     : "N/A"}{" "}
                 </div>
                 <div>
                   {stockLiveData
                     ? stockLiveData["high"]
-                      ? stockLiveData["high"]
+                      ? parseFloat(stockLiveData["high"]).toFixed(2)
                       : "NA"
                     : "N/A"}{" "}
                 </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between text-[10px] text-[#979797]">
                 <div>Low</div>
                 <div>High</div>
               </div>
@@ -133,84 +196,188 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
             <div className="grow text-[#979797] pt-1">
               <div>Price 52-Week Range</div>
               <PriceBarSlider progress={76} />
-              <div className="flex justify-between text-white">
+              <div className="flex justify-between text-white text-xs">
                 <div>
-                  {stockSummary ? stockSummary["Technicals::52WeekLow"] : "N/A"}
+                  {stockSummary
+                    ? stockSummary["Technicals::52WeekLow"]["price"]
+                      ? parseFloat(
+                          stockSummary["Technicals::52WeekLow"]["price"]
+                        ).toFixed(2)
+                      : "NA"
+                    : "N/A"}
                 </div>
                 <div>
                   {stockSummary
-                    ? stockSummary["Technicals::52WeekHigh"]
+                    ? stockSummary["Technicals::52WeekHigh"]["price"]
+                      ? parseFloat(
+                          stockSummary["Technicals::52WeekHigh"]["price"]
+                        ).toFixed(2)
+                      : "NA"
                     : "N/A"}
                 </div>
               </div>
-              <div className="flex justify-between">
-                <div>N/A</div>
-                <div className="pl-2">N/A</div>
+              <div className="flex justify-between text-[10px] text-[#979797]">
+                <div>
+                  {stockSummary
+                    ? stockSummary["Technicals::52WeekLow"]["date"]
+                      ? stockSummary["Technicals::52WeekLow"]["date"]
+                      : "NA"
+                    : "N/A"}
+                </div>
+                <div className="pl-2">
+                  {stockSummary
+                    ? stockSummary["Technicals::52WeekHigh"]["date"]
+                      ? stockSummary["Technicals::52WeekHigh"]["date"]
+                      : "NA"
+                    : "N/A"}
+                </div>
               </div>
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div className="flex flex-row justify-between items-center">
-                <div>Net Assets</div>
-                <div className="text-[10px]">AS OF 03/31/2021</div>
+                <div>Market Cap</div>
               </div>
               <div className="text-white font-bold">
-                {stockSummary ? stockSummary["ETF_Data::TotalAssets"] : "N/A"}
+                {stockSummary
+                  ? stockSummary["Highlights::MarketCapitalizationMln"] != ""
+                    ? formatBytes(
+                        stockSummary["Highlights::MarketCapitalizationMln"]
+                      )
+                    : "NA"
+                  : "N/A"}
               </div>
             </div>
             <div className="grow text-[#979797] pt-1">
               <div>Shares Outstanding</div>
               <div className="text-white font-bold">
                 {stockSummary
-                  ? stockSummary["SharesStats::SharesOutstanding"]
-                    ? stockSummary["SharesStats::SharesOutstanding"]
+                  ? stockSummary["SharesStats::SharesOutstanding"] != ""
+                    ? formatBytes(
+                        stockSummary["SharesStats::SharesOutstanding"]
+                      )
                     : "NA"
                   : "N/A"}
               </div>
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
-              <div>NAV (Previous Day)</div>
-              <div className="text-white font-bold">N/A</div>
-            </div>
-            <div className="grow text-[#979797] pt-1">
-              <div>Net Expense Ratio</div>
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
+              <div>P/E Ratio (TTM)</div>
               <div className="text-white font-bold">
                 {stockSummary
-                  ? stockSummary["ETF_Data::NetExpenseRatio"]
+                  ? stockSummary["Highlights::PERatio"]
+                    ? parseFloat(stockSummary["Highlights::PERatio"]).toFixed(2)
+                    : "NA"
+                  : "N/A"}
+              </div>
+            </div>
+            <div className="grow text-[#979797] pt-1">
+              <div>PEG Ratio (5-Yr)</div>
+              <div className="text-white font-bold">
+                {stockSummary
+                  ? stockSummary["Highlights::PEGRatio"]
+                    ? parseFloat(stockSummary["Highlights::PEGRatio"]).toFixed(
+                        2
+                      )
+                    : "NA"
                   : "N/A"}
               </div>
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
-              <div>30-Day SEC Yeld</div>
-              <div className="text-white font-bold">N/A</div>
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
+              <div>Ann. Div. / Yield</div>
+              <div className="text-white font-bold">
+                $
+                {stockSummary
+                  ? stockSummary["SplitsDividends::ForwardAnnualDividendRate"]
+                    ? parseFloat(
+                        stockSummary[
+                          "SplitsDividends::ForwardAnnualDividendRate"
+                        ]
+                      ).toFixed(2)
+                    : "NA"
+                  : "N/A"}{" "}
+                /{" "}
+                {stockSummary
+                  ? stockSummary["SplitsDividends::ForwardAnnualDividendYield"]
+                    ? parseFloat(
+                        stockSummary[
+                          "SplitsDividends::ForwardAnnualDividendYield"
+                        ]
+                      ).toFixed(2)
+                    : "NA"
+                  : "N/A"}{" "}
+                %
+              </div>
             </div>
             <div className="grow text-[#979797] pt-1">
-              <div>12-Month Yield (TTM)</div>
-              <div className="text-white font-bold">N/A</div>
+              <div>Dividend Ex-Date</div>
+              <div className="text-white font-bold">
+                {stockSummary
+                  ? stockSummary["SplitsDividends::ExDividendDate"]
+                    ? changeDateFormat(
+                        stockSummary["SplitsDividends::ExDividendDate"]
+                      )
+                    : "NA"
+                  : "N/A"}
+              </div>
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
+              <div>EPS (TTM)</div>
+              <div className="text-white font-bold">N/A</div>
+            </div>
+            <div className="grow text-[#979797] pt-1">
               <div>Price Performance (52-Wk)</div>
-              <div className="text-white font-bold">N/A</div>
-            </div>
-            <div className="grow text-[#979797] pt-1">
-              <div>Inception Date</div>
-              <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["ETF_Date::Inception_Date"]
-                    ? stockSummary["ETF_Date::Inception_Date"]
-                    : "NA"
-                  : "N/A"}
+              <div className="font-bold flex items-center">
+                <span>
+                  {stockSummary && stockSummary["Price::Performance"] != "" ? (
+                    stockSummary["Price::Performance"] > 0 ? (
+                      <svg
+                        width="12"
+                        height="9"
+                        viewBox="0 0 12 9"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M6 0L11.1962 9H0.803848L6 0Z" fill="#2EBD85" />
+                      </svg>
+                    ) : (
+                      <svg
+                        width="12"
+                        height="9"
+                        viewBox="0 0 12 9"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M6 0L11.1962 9H0.803848L6 0Z" fill="#e2433b" />
+                      </svg>
+                    )
+                  ) : (
+                    <></>
+                  )}
+                </span>
+                <span
+                  className={
+                    stockSummary && stockSummary["Price::Performance"] > 0
+                      ? "text-[#2EBD85]"
+                      : "text-[#e2433b]"
+                  }
+                >
+                  {stockSummary
+                    ? stockSummary["Price::Performance"]
+                      ? getNumber(stockSummary["Price::Performance"]) + "%"
+                      : "NA"
+                    : "N/A"}
+                </span>
               </div>
             </div>
           </div>

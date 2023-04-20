@@ -8,7 +8,7 @@ interface PriceBarSliderProps {
 
 const PriceBarSlider: FC<PriceBarSliderProps> = ({ progress }) => {
   return (
-    <div className="relative h-[30px] my-1">
+    <div className="relative h-[25px] mt-2">
       <div
         className="bg-gradient-to-r from-slate-400 via-white to-white rounded-full h-[6px] animate-growLineHFull"
         style={{ backgroundPosition: "50%" }}
@@ -30,10 +30,6 @@ const PriceBarSlider: FC<PriceBarSliderProps> = ({ progress }) => {
             <path d="M6 0L11.1962 9H0.803848L6 0Z" fill="#979797" />
           </svg>
         </div>
-      </div>
-      <div className="flex justify-between text-[10px] text-[#979797] pt-1">
-        <div>Low</div>
-        <div>High</div>
       </div>
     </div>
   );

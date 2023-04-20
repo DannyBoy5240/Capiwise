@@ -33,22 +33,29 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
   return (
     <div className="bg-[#0B1620] text-white md:ml-6 mt-6 md:mt-0 p-5 w-full md:w-1/2 lg:w-1/4 flex flex-col justify-between">
       <div>
-        <div className="text-base font-bold pb-3 border-b-2 border-b-[#252A2D]">
+        <div className="text-base font-bold pb-3 pl-1 border-b-2 border-b-[#252A2D]">
           Valuation
         </div>
         <div>
-          <div className="font-medium py-3">Share Price vs. Fair Value</div>
-          <div className="flex justify-between text-sm">
-            <div>
+          <div className="py-3 text-sm">Share Price vs. Fair Value</div>
+          <div className="flex justify-between items-center">
+            <div className="text-xs">
               <span className="text-[#2EBD85]">{code}</span>
               <span> Fair Price</span>
             </div>
-            <div>US$116.36</div>
+            <div className="text-sm font-bold">
+              US$
+              {stockLiveData
+                ? stockLiveData["high"]
+                  ? stockLiveData["high"]
+                  : "NA"
+                : "N/A"}
+            </div>
           </div>
-          <div className="flex justify-between text-sm">
-            <div>Current Price Valuation</div>
-            <div>
-              4.4% <span className="text-[#2EBD85] font-bold">Unverified</span>
+          <div className="flex justify-between items-center">
+            <div className="text-xs">Current Price Valuation</div>
+            <div className="text-sm text-[#2EBD85] font-bold">
+              4.4% Unverified
             </div>
           </div>
           <div className="h-[90px] mt-8">

@@ -59,24 +59,20 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
         // pointStyle: "circle",
       },
       beforeDraw: function (chart: any) {
-        console.log("Hello!!!");
         // var ctx = chart.ctx;
         // var xAxis = chart.scales["x-axis-0"];
         // var yAxis = chart.scales["y-axis-0"];
         // var labels = xAxis.ticks.map((tick: any) => tick.label);
-
         // labels.forEach(function (label: any, index: any) {
         //   var x = xAxis.getPixelForValue(label);
         //   var y = yAxis.bottom;
         //   var width = xAxis.width / labels.length;
         //   var height = yAxis.top - yAxis.bottom;
-
         //   if (index % 2 === 0) {
         //     ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
         //   } else {
         //     ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
         //   }
-
         //   ctx.fillRect(x - width / 2, y, width, height);
         // });
       },
@@ -91,14 +87,14 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
           color: "white",
         },
         grid: {
-          lineWidth: 3,
+          lineWidth: 0.6,
           color: function (context: any) {
             // if (context.tick.value > 25) {
             //   return "#FFFFFF";
             // } else {
             //   return "#00000000";
             // }
-            return "#00000000";
+            return "#000000";
           },
         },
       },
@@ -109,18 +105,20 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
         },
         grid: {
           lineWidth: function (context: any) {
-            if (context.tick.value < Math.min(...data_datasets)) {
-              return 3;
-            } else {
-              return 0.6;
-            }
+            // if (context.tick.value < Math.min(...data_datasets)) {
+            //   return 3;
+            // } else {
+            //   return 0.6;
+            // }
+            return 0.6;
           },
           color: function (context: any) {
-            if (context.tick.value > Math.min(...data_datasets)) {
-              return "#FFFFFF55";
-            } else {
-              return "#E7EBEF";
-            }
+            // if (context.tick.value > Math.min(...data_datasets)) {
+            //   return "#FFFFFF55";
+            // } else {
+            //   return "#E7EBEF";
+            // }
+            return "#000000";
           },
         },
       },
@@ -157,9 +155,9 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
     datasets: [
       {
         data: data_datasets,
-        borderColor: "#2EBD85",
-        backgroundColor: "#2EBD85",
-        fill: true,
+        borderColor: "#FFFFFF",
+        backgroundColor: "#FFFFFF00",
+        fill: false,
         tension: 0.1,
       },
     ],
@@ -168,8 +166,6 @@ const StockChart: FC<StockChartProps> = ({ viewMode, isFullScreen, code }) => {
   const getETFHistoryData = async () => {
     setIsLoading(true);
 
-    // const fetchURL =
-    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=AAPL.US&token=demo&period=d";
     const fetchURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=" +
       code +

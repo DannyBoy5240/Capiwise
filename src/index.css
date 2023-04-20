@@ -70,26 +70,14 @@ body {
 }
 
 .stripes {
-  /* background-image: linear-gradient(
-    90deg,
-    rgba(4, 11, 17, 0.5) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(11, 22, 32, 1) 50%,
-    rgba(4, 11, 17, 0.5) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-size: 300px 10px; */
   background-image: repeating-linear-gradient(
     90deg,
     rgba(4, 11, 17, 0.5),
-    rgba(4, 11, 17, 0.5) 75px,
+    rgba(4, 11, 17, 0.5) 90px,
     rgb(11, 22, 32) 0px,
-    rgb(11, 22, 32) 175px
+    rgb(11, 22, 32) 160px
   );
-  background-size: 200px 50px;
-  background-position: 55px 50px;
+  background-position: 10px;
 }
 
 /* ChartJs Loading Effect */
