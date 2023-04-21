@@ -86,7 +86,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
 
   return (
     <div className="p-6 bg-[#0B1620] text-xs">
-      <div className="border-b pb-6 border-[#252A2D]">
+      <div className="border-b-2 pb-6 border-[#040B11]">
         <div className="flex items-center">
           <div className="text-2xl font-bold">
             {context.Name} ({context.Code})
@@ -112,7 +112,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
         <TotalSummaryInfo stockLiveData={stockLiveData} />
         {/*  */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Price Day Range</div>
               <PriceBarSlider progress={52} />
@@ -179,8 +179,8 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div className="flex flex-row justify-between items-center">
                 <div>Net Assets</div>
                 <div className="text-[10px]">AS OF N/A</div>
@@ -203,8 +203,8 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>NAV (Previous Day)</div>
               <div className="text-white font-bold">N/A</div>
             </div>
@@ -218,8 +218,8 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>30-Day SEC Yeld</div>
               <div className="text-white font-bold">N/A</div>
             </div>
@@ -229,8 +229,8 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#252A2D] text-sm">
-            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
+          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Price Performance (52-Wk)</div>
               <div className="text-white font-bold flex items-center">
                 <span>

@@ -9,7 +9,7 @@ interface StockAnalysisDetailsProps {
 }
 
 const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
-  const [stockLiveData, setStockLiveData] = useState(null);
+  const [stockSummary, setStockSummary] = useState(null);
 
   useEffect(() => {
     getAnalysticInfo();
@@ -17,15 +17,15 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
 
   const getAnalysticInfo = async () => {
     // Get Stock Live Data
-    const stockLiveURL =
-      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
+    const stockURL =
+      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
       code +
-      ".US";
+      ".US&token=demo";
 
-    fetch(stockLiveURL)
+    fetch(stockURL)
       .then((response) => response.json())
       .then((data) => {
-        setStockLiveData(data);
+        setStockSummary(data);
       })
       .catch((error) => console.log(error));
   };
@@ -45,9 +45,9 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             </div>
             <div className="text-sm font-bold">
               US$
-              {stockLiveData
-                ? stockLiveData["high"]
-                  ? stockLiveData["high"]
+              {stockSummary
+                ? stockSummary["Valuation::FairPrice"]
+                  ? stockSummary["Valuation::FairPrice"]
                   : "NA"
                 : "N/A"}
             </div>
@@ -64,9 +64,9 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               <div>Current Price</div>
               <div className="font-bold">
                 US$
-                {stockLiveData
-                  ? stockLiveData["high"]
-                    ? stockLiveData["high"]
+                {stockSummary
+                  ? stockSummary["Valuation::FairPrice"]
+                    ? stockSummary["Valuation::FairPrice"]
                     : "NA"
                   : "N/A"}
               </div>
@@ -102,9 +102,9 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               <div className="pl-2">
                 <span className="text-[#2EBD85]">Below Fair Value: </span>AAPL
                 ($116.36) is trading above our estimate of fair value ($
-                {stockLiveData
-                  ? stockLiveData["high"]
-                    ? stockLiveData["high"]
+                {stockSummary
+                  ? stockSummary["Valuation::FairPrice"]
+                    ? stockSummary["Valuation::FairPrice"]
                     : "NA"
                   : "N/A"}
                 )

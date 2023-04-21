@@ -131,7 +131,7 @@ const StockSummaryChart: FC<StockSummaryChartProps> = ({ code }) => {
         </div>
       </div>
       <div className="border-b border-b-[#252A2D] py-1.5"></div>
-      {/* <div className="flex pt-3.5">
+      <div className="flex pt-3.5">
         <div className="flex items-center">
           <div className="pr-1">
             <svg
@@ -141,7 +141,7 @@ const StockSummaryChart: FC<StockSummaryChartProps> = ({ code }) => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <circle cx="6" cy="6" r="6" fill="#979797" />
+              <circle cx="6" cy="6" r="6" fill="#2EBD85" />
             </svg>
           </div>
           <div className="text-xs">Intrinsic value</div>
@@ -160,20 +160,6 @@ const StockSummaryChart: FC<StockSummaryChartProps> = ({ code }) => {
           </div>
           <div className="text-xs">Margin of safety</div>
         </div>
-      </div> */}
-      <div className="flex items-center pt-3.5">
-        <div className="pr-1">
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="6" cy="6" r="6" fill="#979797" />
-          </svg>
-        </div>
-        <div className="text-xs">Net Asset Value (NAV)</div>
       </div>
     </div>
   );
