@@ -9,7 +9,7 @@ interface GradientSliderProps {
 
 const GradientSlider: FC<GradientSliderProps> = ({ progress, mode }) => {
   return (
-    <div className="relative h-[30px] my-6">
+    <div className={"relative my-6 " + (mode == 3 ? "h-[72px]" : "h-[30px]")}>
       {mode == 1 ? (
         <div className="apporoval-progress1" />
       ) : mode == 2 ? (

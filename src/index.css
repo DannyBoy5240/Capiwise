@@ -45,17 +45,17 @@ body {
 
 /* Classes for Gradient Slider */
 .apporoval-progress1 {
-  background: linear-gradient(90deg, #1ca65e 0%, #f5a623 50.52%, #d0021b 100%);
+  background: linear-gradient(90deg, #1CA65E 16.15%, #F5A623 50%, #D0021B 90.1%);
   border-radius: 50px;
   height: 100%;
 }
 .apporoval-progress2 {
-  background: linear-gradient(90deg, #d0021b 0%, #f5a623 50.52%, #1ca65e 100%);
+  background: linear-gradient(90deg, #1CA65E 16.15%, #F5A623 50%, #D0021B 90.1%);
   border-radius: 50px;
   height: 100%;
 }
 .apporoval-progress3 {
-  background: linear-gradient(90deg, #1ca65e 0%, #f5a623 50.52%, #d0021b 100%);
+  background: linear-gradient(90deg, #1CA65E 16.15%, #F5A623 50%, #D0021B 90.1%);
   border-radius: 10px;
   height: 72px;
 }

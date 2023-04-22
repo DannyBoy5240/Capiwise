@@ -84,6 +84,11 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   };
 
+  const getProgressStatus = (low: any, high: any, current: any): number => {
+    console.log((100 * (current - low)) / (high - low));
+    return (100 * (current - low)) / (high - low);
+  };
+
   return (
     <div className="p-6 bg-[#0B1620] text-xs">
       <div className="border-b-2 pb-6 border-[#040B11]">
@@ -112,7 +117,13 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
           <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Price Day Range</div>
-              <PriceBarSlider progress={52} />
+              <PriceBarSlider
+                progress={getProgressStatus(
+                  stockLiveData ? stockLiveData["low"] : 0,
+                  stockLiveData ? stockLiveData["high"] : 0,
+                  stockLiveData ? stockLiveData["high"] : 0
+                )}
+              />
               <div className="flex justify-between text-white text-xs">
                 <div>
                   {stockLiveData
@@ -136,7 +147,17 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
             </div>
             <div className="grow text-[#979797] pt-1">
               <div>Price 52-Week Range</div>
-              <PriceBarSlider progress={76} />
+              <PriceBarSlider
+                progress={getProgressStatus(
+                  stockSummary
+                    ? stockSummary["Technicals::52WeekLow"]["price"]
+                    : 0,
+                  stockSummary
+                    ? stockSummary["Technicals::52WeekHigh"]["price"]
+                    : 0,
+                  stockLiveData ? stockLiveData["high"] : 0
+                )}
+              />
               <div className="flex justify-between text-white text-xs">
                 <div>
                   {stockSummary
@@ -299,7 +320,11 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <path d="M6 0L11.1962 9H0.803848L6 0Z" fill="#e2433b" />
+                        <path
+                          d="M6 0L11.1962 9H0.803848L6 0Z"
+                          fill="#e2433b"
+                          transform="rotate(180 6 4.5)"
+                        />
                       </svg>
                     )
                   ) : (

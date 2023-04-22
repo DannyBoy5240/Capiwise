@@ -48,6 +48,8 @@ const SummaryChart: FC<SummaryChartProps> = ({
     },
   };
 
+  const tickCount = 4; // total Ticks Count
+
   const options = {
     backgroundColor: "red",
     responsive: true,
@@ -62,27 +64,6 @@ const SummaryChart: FC<SummaryChartProps> = ({
         // usePointStyle: true,
         // pointStyle: "circle",
       },
-      beforeDraw: function (chart: any) {
-        // var ctx = chart.ctx;
-        // var xAxis = chart.scales["x-axis-0"];
-        // var yAxis = chart.scales["y-axis-0"];
-        // var labels = xAxis.ticks.map((tick: any) => tick.label);
-        // labels.forEach(function (label: any, index: any) {
-        //   var x = xAxis.getPixelForValue(label);
-        //   var y = yAxis.bottom;
-        //   var width = xAxis.width / labels.length;
-        //   var height = yAxis.top - yAxis.bottom;
-        //   if (index % 2 === 0) {
-        //     ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
-        //   } else {
-        //     ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
-        //   }
-        //   ctx.fillRect(x - width / 2, y, width, height);
-        // });
-      },
-      // patterns: {
-      //   stripes: pattern,
-      // },
     },
     scales: {
       x: {
@@ -92,37 +73,38 @@ const SummaryChart: FC<SummaryChartProps> = ({
         },
         grid: {
           lineWidth: 0.6,
-          color: function (context: any) {
-            // if (context.tick.value > 25) {
-            //   return "#FFFFFF";
-            // } else {
-            //   return "#00000000";
-            // }
-            return "#000000";
-          },
+          color: "transparent",
         },
       },
       y: {
         position: "right" as positionType,
         ticks: {
           color: "white",
+          maxTicksLimit: 6,
+          // beginAtZero: true,
+          // stepSize: 0.01,
+          callback: function (value: any, index: any, ticks: any) {
+            //   if (index % 100 == 0 || index == ticks.length - 1 || index == 0) {
+            //     console.log("value -> ", value, index, ticks);
+            //     // inefficient, fails with duplicate distances
+            //     // for (const s of Object.values(Map)) {
+            //     //   if (s.distance === value) {
+            //     //     return "s.label";
+            //     //   }
+            //     // }
+            //     return value;
+            //   } else return "";
+            return value.toFixed(2);
+          },
         },
         grid: {
-          lineWidth: function (context: any) {
-            // if (context.tick.value < Math.min(...data_datasets)) {
-            //   return 3;
-            // } else {
-            //   return 0.6;
-            // }
-            return 0.6;
-          },
           color: function (context: any) {
-            // if (context.tick.value > Math.min(...data_datasets)) {
-            //   return "#FFFFFF55";
-            // } else {
-            //   return "#E7EBEF";
-            // }
-            return "#000000";
+            console.log("context", context.tick.value);
+            if (context.index == 5) {
+              return "#FFFFFF";
+            } else {
+              return "#00000000";
+            }
           },
         },
       },
@@ -130,10 +112,10 @@ const SummaryChart: FC<SummaryChartProps> = ({
     elements: {
       point: {
         radius: 0,
-        hoverRadius: 6,
+        hoverRadius: 8,
         pointStyle: "circle",
         backgroundColor: "#FFFFFF",
-        borderWidth: 2,
+        borderWidth: 4,
         borderColor: "#FFFFFF",
       },
     },

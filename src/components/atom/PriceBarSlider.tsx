@@ -9,10 +9,16 @@ interface PriceBarSliderProps {
 const PriceBarSlider: FC<PriceBarSliderProps> = ({ progress }) => {
   return (
     <div className="relative h-[25px] mt-2">
-      <div
-        className="bg-gradient-to-r from-slate-400 via-white to-white rounded-full h-[6px] animate-growLineHFull"
-        style={{ backgroundPosition: "50%" }}
-      />
+      <div className="flex h-[6px] rounded-full">
+        <div className="bg-[#979797]" style={{ width: progress + "%" }}></div>
+        <div
+          className="bg-[#E1E2E4]"
+          style={{
+            backgroundPosition: progress + "%",
+            width: 100 - progress + "%",
+          }}
+        ></div>
+      </div>
       <div
         className="absolute z-5 top-0 bottom-0 border-r-2 border-white w-0 h-[6px] animate-hideLineHFull"
         style={{

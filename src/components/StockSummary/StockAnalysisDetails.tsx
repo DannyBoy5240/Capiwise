@@ -10,6 +10,7 @@ interface StockAnalysisDetailsProps {
 
 const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
   const [stockSummary, setStockSummary] = useState(null);
+  const [stockLiveData, setStockLiveData] = useState(null);
 
   useEffect(() => {
     getAnalysticInfo();
@@ -26,6 +27,19 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
       .then((response) => response.json())
       .then((data) => {
         setStockSummary(data);
+      })
+      .catch((error) => console.log(error));
+
+    // Get Stock Live Data
+    const stockLiveURL =
+      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
+      code +
+      ".US";
+
+    fetch(stockLiveURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setStockLiveData(data);
       })
       .catch((error) => console.log(error));
   };
@@ -59,14 +73,14 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             </div>
           </div>
           <div className="h-[90px] mt-8">
-            <GradientSlider progress={52} mode={3} />
-            <div className="text-xs absolute z-50 mt-[-36px] ml-[20px] pl-[40px] py-1 pr-3 bg-[#0B1620AA]">
+            <GradientSlider progress={50} mode={3} />
+            <div className="text-xs absolute z-50 mt-[-81px] pl-12 py-2 pr-6 bg-[#0B1620AA]">
               <div>Current Price</div>
               <div className="font-bold">
                 US$
-                {stockSummary
-                  ? stockSummary["Valuation::FairPrice"]
-                    ? stockSummary["Valuation::FairPrice"]
+                {stockLiveData
+                  ? stockLiveData["high"]
+                    ? stockLiveData["high"]
                     : "NA"
                   : "N/A"}
               </div>
@@ -101,7 +115,13 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               </div>
               <div className="pl-2">
                 <span className="text-[#2EBD85]">Below Fair Value: </span>AAPL
-                ($116.36) is trading above our estimate of fair value ($
+                ($
+                {stockLiveData
+                  ? stockLiveData["high"]
+                    ? stockLiveData["high"]
+                    : "NA"
+                  : "N/A"}
+                ) is trading above our estimate of fair value ($
                 {stockSummary
                   ? stockSummary["Valuation::FairPrice"]
                     ? stockSummary["Valuation::FairPrice"]

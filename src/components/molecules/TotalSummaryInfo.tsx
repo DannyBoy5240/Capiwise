@@ -23,6 +23,19 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
     return dateString;
   };
 
+  const changeDateFormat = (dateString: string) => {
+    type dateType = "numeric" | "2-digit" | undefined;
+
+    const date = new Date(dateString);
+    const options = {
+      month: "short" as dateType,
+      day: "numeric" as dateType,
+      year: "numeric" as dateType,
+    };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    return formattedDate;
+  };
+
   return (
     <div className="">
       <div
@@ -68,7 +81,7 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
           Data as of{" "}
           {stockLiveData
             ? stockLiveData["timestamp"]
-              ? convertingTimestamp(stockLiveData["timestamp"])
+              ? changeDateFormat(stockLiveData["timestamp"].substr(0, 10))
               : "NA"
             : "N/A"}
         </div>
