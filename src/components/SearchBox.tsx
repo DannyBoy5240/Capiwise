@@ -41,15 +41,18 @@ const SearchBox: FC = () => {
       searchTerm +
       "&limit=10";
 
-    const response = await fetch(fetchURL);
-    const jsonData = await response.json();
-    if (jsonData.length > 0) {
-      setFilteredOptions(jsonData);
-      setShowDropdown(true);
-    } else {
-      setFilteredOptions([]);
-      setShowDropdown(false);
-    }
+    fetch(fetchURL)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length > 0) {
+          setFilteredOptions(data);
+          setShowDropdown(true);
+        } else {
+          setFilteredOptions([]);
+          // setShowDropdown(false);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleSearchFocus = () => {
