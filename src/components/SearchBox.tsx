@@ -67,20 +67,9 @@ const SearchBox: FC = () => {
   };
 
   const handleSearchBlur = (e: any) => {
-    const rect = document
-      .getElementById("symbol-list")
-      ?.getBoundingClientRect();
-    // const isInDivArea =
-    //   rect.left <= event.clientX &&
-    //   event.clientX <= rect.right &&
-    //   rect.top <= event.clientY &&
-    //   event.clientY <= rect.bottom;
-
-    // if (!isInDivArea) {
     setShowDropdown(false);
     document.getElementById("search_box")?.classList.add("bg-transparent");
     document.getElementById("search_box")?.classList.remove("bg-[#0B1620]");
-    // }
   };
 
   const clearSearchBox = () => {
@@ -146,36 +135,43 @@ const SearchBox: FC = () => {
 
         {showDropdown && (
           <div
-            className="absolute z-10 w-full px-1 py-2 mt-1 bg-[#0B1620] rounded-md shadow-lg overflow-auto scrollbar-hide h-48"
+            className={
+              "absolute z-10 w-full px-1 py-2 mt-1 bg-[#0B1620] rounded-md shadow-lg overflow-auto scrollbar-hide " +
+              (filteredOptions.length > 0 ? "h-48" : "h-24")
+            }
             id="symbol-list"
           >
             <div className="text-xl text-left px-3 py-2">Symbols</div>
             <ul>
-              {filteredOptions.map((option: any) => (
-                <li
-                  key={
-                    option.Code + option.Name + option.Type + option.Exchange
-                  }
-                  onClick={() => handleSelect(option)}
-                  className="p-3 cursor-pointer hover:bg-[#040B11]"
-                >
-                  <div className="flex text-sm w-full items-center">
-                    <div className="w-3/12 text-left font-bold">
-                      {option.Code}
+              {filteredOptions.length > 0 ? (
+                filteredOptions.map((option: any) => (
+                  <li
+                    key={
+                      option.Code + option.Name + option.Type + option.Exchange
+                    }
+                    onClick={() => handleSelect(option)}
+                    className="p-3 cursor-pointer hover:bg-[#040B11]"
+                  >
+                    <div className="flex text-sm w-full items-center">
+                      <div className="w-3/12 text-left font-bold">
+                        {option.Code}
+                      </div>
+                      <div className="w-7/12 text-left text-xs font-bold">
+                        {option.Name}
+                      </div>
+                      <div className="w-2/12 text-right text-xs">
+                        {(option.Type === "Common Stock"
+                          ? "Equity"
+                          : option.Type) +
+                          " - " +
+                          option.Exchange}
+                      </div>
                     </div>
-                    <div className="w-7/12 text-left text-xs font-bold">
-                      {option.Name}
-                    </div>
-                    <div className="w-2/12 text-right text-xs">
-                      {(option.Type === "Common Stock"
-                        ? "Equity"
-                        : option.Type) +
-                        " - " +
-                        option.Exchange}
-                    </div>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                ))
+              ) : (
+                <div className="text-sm w-full p-3">No records exists!</div>
+              )}
             </ul>
           </div>
         )}

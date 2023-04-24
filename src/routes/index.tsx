@@ -11,6 +11,8 @@ import SearchStock from "pages/SearchStock";
 import ETFSummary from "pages/ETFSummary";
 import StockSummary from "pages/StockSummary";
 
+import MenuBar from "../components/MenuBar";
+
 const Router: FC = () => {
   return (
     <BrowserRouter>
@@ -53,8 +55,24 @@ const Router: FC = () => {
         <div className="grow flex flex-col justify-center mb-48">
           <Routes>
             <Route path="/" element={<SearchStock />} />
-            <Route path="/etfsummary" element={<ETFSummary />} />
-            <Route path="/stocksummary" element={<StockSummary />} />
+            <Route
+              path="/etfsummary"
+              element={
+                <div>
+                  <MenuBar />
+                  <ETFSummary />
+                </div>
+              }
+            />
+            <Route
+              path="/stocksummary"
+              element={
+                <div>
+                  <MenuBar />
+                  <StockSummary />
+                </div>
+              }
+            />
           </Routes>
         </div>
 
