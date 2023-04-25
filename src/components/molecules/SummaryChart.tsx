@@ -68,8 +68,8 @@ const SummaryChart: FC<SummaryChartProps> = ({
     scales: {
       x: {
         ticks: {
-          maxTicksLimit: 6,
           color: "white",
+          maxTicksLimit: 6,
         },
         grid: {
           lineWidth: 0.6,

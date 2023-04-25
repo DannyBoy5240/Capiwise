@@ -37,54 +37,52 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
   };
 
   return (
-    <div className="">
+    <div
+      className={
+        "flex flex-col border-l-4 pl-4 pr-1" +
+        (stockLiveData && stockLiveData["change"] > 0
+          ? " border-[#2EBD85]"
+          : " border-[#e2433b]")
+      }
+    >
+      <div className="text-2xl font-bold">
+        $
+        {stockLiveData
+          ? stockLiveData["high"]
+            ? stockLiveData["high"]
+            : "NA"
+          : "N/A"}
+      </div>
       <div
         className={
-          "flex flex-col border-l-4 pl-4 pr-1" +
+          "text-xl" +
           (stockLiveData && stockLiveData["change"] > 0
-            ? " border-[#2EBD85]"
-            : " border-[#e2433b]")
+            ? " text-[#2EBD85]"
+            : " text-[#e2433b]")
         }
       >
-        <div className="text-2xl font-bold">
-          $
-          {stockLiveData
-            ? stockLiveData["high"]
-              ? stockLiveData["high"]
-              : "NA"
-            : "N/A"}
-        </div>
-        <div
-          className={
-            "text-xl" +
-            (stockLiveData && stockLiveData["change"] > 0
-              ? " text-[#2EBD85]"
-              : " text-[#e2433b]")
-          }
-        >
-          {stockLiveData
-            ? stockLiveData["change"]
-              ? getNumber(stockLiveData["change"])
-              : "NA"
-            : "N/A"}{" "}
-          (
-          {stockLiveData
-            ? stockLiveData["change_p"]
-              ? getNumber(
-                  parseFloat(stockLiveData["change_p"]).toFixed(2).toString()
-                ) + "%"
-              : "NA"
-            : "N/A"}
-          )
-        </div>
-        <div className="">
-          Data as of{" "}
-          {stockLiveData
-            ? stockLiveData["timestamp"]
-              ? changeDateFormat(stockLiveData["timestamp"].substr(0, 10))
-              : "NA"
-            : "N/A"}
-        </div>
+        {stockLiveData
+          ? stockLiveData["change"]
+            ? getNumber(stockLiveData["change"])
+            : "NA"
+          : "N/A"}{" "}
+        (
+        {stockLiveData
+          ? stockLiveData["change_p"]
+            ? getNumber(
+                parseFloat(stockLiveData["change_p"]).toFixed(2).toString()
+              ) + "%"
+            : "NA"
+          : "N/A"}
+        )
+      </div>
+      <div className="">
+        Data as of{" "}
+        {stockLiveData
+          ? stockLiveData["timestamp"]
+            ? changeDateFormat(stockLiveData["timestamp"].substr(0, 10))
+            : "NA"
+          : "N/A"}
       </div>
     </div>
   );

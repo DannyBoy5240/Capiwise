@@ -110,11 +110,13 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
           Real Time Price. Currency in {context.Currency}
         </div>
       </div>
-      <div className="flex py-6 flex justify-between w-full">
-        <TotalSummaryInfo stockLiveData={stockLiveData} />
+      <div className="flex py-6 w-full justify-between">
+        <div className="w-1/2 md:w-1/4">
+          <TotalSummaryInfo stockLiveData={stockLiveData} />
+        </div>
         {/*  */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+        <div className="w-1/2 md:w-3/4 md:flex">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Price Day Range</div>
               <PriceBarSlider
@@ -197,7 +199,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div className="flex flex-row justify-between items-center">
                 <div>Market Cap</div>
@@ -226,7 +228,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>P/E Ratio (TTM)</div>
               <div className="text-white font-bold">
@@ -251,7 +253,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Ann. Div. / Yield</div>
               <div className="text-white font-bold">
@@ -292,10 +294,16 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>EPS (TTM)</div>
-              <div className="text-white font-bold">N/A</div>
+              <div className="text-white font-bold">
+                {stockSummary
+                  ? stockSummary["Highlights::EarningsShare"]
+                    ? stockSummary["Highlights::EarningsShare"]
+                    : "NA"
+                  : "N/A"}
+              </div>
             </div>
             <div className="grow text-[#979797] pt-1">
               <div>Price Performance (52-Wk)</div>

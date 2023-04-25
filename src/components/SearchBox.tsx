@@ -173,7 +173,7 @@ const SearchBox: FC = () => {
                   </li>
                 ))
               ) : (
-                <div className="text-sm w-full p-3">No records exists!</div>
+                <div className="text-sm w-full p-3 text-left">No results!</div>
               )}
             </ul>
           </div>

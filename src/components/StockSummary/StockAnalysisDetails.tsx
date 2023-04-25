@@ -44,6 +44,20 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
       .catch((error) => console.log(error));
   };
 
+  const getCurrentPriceValuation = () => {
+    if (
+      stockSummary &&
+      stockSummary["Valuation::FairPrice"] &&
+      stockLiveData &&
+      stockLiveData["high"]
+    ) {
+      const fair_price = stockSummary["Valuation::FairPrice"];
+      const current_price = stockLiveData["high"];
+      return ((100 * (current_price - fair_price)) / fair_price).toFixed(2);
+    }
+    return -1;
+  };
+
   return (
     <div className="bg-[#0B1620] text-white md:ml-6 mt-6 md:mt-0 p-5 w-full md:w-1/2 lg:w-1/4 flex flex-col justify-between">
       <div>
@@ -59,17 +73,15 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             </div>
             <div className="text-sm font-bold">
               US$
-              {stockSummary
+              {stockSummary && stockSummary["Valuation::FairPrice"]
                 ? stockSummary["Valuation::FairPrice"]
-                  ? stockSummary["Valuation::FairPrice"]
-                  : "NA"
-                : "N/A"}
+                : "No data available"}
             </div>
           </div>
           <div className="flex justify-between items-center">
             <div className="text-xs">Current Price Valuation</div>
             <div className="text-sm text-[#2EBD85] font-bold">
-              4.4% Unverified
+              {getCurrentPriceValuation()}%
             </div>
           </div>
           <div className="h-[90px] mt-8">
@@ -78,11 +90,9 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               <div>Current Price</div>
               <div className="font-bold">
                 US$
-                {stockLiveData
+                {stockLiveData && stockLiveData["high"]
                   ? stockLiveData["high"]
-                    ? stockLiveData["high"]
-                    : "NA"
-                  : "N/A"}
+                  : "No data available"}
               </div>
             </div>
           </div>

@@ -114,10 +114,12 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
         </div>
       </div>
       <div className="flex py-6 flex justify-between w-full">
-        <TotalSummaryInfo stockLiveData={stockLiveData} />
+        <div className="w-1/2 md:w-1/4">
+          <TotalSummaryInfo stockLiveData={stockLiveData} />
+        </div>
         {/*  */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+        <div className="w-1/2 md:w-3/4 md:flex">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Price Day Range</div>
               <PriceBarSlider
@@ -198,7 +200,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div className="flex flex-row justify-between items-center">
                 <div>Net Assets</div>
@@ -222,7 +224,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>NAV (Previous Day)</div>
               <div className="text-white font-bold">N/A</div>
@@ -237,7 +239,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>30-Day SEC Yeld</div>
               <div className="text-white font-bold">N/A</div>
@@ -248,7 +250,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
             </div>
           </div>
           {/*  */}
-          <div className="flex flex-col border-l px-3 border-[#040B11] text-sm">
+          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
             <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
               <div>Price Performance (52-Wk)</div>
               <div className="text-white font-bold flex items-center">
