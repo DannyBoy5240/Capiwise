@@ -170,7 +170,8 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                 <span className="text-[#2EBD85]">
                   Significantly Below Fair Value:{" "}
                 </span>
-                AAPL is trading above our estimate of fair value of 4.4%.
+                AAPL is trading above our estimate of fair value of{" "}
+                {getCurrentPriceValuation()}%.
               </div>
             </div>
           </div>
