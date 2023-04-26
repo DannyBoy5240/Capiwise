@@ -20,10 +20,10 @@ const Router: FC = () => {
     <BrowserRouter>
       <div className="flex flex-col h-screen">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/test" element={<Home />} />
           <Route
-            path="/search"
+            path="/"
             element={
               <div className="self-end m-4">
                 <MenuProfileSettings />
@@ -58,7 +58,7 @@ const Router: FC = () => {
 
         <div className="grow flex flex-col justify-center mb-48">
           <Routes>
-            <Route path="/search" element={<SearchStock />} />
+            <Route path="/" element={<SearchStock />} />
             <Route
               path="/etfsummary"
               element={
@@ -81,7 +81,7 @@ const Router: FC = () => {
         </div>
 
         <Routes>
-          <Route path="/search" element={<Footer />} />
+          <Route path="/" element={<Footer />} />
           <Route path="/etfsummary" element={<Footer />} />
           <Route path="/stocksummary" element={<Footer />} />
         </Routes>
