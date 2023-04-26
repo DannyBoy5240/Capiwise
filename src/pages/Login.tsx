@@ -97,7 +97,7 @@ const Login: FC = () => {
                 <div className="w-1/3 px-1">
                   <div
                     className="rounded-full bg-transparent border-[#979797] border py-2 flex justify-center"
-                    onClick={() => googleAuth()}
+                    // onClick={() => googleAuth()}
                   >
                     <img src={googleIcon} />
                   </div>
