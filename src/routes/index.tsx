@@ -13,13 +13,17 @@ import StockSummary from "pages/StockSummary";
 
 import MenuBar from "../components/MenuBar";
 
+import Login from "pages/Login";
+
 const Router: FC = () => {
   return (
     <BrowserRouter>
       <div className="flex flex-col h-screen">
         <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/test" element={<Home />} />
           <Route
-            path="/"
+            path="/search"
             element={
               <div className="self-end m-4">
                 <MenuProfileSettings />
@@ -54,7 +58,7 @@ const Router: FC = () => {
 
         <div className="grow flex flex-col justify-center mb-48">
           <Routes>
-            <Route path="/" element={<SearchStock />} />
+            <Route path="/search" element={<SearchStock />} />
             <Route
               path="/etfsummary"
               element={
@@ -76,7 +80,11 @@ const Router: FC = () => {
           </Routes>
         </div>
 
-        <Footer />
+        <Routes>
+          <Route path="/search" element={<Footer />} />
+          <Route path="/etfsummary" element={<Footer />} />
+          <Route path="/stocksummary" element={<Footer />} />
+        </Routes>
       </div>
     </BrowserRouter>
   );

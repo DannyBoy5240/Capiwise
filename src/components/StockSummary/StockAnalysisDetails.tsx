@@ -2,7 +2,10 @@ import { FC } from "react";
 
 import { useState, useEffect } from "react";
 
-import GradientSlider from "../atom/GradientSlider";
+import StockGradientSlider from "../atom/StockGradientSlider";
+
+import correctIcon from "../../assets/correct_ico.svg";
+import wrongIcon from "../../assets/wrong_ico.svg";
 
 interface StockAnalysisDetailsProps {
   code: string;
@@ -11,6 +14,9 @@ interface StockAnalysisDetailsProps {
 const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
   const [stockSummary, setStockSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
+
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const [fairPrice, setFairPrice] = useState(0);
 
   useEffect(() => {
     getAnalysticInfo();
@@ -26,7 +32,9 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
     fetch(stockURL)
       .then((response) => response.json())
       .then((data) => {
-        setStockSummary(data);
+        // setStockSummary(data);
+        if (data && data["Valuation::FairPrice"])
+          setFairPrice(data["Valuation::FairPrice"]);
       })
       .catch((error) => console.log(error));
 
@@ -39,23 +47,16 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
     fetch(stockLiveURL)
       .then((response) => response.json())
       .then((data) => {
-        setStockLiveData(data);
+        // setStockLiveData(data);
+        if (data && data["high"]) setCurrentPrice(data["high"]);
       })
       .catch((error) => console.log(error));
   };
 
   const getCurrentPriceValuation = () => {
-    if (
-      stockSummary &&
-      stockSummary["Valuation::FairPrice"] &&
-      stockLiveData &&
-      stockLiveData["high"]
-    ) {
-      const fair_price = stockSummary["Valuation::FairPrice"];
-      const current_price = stockLiveData["high"];
-      return ((100 * (current_price - fair_price)) / fair_price).toFixed(2);
-    }
-    return -1;
+    if (fairPrice != 0 && currentPrice != 0)
+      return ((100 * (currentPrice - fairPrice)) / fairPrice).toFixed(2);
+    else return -1;
   };
 
   return (
@@ -67,111 +68,126 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
         <div>
           <div className="py-3 text-sm">Share Price vs. Fair Value</div>
           <div className="flex justify-between items-center">
-            <div className="text-xs">
-              <span className="text-[#2EBD85]">{code}</span>
-              <span> Fair Price</span>
+            <div className="text-xs font-bold flex">
+              {currentPrice == 0 || fairPrice == 0 ? (
+                <div className="text-white">{code}</div>
+              ) : currentPrice == fairPrice ? (
+                <div className="text-[#F1B90B]">{code}</div>
+              ) : currentPrice < fairPrice ? (
+                <div className="text-[#2EBD85]">{code}</div>
+              ) : (
+                <div className="text-[#D0021B]">{code}</div>
+              )}
+              <div className="ml-2">Fair Price</div>
             </div>
             <div className="text-sm font-bold">
-              US$
-              {stockSummary && stockSummary["Valuation::FairPrice"]
-                ? stockSummary["Valuation::FairPrice"]
-                : "No data available"}
+              {fairPrice == 0 ? "No data available" : "US$" + fairPrice}
             </div>
           </div>
           <div className="flex justify-between items-center">
             <div className="text-xs">Current Price Valuation</div>
-            <div className="text-sm text-[#2EBD85] font-bold">
-              {getCurrentPriceValuation()}%
+            <div className="text-sm font-bold">
+              {currentPrice == 0 || fairPrice == 0 ? (
+                <div className="text-white">No data available</div>
+              ) : currentPrice == fairPrice ? (
+                <div className="text-[#F1B90B]">Fair Value</div>
+              ) : currentPrice < fairPrice ? (
+                <div className="text-[#2EBD85]">
+                  {getCurrentPriceValuation()}% Undervalued
+                </div>
+              ) : (
+                <div className="text-[#D0021B]">
+                  {getCurrentPriceValuation()}% Overvalued
+                </div>
+              )}
             </div>
           </div>
           <div className="h-[90px] mt-8">
-            <GradientSlider progress={50} mode={3} />
-            <div className="text-xs absolute z-50 mt-[-81px] pl-12 py-2 pr-6 bg-[#0B1620AA]">
+            {fairPrice == 0 || currentPrice == 0 ? (
+              <div className="h-[72px]"></div>
+            ) : (
+              <StockGradientSlider progress={getCurrentPriceValuation()} />
+            )}
+            <div className="text-xs absolute z-50 mt-[-81px] py-2 bg-[#0B1620AA]">
               <div>Current Price</div>
               <div className="font-bold">
                 US$
-                {stockLiveData && stockLiveData["high"]
-                  ? stockLiveData["high"]
-                  : "No data available"}
+                {currentPrice}
               </div>
             </div>
           </div>
           <div className="text-xs">
-            <div className="flex py-1">
-              <div>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clipPath="url(#clip0_1_315)">
-                    <path
-                      d="M10 0C4.48566 0 0 4.48566 0 10C0 15.5143 4.48566 20 10 20C15.5143 20 20 15.5136 20 10C20 4.48645 15.5143 0 10 0ZM10 18.4508C5.34082 18.4508 1.54918 14.66 1.54918 10C1.54918 5.34004 5.34082 1.54918 10 1.54918C14.66 1.54918 18.4508 5.34004 18.4508 10C18.4508 14.66 14.6592 18.4508 10 18.4508Z"
-                      fill="#2EBD85"
-                    />
-                    <path
-                      d="M14.5878 6.52211C14.2725 6.23551 13.7822 6.25797 13.4941 6.57477L8.76902 11.7777L6.48629 9.45707C6.18496 9.15188 5.69543 9.14723 5.39101 9.44778C5.08582 9.74754 5.08117 10.2379 5.38171 10.543L8.23918 13.4478C8.38559 13.5965 8.58387 13.6794 8.79145 13.6794C8.79609 13.6794 8.80152 13.6794 8.80617 13.6802C9.01996 13.6755 9.22137 13.5841 9.36465 13.4261L14.6404 7.61664C14.9278 7.29903 14.9046 6.80949 14.5878 6.52211Z"
-                      fill="#2EBD85"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1_315">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
+            <div className="flex p-1 items-center">
+              <div style={{ transform: "scale(2)" }}>
+                {currentPrice == 0 || fairPrice == 0 ? (
+                  <></>
+                ) : currentPrice < fairPrice ? (
+                  <img src={correctIcon} />
+                ) : currentPrice > fairPrice ? (
+                  <img src={correctIcon} />
+                ) : (
+                  <img src={correctIcon} />
+                )}
               </div>
-              <div className="pl-2">
-                <span className="text-[#2EBD85]">Below Fair Value: </span>AAPL
-                ($
-                {stockLiveData
-                  ? stockLiveData["high"]
-                    ? stockLiveData["high"]
-                    : "NA"
-                  : "N/A"}
-                ) is trading above our estimate of fair value ($
-                {stockSummary
-                  ? stockSummary["Valuation::FairPrice"]
-                    ? stockSummary["Valuation::FairPrice"]
-                    : "NA"
-                  : "N/A"}
-                )
+              <div className="pl-3">
+                {currentPrice == 0 || fairPrice == 0 ? (
+                  <span>
+                    <span className="px-4"></span>
+                    <span>
+                      {code}(${currentPrice}) have no value data available
+                    </span>
+                  </span>
+                ) : (
+                  <span>
+                    {currentPrice < fairPrice ? (
+                      <span className="text-[#2EBD85]">Below Fair Value: </span>
+                    ) : currentPrice > fairPrice ? (
+                      <span className="text-[#D0021B]">Above Fair Value: </span>
+                    ) : (
+                      <span className="text-[#F1B90B]">Fair Value: </span>
+                    )}
+                  </span>
+                )}
+                {code} ($
+                {currentPrice}) is trading above our estimate of fair value ($
+                {fairPrice})
               </div>
             </div>
-            <div className="flex py-1">
-              <div>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clipPath="url(#clip0_1_315)">
-                    <path
-                      d="M10 0C4.48566 0 0 4.48566 0 10C0 15.5143 4.48566 20 10 20C15.5143 20 20 15.5136 20 10C20 4.48645 15.5143 0 10 0ZM10 18.4508C5.34082 18.4508 1.54918 14.66 1.54918 10C1.54918 5.34004 5.34082 1.54918 10 1.54918C14.66 1.54918 18.4508 5.34004 18.4508 10C18.4508 14.66 14.6592 18.4508 10 18.4508Z"
-                      fill="#2EBD85"
-                    />
-                    <path
-                      d="M14.5878 6.52211C14.2725 6.23551 13.7822 6.25797 13.4941 6.57477L8.76902 11.7777L6.48629 9.45707C6.18496 9.15188 5.69543 9.14723 5.39101 9.44778C5.08582 9.74754 5.08117 10.2379 5.38171 10.543L8.23918 13.4478C8.38559 13.5965 8.58387 13.6794 8.79145 13.6794C8.79609 13.6794 8.80152 13.6794 8.80617 13.6802C9.01996 13.6755 9.22137 13.5841 9.36465 13.4261L14.6404 7.61664C14.9278 7.29903 14.9046 6.80949 14.5878 6.52211Z"
-                      fill="#2EBD85"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1_315">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
+            <div className="flex p-1 items-center">
+              <div style={{ transform: "scale(2)" }}>
+                {currentPrice == 0 || fairPrice == 0 ? (
+                  <></>
+                ) : currentPrice < fairPrice ? (
+                  <img src={correctIcon} />
+                ) : currentPrice > fairPrice ? (
+                  <img src={correctIcon} />
+                ) : (
+                  <img src={correctIcon} />
+                )}
               </div>
-              <div className="pl-2">
-                <span className="text-[#2EBD85]">
-                  Significantly Below Fair Value:{" "}
-                </span>
-                AAPL is trading above our estimate of fair value of{" "}
-                {getCurrentPriceValuation()}%.
+              <div className="pl-3">
+                {currentPrice == 0 || fairPrice == 0 ? (
+                  <span>
+                    <span className="px-4"></span>
+                    <span>{code}have no value data available</span>
+                  </span>
+                ) : (
+                  <span>
+                    {currentPrice < fairPrice ? (
+                      <span className="text-[#2EBD85]">Above Fair Value: </span>
+                    ) : currentPrice > fairPrice ? (
+                      <span className="text-[#D0021B]">
+                        Accordingly Above Fair Value:{" "}
+                      </span>
+                    ) : (
+                      <span className="text-[#F1B90B]">
+                        Exactly Fair Value:{" "}
+                      </span>
+                    )}
+                    {code} is trading above our estimate of fair value of{" "}
+                    {getCurrentPriceValuation()}%.
+                  </span>
+                )}
               </div>
             </div>
           </div>

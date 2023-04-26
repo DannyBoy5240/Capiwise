@@ -12,7 +12,7 @@ interface StockPriceSummaryProps {
 
 const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   const [stockSummary, setStockSummary] = useState(null);
-  const [etfSummary, setetfSummary] = useState(null);
+  // const [etfSummary, setetfSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
 
   useEffect(() => {
@@ -34,17 +34,17 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
       .catch((error) => console.log(error));
 
     // Get ETF INFO
-    const etfURL =
-      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/ETFSummary?ticker=" +
-      context.Code +
-      ".US&token=demo";
+    // const etfURL =
+    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/ETFSummary?ticker=" +
+    //   context.Code +
+    //   ".US&token=demo";
 
-    fetch(etfURL)
-      .then((response) => response.json())
-      .then((data) => {
-        setetfSummary(data);
-      })
-      .catch((error) => console.log(error));
+    // fetch(etfURL)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setetfSummary(data);
+    //   })
+    //   .catch((error) => console.log(error));
 
     // Get Stock Live Data
     const stockLiveURL =

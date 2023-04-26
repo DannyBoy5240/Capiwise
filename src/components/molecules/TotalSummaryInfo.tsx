@@ -63,7 +63,9 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
       >
         {stockLiveData
           ? stockLiveData["change"]
-            ? getNumber(stockLiveData["change"])
+            ? getNumber(
+                parseFloat(stockLiveData["change"]).toFixed(2).toString()
+              )
             : "NA"
           : "N/A"}{" "}
         (
