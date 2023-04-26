@@ -8,8 +8,9 @@ interface StockGradientSliderProps {
 
 const StockGradientSlider: FC<StockGradientSliderProps> = ({ progress }) => {
   const status = progress > 0 ? 1 : progress < 0 ? -1 : 0;
-  const boundary =
-    (progress * status >= 100 ? 160 : 100 + progress * status) / 2;
+  // const boundary =
+  //   (progress * status >= 100 ? 160 : 100 + progress * status) / 2;
+  const boundary = status == 1 ? 40 : status == -1 ? 70 : 0;
 
   return (
     <div className="relative my-6 h-[72px]">
@@ -18,7 +19,7 @@ const StockGradientSlider: FC<StockGradientSliderProps> = ({ progress }) => {
           className="h-full rounded-[10px]"
           style={{
             background:
-              "linear-gradient(90deg, #1CA65E 0% #F5A623 50%, #D0021B 95%)",
+              "linear-gradient(90deg, #1ca65e 16%, #f5a623 50%, #d0021b 90.1%)",
           }}
         ></div>
       ) : status == 1 ? (
@@ -26,31 +27,15 @@ const StockGradientSlider: FC<StockGradientSliderProps> = ({ progress }) => {
           className="h-full rounded-[10px]"
           style={{
             background:
-              "linear-gradient(90deg, #1CA65E 0% #F5A623 " +
-              boundary +
-              "%, #D0021B 95%)",
+              "linear-gradient(90deg, #1ca65e 10%, #f5a623 40%, #d0021b 70.1%)",
           }}
         ></div>
       ) : (
-        // <div
-        //   className="h-full rounded-[10px]"
-        //   style={{
-        //     background:
-        //       "linear-gradient(90deg, #1CA65E " +
-        //       boundary / 2 +
-        //       "%, #F5A623 " +
-        //       boundary +
-        //       "%, #D0021B " +
-        //       boundary +
-        //       (90 - boundary) / 2 +
-        //       "%)",
-        //   }}
-        // ></div>
         <div
           className="h-full rounded-[10px]"
           style={{
             background:
-              "linear-gradient(90deg, #1CA65E 0% #F5A623 50%, #D0021B 95%)",
+              "linear-gradient(90deg, #1ca65e 32%, #f5a623 70%, #d0021b 90.1%)",
           }}
         ></div>
       )}

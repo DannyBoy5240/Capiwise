@@ -58,6 +58,12 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
       return ((100 * (currentPrice - fairPrice)) / fairPrice).toFixed(2);
     else return -1;
   };
+  const getCurrentPriceBarWidth = () => {
+    const progress = getCurrentPriceValuation();
+    const boundary = progress > 0 ? 40 : progress < 0 ? 70 : 0;
+    let pos = (boundary * currentPrice) / fairPrice;
+    pos = pos > 100 ? (pos = 90) : pos;
+  };
 
   return (
     <div className="bg-[#0B1620] text-white md:ml-6 mt-6 md:mt-0 p-5 w-full md:w-1/2 lg:w-1/4 flex flex-col justify-between">
@@ -102,13 +108,19 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               )}
             </div>
           </div>
-          <div className="h-[90px] mt-8">
+          <div className="h-[90px] mt-8 relative">
             {fairPrice == 0 || currentPrice == 0 ? (
               <div className="h-[72px]"></div>
             ) : (
               <StockGradientSlider progress={getCurrentPriceValuation()} />
             )}
-            <div className="text-xs absolute z-50 mt-[-81px] py-2 bg-[#0B1620AA]">
+            <div
+              className={
+                "text-xs absolute z-50 mt-[-81px] py-2 bg-[#0B1620AA] w-[" +
+                getCurrentPriceBarWidth() +
+                "%]"
+              }
+            >
               <div>Current Price</div>
               <div className="font-bold">
                 US$

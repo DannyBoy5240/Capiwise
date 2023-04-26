@@ -119,7 +119,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
         },
         grid: {
           lineWidth: 0.6,
-          color: "black",
+          // color: "black",
         },
       },
       y: {
