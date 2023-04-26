@@ -7,8 +7,6 @@ import facebookIcon from "../assets/facebook_ico.svg";
 import appleIcon from "../assets/apple_ico.svg";
 
 const Login: FC = () => {
-  const googleAuth = () => {};
-
   return (
     <div className="w-full h-screen flex">
       {/* Back screen */}

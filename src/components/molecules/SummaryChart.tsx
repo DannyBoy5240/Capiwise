@@ -191,7 +191,6 @@ const SummaryChart: FC<SummaryChartProps> = ({
     else if (viewMode == 6) fperiod = "5y";
     else fperiod = "5y";
 
-    let count = 0;
     fetch(fetchURL + fperiod)
       .then((response) => response.json())
       .then((data) => {
