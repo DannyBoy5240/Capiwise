@@ -8,8 +8,6 @@ interface StockGradientSliderProps {
 
 const StockGradientSlider: FC<StockGradientSliderProps> = ({ progress }) => {
   const status = progress > 0 ? 1 : progress < 0 ? -1 : 0;
-  // const boundary =
-  //   (progress * status >= 100 ? 160 : 100 + progress * status) / 2;
   const boundary = status == 1 ? 40 : status == -1 ? 70 : 0;
 
   return (

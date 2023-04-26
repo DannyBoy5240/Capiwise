@@ -63,6 +63,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
     const boundary = progress > 0 ? 40 : progress < 0 ? 70 : 0;
     let pos = (boundary * currentPrice) / fairPrice;
     pos = pos > 100 ? (pos = 90) : pos;
+    return pos;
   };
 
   return (
@@ -116,10 +117,9 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             )}
             <div
               className={
-                "text-xs absolute z-50 mt-[-81px] py-2 bg-[#0B1620AA] w-[" +
-                getCurrentPriceBarWidth() +
-                "%]"
+                "text-xs absolute z-50 mt-[-81px] py-2 bg-[#0B1620AA] text-right pr-3"
               }
+              style={{ width: getCurrentPriceBarWidth() + "%" }}
             >
               <div>Current Price</div>
               <div className="font-bold">
