@@ -24,7 +24,7 @@ const SignInRoute: React.FunctionComponent = () => (
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/verify" element={<VerifyCode />} />
-      <Route path="/requestcode/:email" element={<RequestCode />} />
+      <Route path="/requestcode" element={<RequestCode />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/" element={<Login />} />
     </Routes>

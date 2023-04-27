@@ -10,8 +10,8 @@ import {
 const userPoolId = "eu-north-1_t8oqWPQtD";
 const clientId = "61q7jmu2t5h45js9vm5r1d7jlh";
 
-console.log(`userpool id=${userPoolId}`);
-console.log(`client id=${clientId}`);
+// console.log(`userpool id=${userPoolId}`);
+// console.log(`client id=${clientId}`);
 
 const poolData = {
   UserPoolId: `${userPoolId}`,
@@ -169,6 +169,7 @@ export async function setAttribute(attribute: any) {
 export async function sendCode(username: string) {
   return new Promise(function (resolve, reject) {
     const cognitoUser = getCognitoUser(username);
+    console.log("cognitoUser", cognitoUser);
 
     if (!cognitoUser) {
       reject(`could not find ${username}`);

@@ -54,7 +54,6 @@ const SignUp: React.FunctionComponent<{}> = () => {
   const authContext = useContext(AuthContext);
 
   const signInClicked = async () => {
-    console.log("signInClicked!");
     try {
       await authContext.signUpWithEmail(username, email, password);
       setCreated(true);
