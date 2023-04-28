@@ -3,7 +3,6 @@ import { FC } from "react";
 import { useEffect, useState } from "react";
 
 import PriceBarSlider from "../atom/PriceBarSlider";
-
 import TotalSummaryInfo from "../molecules/TotalSummaryInfo";
 
 interface StockPriceSummaryProps {
@@ -12,7 +11,6 @@ interface StockPriceSummaryProps {
 
 const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   const [stockSummary, setStockSummary] = useState(null);
-  // const [etfSummary, setetfSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
 
   useEffect(() => {
@@ -32,19 +30,6 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
         setStockSummary(data);
       })
       .catch((error) => console.log(error));
-
-    // Get ETF INFO
-    // const etfURL =
-    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/ETFSummary?ticker=" +
-    //   context.Code +
-    //   ".US&token=demo";
-
-    // fetch(etfURL)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setetfSummary(data);
-    //   })
-    //   .catch((error) => console.log(error));
 
     // Get Stock Live Data
     const stockLiveURL =
@@ -76,12 +61,16 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   const formatBytes = (bytes: number, decimals = 2): string => {
     if (bytes === 0) return "0 B";
 
-    const k = 1024;
+    const k = 1000;
     const dm = decimals < 0 ? 0 : decimals;
     const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const i = Math.floor(Math.log(bytes * 10 ** 6) / Math.log(k));
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+    return (
+      parseFloat(((bytes * 10 ** 6) / Math.pow(k, i)).toFixed(dm)) +
+      " " +
+      sizes[i]
+    );
   };
 
   const getProgressStatus = (low: any, high: any, current: any): number => {
@@ -99,13 +88,13 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
           {stockSummary
             ? stockSummary["General::Exchange"]
               ? stockSummary["General::Exchange"]
-              : "NA"
+              : "N/A"
             : "N/A"}{" "}
           -{" "}
           {stockSummary
             ? stockSummary["General::Exchange"]
               ? stockSummary["General::Exchange"]
-              : "NA"
+              : "N/A"
             : "N/A"}{" "}
           Real Time Price. Currency in {context.Currency}
         </div>
@@ -129,16 +118,16 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               <div className="flex justify-between text-white text-xs">
                 <div>
                   {stockLiveData
-                    ? stockLiveData["low"]
+                    ? stockLiveData["low"] && stockLiveData["low"] != "N/A"
                       ? parseFloat(stockLiveData["low"]).toFixed(2)
-                      : "NA"
+                      : "N/A"
                     : "N/A"}{" "}
                 </div>
                 <div>
                   {stockLiveData
-                    ? stockLiveData["high"]
+                    ? stockLiveData["high"] && stockLiveData["low"] != "N/A"
                       ? parseFloat(stockLiveData["high"]).toFixed(2)
-                      : "NA"
+                      : "N/A"
                     : "N/A"}{" "}
                 </div>
               </div>
@@ -163,36 +152,40 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               <div className="flex justify-between text-white text-xs">
                 <div>
                   {stockSummary
-                    ? stockSummary["Technicals::52WeekLow"]["price"]
+                    ? stockSummary["Technicals::52WeekLow"]["price"] &&
+                      stockSummary["Technicals::52WeekLow"]["price"] != "N/A"
                       ? parseFloat(
                           stockSummary["Technicals::52WeekLow"]["price"]
                         ).toFixed(2)
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </div>
                 <div>
                   {stockSummary
-                    ? stockSummary["Technicals::52WeekHigh"]["price"]
+                    ? stockSummary["Technicals::52WeekHigh"]["price"] &&
+                      stockSummary["Technicals::52WeekHigh"]["price"] != "N/A"
                       ? parseFloat(
                           stockSummary["Technicals::52WeekHigh"]["price"]
                         ).toFixed(2)
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </div>
               </div>
               <div className="flex justify-between text-[10px] text-[#979797]">
                 <div>
                   {stockSummary
-                    ? stockSummary["Technicals::52WeekLow"]["date"]
+                    ? stockSummary["Technicals::52WeekLow"]["date"] &&
+                      stockSummary["Technicals::52WeekLow"]["date"] != "N/A"
                       ? stockSummary["Technicals::52WeekLow"]["date"]
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </div>
                 <div className="pl-2">
                   {stockSummary
-                    ? stockSummary["Technicals::52WeekHigh"]["date"]
+                    ? stockSummary["Technicals::52WeekHigh"]["date"] &&
+                      stockSummary["Technicals::52WeekHigh"]["date"] != "N/A"
                       ? stockSummary["Technicals::52WeekHigh"]["date"]
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </div>
               </div>
@@ -206,11 +199,12 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               </div>
               <div className="text-white font-bold">
                 {stockSummary
-                  ? stockSummary["Highlights::MarketCapitalizationMln"] != ""
+                  ? stockSummary["Highlights::MarketCapitalizationMln"] != "" &&
+                    stockSummary["Highlights::MarketCapitalizationMln"] != "N/A"
                     ? formatBytes(
                         stockSummary["Highlights::MarketCapitalizationMln"]
                       )
-                    : "NA"
+                    : "N/A"
                   : "N/A"}
               </div>
             </div>
@@ -218,11 +212,12 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               <div>Shares Outstanding</div>
               <div className="text-white font-bold">
                 {stockSummary
-                  ? stockSummary["SharesStats::SharesOutstanding"] != ""
+                  ? stockSummary["SharesStats::SharesOutstanding"] != "" &&
+                    stockSummary["SharesStats::SharesOutstanding"] != "N/A"
                     ? formatBytes(
                         stockSummary["SharesStats::SharesOutstanding"]
                       )
-                    : "NA"
+                    : "N/A"
                   : "N/A"}
               </div>
             </div>
@@ -233,9 +228,10 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               <div>P/E Ratio (TTM)</div>
               <div className="text-white font-bold">
                 {stockSummary
-                  ? stockSummary["Highlights::PERatio"]
+                  ? stockSummary["Highlights::PERatio"] &&
+                    stockSummary["Highlights::PERatio"] != "N/A"
                     ? parseFloat(stockSummary["Highlights::PERatio"]).toFixed(2)
-                    : "NA"
+                    : "N/A"
                   : "N/A"}
               </div>
             </div>
@@ -243,11 +239,12 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               <div>PEG Ratio (5-Yr)</div>
               <div className="text-white font-bold">
                 {stockSummary
-                  ? stockSummary["Highlights::PEGRatio"]
+                  ? stockSummary["Highlights::PEGRatio"] &&
+                    stockSummary["Highlights::PEGRatio"] != "N/A"
                     ? parseFloat(stockSummary["Highlights::PEGRatio"]).toFixed(
                         2
                       )
-                    : "NA"
+                    : "N/A"
                   : "N/A"}
               </div>
             </div>
@@ -260,23 +257,31 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                 $
                 {stockSummary
                   ? stockSummary["SplitsDividends::ForwardAnnualDividendRate"]
-                    ? parseFloat(
-                        stockSummary[
-                          "SplitsDividends::ForwardAnnualDividendRate"
-                        ]
-                      ).toFixed(2)
-                    : "NA"
+                    ? stockSummary[
+                        "SplitsDividends::ForwardAnnualDividendRate"
+                      ] != "N/A"
+                      ? parseFloat(
+                          stockSummary[
+                            "SplitsDividends::ForwardAnnualDividendRate"
+                          ]
+                        ).toFixed(2)
+                      : "0"
+                    : "N/A"
                   : "N/A"}{" "}
                 /{" "}
                 {stockSummary
                   ? stockSummary["SplitsDividends::ForwardAnnualDividendYield"]
-                    ? parseFloat(
-                        stockSummary[
-                          "SplitsDividends::ForwardAnnualDividendYield"
-                        ]
-                      ).toFixed(2)
-                    : "NA"
-                  : "N/A"}{" "}
+                    ? stockSummary[
+                        "SplitsDividends::ForwardAnnualDividendYield"
+                      ] != "N/A"
+                      ? parseFloat(
+                          stockSummary[
+                            "SplitsDividends::ForwardAnnualDividendYield"
+                          ]
+                        ).toFixed(2)
+                      : "0.00"
+                    : "N/A"
+                  : "N/A"}
                 %
               </div>
             </div>
@@ -285,10 +290,13 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               <div className="text-white font-bold">
                 {stockSummary
                   ? stockSummary["SplitsDividends::ExDividendDate"]
-                    ? changeDateFormat(
-                        stockSummary["SplitsDividends::ExDividendDate"]
-                      )
-                    : "NA"
+                    ? stockSummary["SplitsDividends::ExDividendDate"] !=
+                      "0000-00-00"
+                      ? changeDateFormat(
+                          stockSummary["SplitsDividends::ExDividendDate"]
+                        )
+                      : "N/A"
+                    : "N/A"
                   : "N/A"}
               </div>
             </div>
@@ -301,7 +309,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                 {stockSummary
                   ? stockSummary["Highlights::EarningsShare"]
                     ? stockSummary["Highlights::EarningsShare"]
-                    : "NA"
+                    : "N/A"
                   : "N/A"}
               </div>
             </div>
@@ -347,9 +355,10 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                   }
                 >
                   {stockSummary
-                    ? stockSummary["Price::Performance"]
+                    ? stockSummary["Price::Performance"] &&
+                      stockSummary["Price::Performance"] != "N/A"
                       ? getNumber(stockSummary["Price::Performance"]) + "%"
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </span>
               </div>
