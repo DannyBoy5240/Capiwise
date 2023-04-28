@@ -397,7 +397,7 @@ export default function Register() {
             }
             type="text"
             placeholder="Password"
-            onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {}}
+            // onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {}}
           />
         </div>
       </div>
