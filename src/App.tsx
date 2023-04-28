@@ -11,10 +11,13 @@ import SignIn from "./routes/auth/signIn";
 import SignUp from "./routes/auth/signUp";
 import VerifyCode from "./routes/auth/verify";
 import RequestCode from "./routes/auth/requestCode";
+import ForgetPassword from "./routes/auth/forgetPassword";
+import ResetPassword from "./routes/auth/resetPassword";
+
 import ForgotPassword from "./routes/auth/forgotPassword";
 import ChangePassword from "./routes/auth/changePassword";
-import Landing from "./routes/landing";
-import Home from "./routes/home";
+
+import SearchStock from "./pages/SearchStock";
 
 import Login from "./routes/auth/login";
 
@@ -24,7 +27,8 @@ const SignInRoute: React.FunctionComponent = () => (
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/verify" element={<VerifyCode />} />
-      <Route path="/requestcode" element={<RequestCode />} />
+      <Route path="/forgetpassword" element={<ForgetPassword />} />
+      <Route path="/resetpassword" element={<ResetPassword />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/" element={<Login />} />
     </Routes>
@@ -35,14 +39,13 @@ const MainRoute: React.FunctionComponent = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/changepassword" element={<ChangePassword />} />
-      <Route path="/" element={<Home />} />
+      <Route path="/search" element={<SearchStock />} />
     </Routes>
   </BrowserRouter>
 );
 
 const App: React.FunctionComponent = () => (
   <>
-    {/* <CssBaseline /> */}
     <AuthProvider>
       <AuthIsSignedIn>
         <MainRoute />

@@ -1,33 +1,11 @@
 import React, { useState, useContext } from "react";
 
-import { useNavigate, useLocation } from "react-router-dom";
-
-import { useValidEmail } from "../../hooks/useAuthHooks";
-import { Email } from "../../components/authComponents";
-
-import { AuthContext } from "../../contexts/authContext";
+import { useNavigate } from "react-router-dom";
 
 import AuthHeader from "./AuthHeader";
 
-export default function RequestCode() {
-  const location = useLocation();
-  const email = location.state?.email;
-
-  const [error, setError] = useState("");
-  const [resetSent, setResetSent] = useState(false);
-
+export default function ForgetPassword() {
   const navigate = useNavigate();
-
-  const authContext = useContext(AuthContext);
-
-  const sendCodeClicked = async () => {
-    try {
-      await authContext.sendCode(email);
-      setResetSent(true);
-    } catch (err) {
-      setError("Unknown user");
-    }
-  };
 
   return (
     <>
@@ -44,10 +22,7 @@ export default function RequestCode() {
           <div className="pt-4">
             <button
               className="bg-[#2EBD85] hover:bg-[#E2E7ED] w-[400px] py-2 rounded-full text-black"
-              onClick={() => {
-                sendCodeClicked();
-                navigate("/forgotpassword");
-              }}
+              onClick={() => navigate("/resetpassword")}
             >
               Reset password
             </button>

@@ -5,17 +5,8 @@ export const Email: React.FunctionComponent<{
   setEmail: (_: string) => void;
 }> = ({ emailIsValid, setEmail }) => {
   return (
-    // <TextField
-    //   fullWidth
-    //   variant="outlined"
-    //   label={emailIsValid ? "Email" : "Invalid Email"}
-    //   error={!emailIsValid}
-    //   onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     setEmail(evt.target.value);
-    //   }}
-    // />
     <input
-      className={`bg-transparent border text-white focus:outline-none rounded-md w-full h-full px-2 ${
+      className={`bg-transparent border border-[#979797] text-white focus:outline-none rounded-md w-full h-full px-2 ${
         !emailIsValid ? "border-red-500" : ""
       }`}
       type="email"
@@ -31,18 +22,8 @@ export const Password: React.FunctionComponent<{
   setPassword: (_: string) => void;
 }> = ({ label, passwordIsValid, setPassword }) => {
   return (
-    // <TextField
-    //   fullWidth
-    //   type="password"
-    //   variant="outlined"
-    //   label={passwordIsValid ? label : "Minimum 8 characters"}
-    //   error={!passwordIsValid}
-    //   onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     setPassword(evt.target.value);
-    //   }}
-    // />
     <input
-      className={`bg-transparent border text-white focus:outline-none rounded-md w-full h-full px-2 ${
+      className={`bg-transparent border border-[#979797] text-white focus:outline-none rounded-md w-full h-full px-2 ${
         !passwordIsValid ? "border-red-500" : ""
       }`}
       type="password"
@@ -57,17 +38,8 @@ export const Username: React.FunctionComponent<{
   setUsername: (_: string) => void;
 }> = ({ usernameIsValid, setUsername }) => {
   return (
-    // <TextField
-    //   fullWidth
-    //   variant="outlined"
-    //   label={usernameIsValid ? "Username" : "Minimum 8 characters"}
-    //   error={!usernameIsValid}
-    //   onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     setUsername(evt.target.value);
-    //   }}
-    // />
     <input
-      className={`bg-transparent border text-white focus:outline-none rounded-md w-full h-full px-2 ${
+      className={`bg-transparent border border-[#979797] text-white focus:outline-none rounded-md w-full h-full px-2 ${
         !usernameIsValid ? "border-red-500" : ""
       }`}
       type="text"
@@ -84,15 +56,6 @@ export const Code: React.FunctionComponent<{
   setCode: (_: string) => void;
 }> = ({ codeIsValid, setCode }) => {
   return (
-    // <TextField
-    //   fullWidth
-    //   variant="outlined"
-    //   label={codeIsValid ? "Code" : "Minimum 6 characters"}
-    //   error={!codeIsValid}
-    //   onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     setCode(evt.target.value);
-    //   }}
-    // />
     <input
       className={`w-full border rounded-md p-2 ${
         !codeIsValid ? "border-red-500" : ""

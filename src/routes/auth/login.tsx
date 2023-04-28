@@ -52,7 +52,7 @@ const login: FC = () => {
   };
 
   const passwordResetClicked = async () => {
-    navigate(`/requestcode`, { state: { email: email } });
+    navigate(`/forgetpassword`, { state: { email: email } });
   };
 
   return (
