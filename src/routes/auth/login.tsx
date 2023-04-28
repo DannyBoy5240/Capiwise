@@ -84,7 +84,7 @@ const login: FC = () => {
                   {/* Sign Up */}
                   <p
                     className="text-center cursor-pointer"
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/register")}
                   >
                     Sign up
                   </p>

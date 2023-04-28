@@ -20,17 +20,19 @@ import ChangePassword from "./routes/auth/changePassword";
 import SearchStock from "./pages/SearchStock";
 
 import Login from "./routes/auth/login";
+import Register from "./routes/auth/register";
 
 const SignInRoute: React.FunctionComponent = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/signin" element={<SignIn />} />
+      {/* <Route path="/signin" element={<SignIn />} /> */}
       <Route path="/signup" element={<SignUp />} />
       <Route path="/verify" element={<VerifyCode />} />
       <Route path="/forgetpassword" element={<ForgetPassword />} />
       <Route path="/resetpassword" element={<ResetPassword />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   </BrowserRouter>
 );

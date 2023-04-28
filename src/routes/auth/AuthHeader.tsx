@@ -13,7 +13,7 @@ const AuthHeader: FC<AuthHeaderInterface> = ({ mode }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full flex justify-center border-b-2">
+    <div className="w-full flex justify-center border-b-2" id="auth-header">
       <div className="flex justify-between w-10/12 lg:w-9/12 p-7">
         <div>
           <img src={Logo} />
@@ -31,7 +31,7 @@ const AuthHeader: FC<AuthHeaderInterface> = ({ mode }) => {
               </div>
               <div className="pl-3">
                 <button
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate("/register")}
                   className="bg-[#2EBD85] hover:bg-[#979797] px-3 py-1 rounded-full"
                 >
                   Register

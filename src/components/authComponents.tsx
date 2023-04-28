@@ -10,7 +10,7 @@ export const Email: React.FunctionComponent<{
         !emailIsValid ? "border-red-500" : ""
       }`}
       type="email"
-      placeholder={emailIsValid ? "Email" : "Invalid Email"}
+      // placeholder={emailIsValid ? "" : "Invalid Email"}
       onChange={(evt) => setEmail(evt.target.value)}
     />
   );
@@ -27,7 +27,7 @@ export const Password: React.FunctionComponent<{
         !passwordIsValid ? "border-red-500" : ""
       }`}
       type="password"
-      placeholder={passwordIsValid ? label : "Minimum 8 characters"}
+      // placeholder={passwordIsValid ? label : "Minimum 8 characters"}
       onChange={(evt) => setPassword(evt.target.value)}
     />
   );
@@ -43,7 +43,7 @@ export const Username: React.FunctionComponent<{
         !usernameIsValid ? "border-red-500" : ""
       }`}
       type="text"
-      placeholder={usernameIsValid ? "Username" : "Minimum 8 characters"}
+      // placeholder={usernameIsValid ? "Username" : "Minimum 8 characters"}
       onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(evt.target.value);
       }}
@@ -61,7 +61,7 @@ export const Code: React.FunctionComponent<{
         !codeIsValid ? "border-red-500" : ""
       }`}
       type="text"
-      placeholder={codeIsValid ? "Code" : "Minimum 6 characters"}
+      // placeholder={codeIsValid ? "Code" : "Minimum 6 characters"}
       onChange={(evt) => setCode(evt.target.value)}
     />
   );

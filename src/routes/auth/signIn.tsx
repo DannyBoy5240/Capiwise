@@ -48,11 +48,9 @@ const SignIn: React.FunctionComponent<{}> = () => {
           console.log("Handle MFA setup here!");
         },
       });
-      // navigate.push("home");
       navigate("/home");
     } catch (err: any) {
       if (err.code === "UserNotConfirmedException") {
-        // navigate.push("verify");
         navigate("/verify");
       } else {
         setError(err.message);
