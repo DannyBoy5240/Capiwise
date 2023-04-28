@@ -41,7 +41,7 @@ const login: FC = () => {
           console.log("Handle MFA setup here!");
         },
       });
-      navigate("/");
+      navigate("/search");
     } catch (err: any) {
       if (err.code === "UserNotConfirmedException") {
         navigate("/verify");
