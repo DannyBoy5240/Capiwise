@@ -102,13 +102,13 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
           {etfSummary
             ? etfSummary["General::Exchange"]
               ? etfSummary["General::Exchange"]
-              : "NA"
+              : "N/A"
             : "N/A"}{" "}
           -{" "}
           {etfSummary
             ? etfSummary["General::Exchange"]
               ? etfSummary["General::Exchange"]
-              : "NA"
+              : "N/A"
             : "N/A"}{" "}
           Real Time Price. Currency in {context.Currency}
         </div>
@@ -132,16 +132,16 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
               <div className="flex justify-between text-white text-xs">
                 <div>
                   {stockLiveData
-                    ? stockLiveData["low"]
+                    ? stockLiveData["low"] && stockLiveData["low"] != "N/A"
                       ? parseFloat(stockLiveData["low"]).toFixed(2)
-                      : "NA"
+                      : "N/A"
                     : "N/A"}{" "}
                 </div>
                 <div>
                   {stockLiveData
-                    ? stockLiveData["high"]
+                    ? stockLiveData["high"] && stockLiveData["high"] != "N/A"
                       ? parseFloat(stockLiveData["high"]).toFixed(2)
-                      : "NA"
+                      : "N/A"
                     : "N/A"}{" "}
                 </div>
               </div>
@@ -164,20 +164,22 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
               <div className="flex justify-between text-white text-xs">
                 <div>
                   {etfSummary
-                    ? etfSummary["Technicals::52WeekLow"]["price"]
+                    ? etfSummary["Technicals::52WeekLow"]["price"] &&
+                      etfSummary["Technicals::52WeekLow"]["price"] != "N/A"
                       ? parseFloat(
                           etfSummary["Technicals::52WeekLow"]["price"]
                         ).toFixed(2)
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </div>
                 <div>
                   {etfSummary
-                    ? etfSummary["Technicals::52WeekHigh"]["price"]
+                    ? etfSummary["Technicals::52WeekHigh"]["price"] &&
+                      etfSummary["Technicals::52WeekHigh"]["price"] != "N/A"
                       ? parseFloat(
                           etfSummary["Technicals::52WeekHigh"]["price"]
                         ).toFixed(2)
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </div>
               </div>
@@ -186,14 +188,14 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
                   {etfSummary
                     ? etfSummary["Technicals::52WeekLow"]["date"]
                       ? etfSummary["Technicals::52WeekLow"]["date"]
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </div>
                 <div className="pl-2">
                   {etfSummary
                     ? etfSummary["Technicals::52WeekHigh"]["date"]
                       ? etfSummary["Technicals::52WeekHigh"]["date"]
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </div>
               </div>
@@ -218,7 +220,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
                 {etfSummary
                   ? etfSummary["SharesStats::SharesOutstanding"]
                     ? etfSummary["SharesStats::SharesOutstanding"]
-                    : "NA"
+                    : "N/A"
                   : "N/A"}
               </div>
             </div>
@@ -295,7 +297,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
                   {etfSummary
                     ? etfSummary["Price::Performance"]
                       ? getNumber(etfSummary["Price::Performance"]) + "%"
-                      : "NA"
+                      : "N/A"
                     : "N/A"}
                 </span>
               </div>
@@ -305,8 +307,10 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
               <div className="text-white font-bold">
                 {etfSummary
                   ? etfSummary["ETF_Data::Inception_Date"]
-                    ? changeDateFormat(etfSummary["ETF_Data::Inception_Date"])
-                    : "NA"
+                    ? etfSummary["ETF_Data::Inception_Date"] != "0000-00-00"
+                      ? changeDateFormat(etfSummary["ETF_Data::Inception_Date"])
+                      : "N/A"
+                    : "N/A"
                   : "N/A"}
               </div>
             </div>

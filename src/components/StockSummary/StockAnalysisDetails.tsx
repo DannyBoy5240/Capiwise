@@ -122,7 +122,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             )}
             <div
               className={
-                "text-xs absolute z-50 mt-[-81px] py-2 bg-[#0B1620AA] text-right pr-3"
+                "text-xs absolute z-50 mt-[-84px] py-2 bg-[#0B1620AA] text-right pr-3"
               }
               style={{ width: getCurrentPriceBarWidth() + "%" }}
             >
@@ -137,13 +137,13 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             <div className="flex p-1 items-center">
               <div style={{ transform: "scale(2)" }}>
                 {currentPrice == 0 || fairPrice == 0 ? (
-                  <img src={nodataIcon} />
+                  <img src={nodataIcon} width={22} height={22} />
                 ) : currentPrice < fairPrice ? (
-                  <img src={undervaluedIcon} />
+                  <img src={undervaluedIcon} width={22} height={22} />
                 ) : currentPrice > fairPrice ? (
-                  <img src={overvaluedIcon} />
+                  <img src={overvaluedIcon} width={22} height={22} />
                 ) : (
-                  <img src={fairvalueIcon} />
+                  <img src={fairvalueIcon} width={22} height={22} />
                 )}
               </div>
               <div className="pl-3">
@@ -173,13 +173,13 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             <div className="flex p-1 items-center">
               <div style={{ transform: "scale(2)" }}>
                 {currentPrice == 0 || fairPrice == 0 ? (
-                  <img src={nodataIcon} />
+                  <img src={nodataIcon} width={22} height={22} />
                 ) : currentPrice < fairPrice ? (
-                  <img src={undervaluedIcon} />
+                  <img src={undervaluedIcon} width={22} height={22} />
                 ) : currentPrice > fairPrice ? (
-                  <img src={overvaluedIcon} />
+                  <img src={overvaluedIcon} width={22} height={22} />
                 ) : (
-                  <img src={fairvalueIcon} />
+                  <img src={fairvalueIcon} width={22} height={22} />
                 )}
               </div>
               <div className="pl-3">

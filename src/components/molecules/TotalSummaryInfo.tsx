@@ -50,7 +50,7 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
         {stockLiveData
           ? stockLiveData["high"]
             ? stockLiveData["high"]
-            : "NA"
+            : "N/A"
           : "N/A"}
       </div>
       <div
@@ -66,7 +66,7 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
             ? getNumber(
                 parseFloat(stockLiveData["change"]).toFixed(2).toString()
               )
-            : "NA"
+            : "N/A"
           : "N/A"}{" "}
         (
         {stockLiveData
@@ -74,7 +74,7 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
             ? getNumber(
                 parseFloat(stockLiveData["change_p"]).toFixed(2).toString()
               ) + "%"
-            : "NA"
+            : "N/A"
           : "N/A"}
         )
       </div>
@@ -83,7 +83,7 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
         {stockLiveData
           ? stockLiveData["timestamp"]
             ? changeDateFormat(stockLiveData["timestamp"].substr(0, 10))
-            : "NA"
+            : "N/A"
           : "N/A"}
       </div>
     </div>

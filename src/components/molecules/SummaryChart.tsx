@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import {
   Chart as ChartJS,
@@ -39,6 +39,9 @@ const SummaryChart: FC<SummaryChartProps> = ({
     Legend,
     annotationPlugin
   );
+
+  const chartRef = useRef(null);
+  const fairARef = useRef(null);
 
   const [labels, setLabels] = useState<string[]>([]);
   const [data_datasets, setData_Datasets] = useState<number[]>([]);
@@ -83,12 +86,14 @@ const SummaryChart: FC<SummaryChartProps> = ({
             borderWidth: 1,
             borderDash: [5, 5],
             label: {
-              display: true,
-              content: fairPrice.toString(),
+              display: false,
+              content: parseFloat(fairPrice.toString()).toFixed(2),
               backgroundColor: "#2EBD85",
               color: "white",
-              xAdjust: 0,
-              // yAdjust: -15,
+              xAdjust: -50,
+              yAdjust: -10,
+              xScaleID: "x-axis-0",
+              yScaleID: "y-axis-0",
             },
           },
           {
@@ -96,16 +101,15 @@ const SummaryChart: FC<SummaryChartProps> = ({
             type: "line" as const, // important, otherwise typescript complains
             mode: "horizontal",
             scaleID: "y",
-            value: (fairPrice * 4) / 5,
+            value: ((parseFloat(fairPrice.toString()) * 4) / 5).toFixed(2),
             borderColor: "#F1B90B",
             borderWidth: 1,
             borderDash: [5, 5],
             label: {
-              display: true,
+              display: false,
               content: ((fairPrice * 4) / 5).toString(),
               backgroundColor: "#F1B90B",
               color: "white",
-              xAdjust: 120,
             },
           },
         ],
@@ -244,13 +248,51 @@ const SummaryChart: FC<SummaryChartProps> = ({
           .then((response) => response.json())
           .then((data) => {
             if (data && data["Valuation::FairPrice"]) {
-              const fair_price = data["Valuation::FairPrice"].toFixed(2);
-              const fair_price_temp = (fair_price * 4) / 5;
-              setChartMin(
-                chart_min > fair_price_temp ? fair_price_temp : chart_min
+              const fair_price = parseFloat(
+                data["Valuation::FairPrice"].toFixed(2)
               );
-              setChartMax(chart_max < fair_price ? fair_price : chart_max);
+              const fair_price_temp = (fair_price * 4) / 5;
+
+              chart_min =
+                chart_min > fair_price_temp ? fair_price_temp : chart_min;
+              setChartMin(chart_min);
+              chart_max = chart_max < fair_price ? fair_price : chart_max;
+              setChartMax(chart_max);
               setFairPrice(fair_price);
+
+              // update custom fair line position
+              if (chartRef.current) {
+                const width = chartRef.current["width"];
+                const height = chartRef.current["height"];
+
+                const deltaY = chart_max - chart_min;
+                const offsetX = width - 40;
+
+                let offsetY = ((fair_price - chart_min) / deltaY) * height + 60;
+                const fairA = document.getElementById("fair1_id");
+                if (fairA) {
+                  fairA.style.display = "flex";
+                  fairA.style.position = "relative";
+                  fairA.style.left = offsetX + "px";
+                  fairA.style.bottom = offsetY + "px";
+                  fairA.innerHTML =
+                    fair_price.toString() +
+                    "<div style='position: absolute;  left: -15px; top: -1px; width: 0px; height: 0px; border-top: 15px solid transparent; border-right: 15px solid #2EBD85; border-bottom: 15px solid transparent;'></div>";
+                }
+
+                offsetY =
+                  ((fair_price_temp - chart_min) / deltaY) * height + 60;
+                const fairB = document.getElementById("fair2_id");
+                if (fairB) {
+                  fairB.style.display = "flex";
+                  fairB.style.position = "relative";
+                  fairB.style.left = offsetX + "px";
+                  fairB.style.bottom = offsetY + "px";
+                  fairB.innerHTML =
+                    fair_price_temp.toString() +
+                    "<div style='position: absolute;  left: -15px; top: -1px; width: 0px; height: 0px; border-top: 15px solid transparent; border-right: 15px solid #FFFFFF; border-bottom: 15px solid transparent;'></div>";
+                }
+              }
             }
           })
           .catch((error) => console.log(error));
@@ -264,18 +306,37 @@ const SummaryChart: FC<SummaryChartProps> = ({
     getETFHistoryData();
   }, [viewMode]);
 
-  return isLoading == false ? (
-    <Line
-      id="chart_id"
-      data={data}
-      options={options}
-      className={isFullScreen ? "" : "stripes"}
-    />
-  ) : (
-    <div className="loading-progress">
-      <div className="spinner"></div>
-      <div className="text">Loading...</div>
-    </div>
+  return (
+    <>
+      {isLoading == false ? (
+        <Line
+          id="chart_id"
+          ref={chartRef}
+          data={data}
+          options={options}
+          className={isFullScreen ? "" : "stripes"}
+        />
+      ) : (
+        <div className="loading-progress">
+          <div className="spinner"></div>
+          <div className="text">Loading...</div>
+        </div>
+      )}
+      <div
+        id="fair1_id"
+        className="bg-[#2EBD85] px-2 py-1 w-[50px] text-sm"
+        style={{ display: "none" }}
+      >
+        N/A
+      </div>
+      <div
+        id="fair2_id"
+        className="bg-[white] px-2 py-1 w-[50px] text-sm text-black"
+        style={{ display: "none" }}
+      >
+        N/A
+      </div>
+    </>
   );
 };
 
