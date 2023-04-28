@@ -107,11 +107,11 @@ const AuthProvider = ({ children }: Props) => {
     email: string,
     password: string
   ) {
-    try {
-      await cognito.signUpUserWithEmail(username, email, password);
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    await cognito.signUpUserWithEmail(username, email, password);
+    // } catch (err) {
+    // throw err;
+    // }
   }
 
   function signOut() {
