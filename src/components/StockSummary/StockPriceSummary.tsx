@@ -3,7 +3,6 @@ import { FC } from "react";
 import { useEffect, useState } from "react";
 
 import PriceBarSlider from "../atom/PriceBarSlider";
-
 import TotalSummaryInfo from "../molecules/TotalSummaryInfo";
 
 interface StockPriceSummaryProps {

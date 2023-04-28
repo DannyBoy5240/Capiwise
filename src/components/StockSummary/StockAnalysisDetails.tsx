@@ -7,6 +7,11 @@ import StockGradientSlider from "../atom/StockGradientSlider";
 import correctIcon from "../../assets/correct_ico.svg";
 import wrongIcon from "../../assets/wrong_ico.svg";
 
+import nodataIcon from "../../assets/no_data_available_icon.svg";
+import overvaluedIcon from "../../assets/overvalued_icon.svg";
+import undervaluedIcon from "../../assets/undervalued_icon.svg";
+import fairvalueIcon from "../../assets/fair_value_icon.svg";
+
 interface StockAnalysisDetailsProps {
   code: string;
 }
@@ -83,7 +88,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               ) : currentPrice < fairPrice ? (
                 <div className="text-[#2EBD85]">{code}</div>
               ) : (
-                <div className="text-[#D0021B]">{code}</div>
+                <div className="text-[#E2433B]">{code}</div>
               )}
               <div className="ml-2">Fair Price</div>
             </div>
@@ -103,7 +108,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                   {getCurrentPriceValuation()}% Undervalued
                 </div>
               ) : (
-                <div className="text-[#D0021B]">
+                <div className="text-[#E2433B]">
                   {getCurrentPriceValuation()}% Overvalued
                 </div>
               )}
@@ -132,13 +137,13 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             <div className="flex p-1 items-center">
               <div style={{ transform: "scale(2)" }}>
                 {currentPrice == 0 || fairPrice == 0 ? (
-                  <></>
+                  <img src={nodataIcon} />
                 ) : currentPrice < fairPrice ? (
-                  <img src={correctIcon} />
+                  <img src={undervaluedIcon} />
                 ) : currentPrice > fairPrice ? (
-                  <img src={correctIcon} />
+                  <img src={overvaluedIcon} />
                 ) : (
-                  <img src={correctIcon} />
+                  <img src={fairvalueIcon} />
                 )}
               </div>
               <div className="pl-3">
@@ -154,7 +159,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                     {currentPrice < fairPrice ? (
                       <span className="text-[#2EBD85]">Below Fair Value: </span>
                     ) : currentPrice > fairPrice ? (
-                      <span className="text-[#D0021B]">Above Fair Value: </span>
+                      <span className="text-[#E2433B]">Above Fair Value: </span>
                     ) : (
                       <span className="text-[#F1B90B]">Fair Value: </span>
                     )}
@@ -168,13 +173,13 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             <div className="flex p-1 items-center">
               <div style={{ transform: "scale(2)" }}>
                 {currentPrice == 0 || fairPrice == 0 ? (
-                  <></>
+                  <img src={nodataIcon} />
                 ) : currentPrice < fairPrice ? (
-                  <img src={correctIcon} />
+                  <img src={undervaluedIcon} />
                 ) : currentPrice > fairPrice ? (
-                  <img src={correctIcon} />
+                  <img src={overvaluedIcon} />
                 ) : (
-                  <img src={correctIcon} />
+                  <img src={fairvalueIcon} />
                 )}
               </div>
               <div className="pl-3">
@@ -188,7 +193,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                     {currentPrice < fairPrice ? (
                       <span className="text-[#2EBD85]">Above Fair Value: </span>
                     ) : currentPrice > fairPrice ? (
-                      <span className="text-[#D0021B]">
+                      <span className="text-[#E2433B]">
                         Accordingly Above Fair Value:{" "}
                       </span>
                     ) : (
