@@ -191,7 +191,9 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                 ) : (
                   <span>
                     {currentPrice < fairPrice ? (
-                      <span className="text-[#2EBD85]">Above Fair Value: </span>
+                      <span className="text-[#2EBD85]">
+                        Significantly Below Fair Value:{" "}
+                      </span>
                     ) : currentPrice > fairPrice ? (
                       <span className="text-[#E2433B]">
                         Accordingly Above Fair Value:{" "}

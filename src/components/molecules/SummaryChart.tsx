@@ -16,19 +16,63 @@ import { Line } from "react-chartjs-2";
 
 import annotationPlugin from "chartjs-plugin-annotation";
 
+import fullScreenIcon from "../../assets/fullscreen_ico.svg";
+
 interface SummaryChartProps {
-  viewMode: number;
-  isFullScreen: boolean;
+  // viewMode: number;
+  // isFullScreen: boolean;
   code: string;
 }
 
 type positionType = "left" | "center" | "top" | "right" | "bottom" | undefined;
 
 const SummaryChart: FC<SummaryChartProps> = ({
-  viewMode,
-  isFullScreen,
+  // viewMode,
+  // isFullScreen,
   code,
 }) => {
+  // Chart View Mode
+  const [viewMode, setViewMode] = useState(3);
+
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  useEffect(() => {
+    const obj = document
+      ?.getElementById("modeGroup")
+      ?.getElementsByTagName("button");
+    if (obj && obj[2] && !obj[2].classList.contains("border-b-2")) {
+      obj[2].classList.add("border-b-2");
+      obj[2].classList.remove("border-b-0");
+    }
+  }, []);
+
+  const handleToogleScreen = () => {
+    console.log("fullscreen mode");
+    setIsFullScreen(!isFullScreen);
+    updateChartInterface();
+  };
+  const handleToogleDownScreen = () => {
+    console.log("save mode");
+    setIsFullScreen(false);
+    updateChartInterface();
+  };
+
+  const handleViewMode = (event: any, mode: number) => {
+    setViewMode(mode);
+
+    // remove all border style in parent element
+    const obj = document
+      ?.getElementById("modeGroup")
+      ?.getElementsByTagName("button");
+    for (let i = 0; obj && i < obj.length; i++) {
+      obj[i].classList.remove("border-b-2");
+      obj[i].classList.add("border-b-0");
+    }
+
+    event.target.classList.add("border-b-2");
+    event.target.classList.remove("border-b-0");
+  };
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -41,7 +85,6 @@ const SummaryChart: FC<SummaryChartProps> = ({
   );
 
   const chartRef = useRef(null);
-  const fairARef = useRef(null);
 
   const [labels, setLabels] = useState<string[]>([]);
   const [data_datasets, setData_Datasets] = useState<number[]>([]);
@@ -81,19 +124,17 @@ const SummaryChart: FC<SummaryChartProps> = ({
             type: "line" as const, // important, otherwise typescript complains
             mode: "horizontal",
             scaleID: "y",
-            value: fairPrice,
+            value: parseFloat(fairPrice.toString()).toFixed(2),
             borderColor: "#2EBD85",
             borderWidth: 1,
             borderDash: [5, 5],
             label: {
-              display: false,
+              display: true,
               content: parseFloat(fairPrice.toString()).toFixed(2),
               backgroundColor: "#2EBD85",
               color: "white",
-              xAdjust: -50,
-              yAdjust: -10,
-              xScaleID: "x-axis-0",
-              yScaleID: "y-axis-0",
+              xAdjust: -80,
+              // xScaleID: "x-axis-0",
             },
           },
           {
@@ -106,10 +147,13 @@ const SummaryChart: FC<SummaryChartProps> = ({
             borderWidth: 1,
             borderDash: [5, 5],
             label: {
-              display: false,
-              content: ((fairPrice * 4) / 5).toString(),
+              display: true,
+              content: parseFloat(
+                ((parseFloat(fairPrice.toString()) * 4) / 5).toString()
+              ).toFixed(2),
               backgroundColor: "#F1B90B",
               color: "white",
+              xAdjust: 80,
             },
           },
         ],
@@ -263,12 +307,22 @@ const SummaryChart: FC<SummaryChartProps> = ({
               // update custom fair line position
               if (chartRef.current) {
                 const width = chartRef.current["width"];
-                const height = chartRef.current["height"];
+                const height = chartRef.current["scales"]["y"]["height"];
 
-                const deltaY = chart_max - chart_min;
-                const offsetX = width - 40;
+                const maxY = chartRef.current["scales"]["y"]["max"];
+                const minY = chartRef.current["scales"]["y"]["min"];
+                const deltaY = maxY - minY;
 
-                let offsetY = ((fair_price - chart_min) / deltaY) * height + 60;
+                console.log("deltaY -> ", deltaY);
+
+                const offsetX = width - 45;
+                const offsetY =
+                  (height * (nums[count - 1] - minY)) / deltaY +
+                  (chartRef.current["height"] -
+                    chartRef.current["chartArea"]["height"]);
+
+                console.log("offsetY ->", offsetY);
+
                 const fairA = document.getElementById("fair1_id");
                 if (fairA) {
                   fairA.style.display = "flex";
@@ -276,21 +330,8 @@ const SummaryChart: FC<SummaryChartProps> = ({
                   fairA.style.left = offsetX + "px";
                   fairA.style.bottom = offsetY + "px";
                   fairA.innerHTML =
-                    fair_price.toString() +
-                    "<div style='position: absolute;  left: -15px; top: -1px; width: 0px; height: 0px; border-top: 15px solid transparent; border-right: 15px solid #2EBD85; border-bottom: 15px solid transparent;'></div>";
-                }
-
-                offsetY =
-                  ((fair_price_temp - chart_min) / deltaY) * height + 60;
-                const fairB = document.getElementById("fair2_id");
-                if (fairB) {
-                  fairB.style.display = "flex";
-                  fairB.style.position = "relative";
-                  fairB.style.left = offsetX + "px";
-                  fairB.style.bottom = offsetY + "px";
-                  fairB.innerHTML =
-                    fair_price_temp.toString() +
-                    "<div style='position: absolute;  left: -15px; top: -1px; width: 0px; height: 0px; border-top: 15px solid transparent; border-right: 15px solid #FFFFFF; border-bottom: 15px solid transparent;'></div>";
+                    parseFloat(nums[count - 1].toString()).toFixed(2) +
+                    "<div style='position: absolute;  left: -10px; top: 0px; width: 0px; height: 0px; border-top: 12px solid transparent; border-right: 10px solid white; border-bottom: 12px solid transparent;'></div>";
                 }
               }
             }
@@ -304,39 +345,163 @@ const SummaryChart: FC<SummaryChartProps> = ({
 
   useEffect(() => {
     getETFHistoryData();
-  }, [viewMode]);
+  }, [viewMode, isFullScreen]);
+
+  useEffect(() => {
+    console.log("refreshed!!!");
+    if (data_datasets.length > 0 && chartRef) updateChartInterface();
+  }, [data_datasets, options, chartRef, isFullScreen]);
+
+  const updateChartInterface = () => {
+    console.log("updateChartInterface function called!");
+    if (chartRef.current) {
+      const width = chartRef.current["width"];
+      const height = chartRef.current["scales"]["y"]["height"];
+
+      const maxY = chartRef.current["scales"]["y"]["max"];
+      const minY = chartRef.current["scales"]["y"]["min"];
+      const deltaY = maxY - minY;
+
+      console.log("deltaY -> ", deltaY);
+
+      const offsetX = width - 45;
+      const offsetY =
+        (height * (data_datasets[posCount - 1] - minY)) / deltaY +
+        (chartRef.current["height"] - chartRef.current["chartArea"]["height"]) +
+        2;
+
+      console.log("offsetY ->", offsetY);
+
+      const fairA = document.getElementById("fair1_id");
+      if (fairA) {
+        fairA.style.display = "flex";
+        fairA.style.position = "relative";
+        fairA.style.left = offsetX + "px";
+        fairA.style.bottom = offsetY + "px";
+        fairA.innerHTML =
+          parseFloat(data_datasets[posCount - 1].toString()).toFixed(2) +
+          "<div style='position: absolute;  left: -10px; top: 0px; width: 0px; height: 0px; border-top: 12px solid transparent; border-right: 10px solid white; border-bottom: 12px solid transparent;'></div>";
+      }
+    }
+  };
 
   return (
-    <>
-      {isLoading == false ? (
-        <Line
-          id="chart_id"
-          ref={chartRef}
-          data={data}
-          options={options}
-          className={isFullScreen ? "" : "stripes"}
-        />
-      ) : (
-        <div className="loading-progress">
-          <div className="spinner"></div>
-          <div className="text">Loading...</div>
+    <div
+      className={
+        isFullScreen ? "full-screen" : "p-6 bg-[#0B1620] w-full md:w-1/2"
+      }
+    >
+      <div className="flex justify-between items-center">
+        <div className="text-sm mb-2" id="modeGroup">
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={(e) => handleViewMode(e, 1)}
+          >
+            1D
+          </button>
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={(e) => handleViewMode(e, 2)}
+          >
+            1W
+          </button>
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={(e) => handleViewMode(e, 3)}
+          >
+            1M
+          </button>
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={(e) => handleViewMode(e, 4)}
+          >
+            6M
+          </button>
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={(e) => handleViewMode(e, 5)}
+          >
+            1Y
+          </button>
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={(e) => handleViewMode(e, 6)}
+          >
+            5Y
+          </button>
+          <button
+            className="text-white hover:text-[#2EBD85] border-b-0 hover:border-b-2 border-[#2EBD85] py-1 px-1.5 font-bold mx-1.5"
+            onClick={(e) => handleViewMode(e, 7)}
+          >
+            MAX
+          </button>
         </div>
-      )}
-      <div
-        id="fair1_id"
-        className="bg-[#2EBD85] px-2 py-1 w-[50px] text-sm"
-        style={{ display: "none" }}
-      >
-        N/A
+        <div className="flex" onClick={() => handleToogleScreen()}>
+          <div>
+            <img src={fullScreenIcon} />
+          </div>
+          <div className="pl-3 text-sm font-bold">
+            {!isFullScreen ? "Full Screen" : "Save Mode Screen"}
+          </div>
+        </div>
       </div>
-      <div
-        id="fair2_id"
-        className="bg-[white] px-2 py-1 w-[50px] text-sm text-black"
-        style={{ display: "none" }}
-      >
-        N/A
+      <div className={`${isFullScreen ? "full-screen-chart" : ""}`}>
+        <>
+          {isLoading == false ? (
+            <Line
+              id="chart_id"
+              ref={chartRef}
+              data={data}
+              options={options}
+              className={isFullScreen ? "" : "stripes"}
+            />
+          ) : (
+            <div className="loading-progress">
+              <div className="spinner"></div>
+              <div className="text">Loading...</div>
+            </div>
+          )}
+          <div
+            id="fair1_id"
+            className="bg-[white] pl-0 py-1 w-10 text-xs font-bold text-black"
+            style={{ display: "none" }}
+          >
+            N/A
+          </div>
+        </>
       </div>
-    </>
+      <div className="border-b border-b-[#252A2D] py-1.5"></div>
+      <div className="flex pt-3.5">
+        <div className="flex items-center">
+          <div className="pr-1">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="6" cy="6" r="6" fill="#2EBD85" />
+            </svg>
+          </div>
+          <div className="text-xs">Intrinsic value</div>
+        </div>
+        <div className="flex items-center px-3">
+          <div className="pr-1">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="6" cy="6" r="6" fill="#F1B90B" />
+            </svg>
+          </div>
+          <div className="text-xs">Margin of safety</div>
+        </div>
+      </div>
+    </div>
   );
 };
 

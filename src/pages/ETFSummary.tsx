@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import ETFPriceSummary from "../components/ETFSummary/ETFPriceSummary";
 import AnalysisDetails from "../components/ETFSummary/AnalysisDetails";
-import ETFSummaryChart from "../components/ETFSummary/ETFSummaryChart";
+import SummaryChart from "../components/molecules/SummaryChart";
 
 const ETFSummary = () => {
   const location = useLocation();
@@ -14,7 +14,7 @@ const ETFSummary = () => {
     <div className="p-6">
       <ETFPriceSummary context={etfContext} />
       <div className="py-6 flex flex-col md:flex-row">
-        <ETFSummaryChart code={etfContext.Code} />
+        <SummaryChart code={etfContext.Code} />
         <AnalysisDetails code={etfContext.Code} />
       </div>
     </div>
