@@ -13,7 +13,7 @@ export default function ForgetPassword() {
       <div className="w-full flex justify-center">
         <div className="text-center w-[400px]">
           <div className="text-2xl text-white font-bold pt-11">
-            I've forgotten my password
+            I‘ve forgotten my password
           </div>
           <div className="text-sm text-[#979797] pt-3.5">
             If you‘re logged out and can‘t remember your passwors, we can send

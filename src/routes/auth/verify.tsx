@@ -23,7 +23,7 @@ import { AuthContext } from "../../contexts/authContext";
 //   },
 // })
 
-const VerifyCode: React.FunctionComponent<{}> = ({}) => {
+const VerifyCode: React.FunctionComponent = () => {
   // const classes = useStyles()
 
   const { username, setUsername, usernameIsValid } = useValidUsername("");
