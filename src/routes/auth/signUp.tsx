@@ -24,7 +24,7 @@ import { AuthContext } from "../../contexts/authContext";
 //   },
 // })
 
-const SignUp: React.FunctionComponent<{}> = ({}) => {
+const SignUp: React.FunctionComponent = () => {
   // const classes = useStyles()
 
   const { email, setEmail, emailIsValid } = useValidEmail("");

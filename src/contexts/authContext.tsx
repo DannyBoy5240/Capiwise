@@ -120,46 +120,46 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   async function verifyCode(username: string, code: string) {
-    try {
-      await cognito.verifyCode(username, code);
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    await cognito.verifyCode(username, code);
+    // } catch (err) {
+    // throw err;
+    // }
   }
 
   async function getSession() {
-    try {
-      const session = await cognito.getSession();
-      return session;
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    const session = await cognito.getSession();
+    return session;
+    // } catch (err) {
+    // throw err;
+    // }
   }
 
   async function getAttributes() {
-    try {
-      const attr = await cognito.getAttributes();
-      return attr;
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    const attr = await cognito.getAttributes();
+    return attr;
+    // } catch (err) {
+    // throw err;
+    // }
   }
 
   async function setAttribute(attr: any) {
-    try {
-      const res = await cognito.setAttribute(attr);
-      return res;
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    const res = await cognito.setAttribute(attr);
+    return res;
+    // } catch (err) {
+    // throw err;
+    // }
   }
 
   async function sendCode(username: string) {
-    try {
-      await cognito.sendCode(username);
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    await cognito.sendCode(username);
+    // } catch (err) {
+    // throw err;
+    // }
   }
 
   async function forgotPassword(
@@ -167,19 +167,19 @@ const AuthProvider = ({ children }: Props) => {
     code: string,
     password: string
   ) {
-    try {
-      await cognito.forgotPassword(username, code, password);
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    await cognito.forgotPassword(username, code, password);
+    // } catch (err) {
+    // throw err;
+    // }
   }
 
   async function changePassword(oldPassword: string, newPassword: string) {
-    try {
-      await cognito.changePassword(oldPassword, newPassword);
-    } catch (err) {
-      throw err;
-    }
+    // try {
+    await cognito.changePassword(oldPassword, newPassword);
+    // } catch (err) {
+    // throw err;
+    // }
   }
 
   const state: IAuth = {
