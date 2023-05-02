@@ -11,6 +11,8 @@ interface AnalysisDetailsProps {
 const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
   const [chanceValue, setChanceValue] = useState(0);
   const [riskValue, setRiskValue] = useState(0);
+  const [idxChanceValue, setIdxChanceValue] = useState(0);
+  const [idxRiskValue, setIdxRiskValue] = useState(0);
 
   useEffect(() => {
     getAnalysticInfo();
@@ -31,6 +33,10 @@ const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
             ? data["Valuation::Risk"]
             : -data["Valuation::Risk"]
         );
+        setIdxChanceValue(data["Index::Chance"]);
+        setIdxRiskValue(
+          data["Index::Risk"] > 0 ? data["Index::Risk"] : -data["Index::Risk"]
+        );
       })
       .catch((error) => console.log(error));
   };
@@ -43,11 +49,21 @@ const AnalysisDetails: FC<AnalysisDetailsProps> = ({ code }) => {
           <div className="font-sm py-3 border-t-2 border-t-[#040B11] mt-2">
             Risk vs. Index
           </div>
-          <GradientSlider progress={chanceValue} mode={1} />
+          <GradientSlider
+            progress={riskValue}
+            progressIdx={idxRiskValue}
+            code={code}
+            mode={1}
+          />
           <div className="font-medium py-3 border-t-2 border-t-[#040B11] mt-2">
             Return vs. Index
           </div>
-          <GradientSlider progress={riskValue} mode={2} />
+          <GradientSlider
+            progress={chanceValue}
+            progressIdx={idxChanceValue}
+            code={code}
+            mode={2}
+          />
           <div className="text-xs">
             <div className="flex py-1">
               <div>

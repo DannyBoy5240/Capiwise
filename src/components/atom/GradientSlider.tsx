@@ -4,12 +4,19 @@ import { useEffect } from "react";
 
 interface GradientSliderProps {
   progress: number;
+  progressIdx: number;
+  code: string;
   mode: number;
 }
 
-const GradientSlider: FC<GradientSliderProps> = ({ progress, mode }) => {
+const GradientSlider: FC<GradientSliderProps> = ({
+  progress,
+  progressIdx,
+  code,
+  mode,
+}) => {
   return (
-    <div className={"relative my-6 " + (mode == 3 ? "h-[72px]" : "h-[30px]")}>
+    <div className={"relative my-6 " + (mode == 3 ? "h-[72px]" : "h-[32px]")}>
       {mode == 1 ? (
         <div className="apporoval-progress1" />
       ) : mode == 2 ? (
@@ -30,37 +37,26 @@ const GradientSlider: FC<GradientSliderProps> = ({ progress, mode }) => {
         <div></div>
       )}
       <div
-        className={"vertical-line" + (mode == 3 ? " h-[72px]" : "")}
+        className="vertical-line"
         style={{
-          left: progress + "%",
+          left: progressIdx + "%",
+          borderRight: "3px solid #20A5F1",
         }}
       >
-        <div className="absolute top-[-30px] left-[-6px] w-[200px]">
-          {mode == 1 || mode == 2 ? (
-            <div className="text-xs text-[#979797] relative left-[-36px]">
-              {progress > 50 ? "Above" : progress == 50 ? "Same as" : "Below"}{" "}
-              Average
-            </div>
-          ) : (
-            <div className="text-xs text-[#979797] relative left-[-18px]">
-              {/* {progress > 50 ? "Above" : progress == 50 ? "Fair" : "Below"}{" "} */}
-              Fair Price
-            </div>
-          )}
-          <div>
-            <svg
-              width="14"
-              height="12"
-              viewBox="0 0 14 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7 12L0.0717956 -3.51391e-07L13.9282 8.59975e-07L7 12Z"
-                fill="#979797"
-              />
-            </svg>
-          </div>
+        <div className="absolute top-[-16px] w-[200px] text-[#20A5F1] text-[10px]">
+          Index
+        </div>
+      </div>
+      <div
+        className="vertical-line"
+        style={{
+          left: progress + "%",
+          height: 40,
+          top: -8,
+        }}
+      >
+        <div className="absolute top-[-18px] left-[-6px] w-[200px] text-white text-[10px]">
+          {code}
         </div>
       </div>
       {mode == 1 || mode == 2 ? (
