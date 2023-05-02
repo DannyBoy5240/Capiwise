@@ -35,10 +35,6 @@ import Logo from "./assets/logo.svg";
 
 import TestPage from "./pages/TestPage";
 
-import { useEffect, useState } from "react";
-import { Amplify, Auth, Hub } from "aws-amplify";
-import awsConfig from "./aws-exports";
-
 const SignInRoute: React.FunctionComponent = () => (
   <BrowserRouter>
     <Routes>

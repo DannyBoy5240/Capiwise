@@ -11,7 +11,6 @@ interface ETFPriceSummaryProps {
 }
 
 const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
-  const [stockSummary, setStockSummary] = useState(null);
   const [etfSummary, setetfSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
 
@@ -20,19 +19,6 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
   }, []);
 
   const getSummaryInfo = async () => {
-    // Get Stock INFO
-    const stockURL =
-      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
-      context.Code +
-      ".US&token=demo";
-
-    fetch(stockURL)
-      .then((response) => response.json())
-      .then((data) => {
-        setStockSummary(data);
-      })
-      .catch((error) => console.log(error));
-
     // Get ETF INFO
     const etfURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/ETFSummary?ticker=" +
