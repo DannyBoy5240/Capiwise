@@ -59,11 +59,14 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   };
 
   const formatBytes = (bytes: number, decimals = 2): string => {
+    console.log("bytes", bytes);
+
     if (bytes === 0) return "0 B";
 
     const k = 1000;
     const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    // const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    const sizes = ["", "", "M", "B", "T", "Q"];
     const i = Math.floor(Math.log(bytes * 10 ** 6) / Math.log(k));
 
     return (
