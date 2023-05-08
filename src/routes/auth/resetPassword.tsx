@@ -14,7 +14,7 @@ import Sender from "../../assets/sender.svg";
 
 export default function ResetPassword() {
   const location = useLocation();
-  const rpemail = location.state?.email;
+  // const rpemail = location.state?.email;
 
   const [error, setError] = useState("");
   const [resetSent, setResetSent] = useState(false);
@@ -27,7 +27,7 @@ export default function ResetPassword() {
 
   const sendCodeClicked = async () => {
     try {
-      await authContext.sendCode(rpemail);
+      await authContext.sendCode(email.replace(".", "s").replace("@", "s"));
       setResetSent(true);
     } catch (err) {
       setError("Unknown user");
@@ -57,6 +57,7 @@ export default function ResetPassword() {
           className="bg-[#2EBD85] hover:bg-[#E2E7ED] w-[400px] py-2 rounded-full text-black"
           disabled={!emailIsValid || email.length === 0}
           onClick={() => {
+            sendCodeClicked();
             setResetSent(true);
           }}
         >

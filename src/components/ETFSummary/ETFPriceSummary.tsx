@@ -113,7 +113,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
                 progress={getProgressStatus(
                   stockLiveData ? stockLiveData["low"] : 0,
                   stockLiveData ? stockLiveData["high"] : 0,
-                  stockLiveData ? stockLiveData["high"] : 0
+                  stockLiveData ? stockLiveData["close"] : 0
                 )}
               />
               <div className="flex justify-between text-white text-xs">

@@ -155,11 +155,7 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   async function sendCode(username: string) {
-    // try {
     await cognito.sendCode(username);
-    // } catch (err) {
-    // throw err;
-    // }
   }
 
   async function forgotPassword(

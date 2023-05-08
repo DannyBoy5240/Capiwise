@@ -48,8 +48,8 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
       <div className="text-2xl font-bold">
         $
         {stockLiveData
-          ? stockLiveData["high"]
-            ? stockLiveData["high"]
+          ? stockLiveData["close"]
+            ? stockLiveData["close"]
             : "N/A"
           : "N/A"}
       </div>
