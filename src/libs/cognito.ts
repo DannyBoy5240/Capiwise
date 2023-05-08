@@ -10,9 +10,6 @@ import {
 const userPoolId = "eu-north-1_t8oqWPQtD";
 const clientId = "61q7jmu2t5h45js9vm5r1d7jlh";
 
-// console.log(`userpool id=${userPoolId}`);
-// console.log(`client id=${clientId}`);
-
 const poolData = {
   UserPoolId: `${userPoolId}`,
   ClientId: `${clientId}`,

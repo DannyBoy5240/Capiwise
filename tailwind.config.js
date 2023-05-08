@@ -8,8 +8,9 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ["Roboto", "sans-serif"],
+      roboto: ["Roboto", "sans-serif"],
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require("tailwind-gradient-mask-image")],
 };

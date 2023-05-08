@@ -222,6 +222,14 @@ const SummaryChart: FC<SummaryChartProps> = ({
     ],
   };
 
+  const changeDateFormat = (date: string) => {
+    const dateStr: string = date;
+    const dateArr: string[] = dateStr.split("-");
+    const formattedDate: string =
+      dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+    return formattedDate;
+  };
+
   const getETFHistoryData = async () => {
     setIsLoading(true);
 
@@ -270,6 +278,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
             tlabels[i] = `${date.getFullYear()}-${(date.getMonth() + 1)
               .toString()
               .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+            tlabels[i] = changeDateFormat(tlabels[i]);
           } else {
             tlabels[i] = `${date.getHours().toString().padStart(2, "0")}:${date
               .getMinutes()
@@ -484,7 +493,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
               <circle cx="6" cy="6" r="6" fill="#2EBD85" />
             </svg>
           </div>
-          <div className="text-xs">Intrinsic value</div>
+          <div className="text-xs">Net Asset Value(NAV)</div>
         </div>
         <div className="flex items-center px-3">
           <div className="pr-1">
@@ -498,7 +507,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
               <circle cx="6" cy="6" r="6" fill="#F1B90B" />
             </svg>
           </div>
-          <div className="text-xs">Margin of safety</div>
+          <div className="text-xs">Discount to NAV</div>
         </div>
       </div>
     </div>

@@ -54,7 +54,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
     const dateStr: string = date;
     const dateArr: string[] = dateStr.split("-");
     const formattedDate: string =
-      dateArr[1] + "/" + dateArr[2] + "/" + dateArr[0];
+      dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
     return formattedDate;
   };
 
@@ -63,7 +63,8 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
 
     const k = 1000;
     const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    // const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    const sizes = ["", "", "M", "B", "T", "Q"];
     const i = Math.floor(Math.log(bytes * 10 ** 6) / Math.log(k));
 
     return (
@@ -176,7 +177,9 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                   {stockSummary
                     ? stockSummary["Technicals::52WeekLow"]["date"] &&
                       stockSummary["Technicals::52WeekLow"]["date"] != "N/A"
-                      ? stockSummary["Technicals::52WeekLow"]["date"]
+                      ? changeDateFormat(
+                          stockSummary["Technicals::52WeekLow"]["date"]
+                        )
                       : "N/A"
                     : "N/A"}
                 </div>
@@ -184,7 +187,9 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                   {stockSummary
                     ? stockSummary["Technicals::52WeekHigh"]["date"] &&
                       stockSummary["Technicals::52WeekHigh"]["date"] != "N/A"
-                      ? stockSummary["Technicals::52WeekHigh"]["date"]
+                      ? changeDateFormat(
+                          stockSummary["Technicals::52WeekHigh"]["date"]
+                        )
                       : "N/A"
                     : "N/A"}
                 </div>

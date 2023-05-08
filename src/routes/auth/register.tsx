@@ -9,10 +9,6 @@ import { AuthContext } from "../../contexts/authContext";
 
 import AuthHeader from "./AuthHeader";
 
-import CountrySelector from "./countrySelector";
-import { COUNTRIES } from "../../libs/countries";
-import { SelectMenuOption } from "../../libs/types";
-
 import Key from "../../assets/key.svg";
 import Sender from "../../assets/sender.svg";
 import backIcon from "../../assets/back_ico.svg";
@@ -29,11 +25,33 @@ export default function Register() {
   const [verifyStatus, setVerifyStatus] = useState(0);
 
   const { email, setEmail, emailIsValid } = useValidEmail("");
-  // country selector variables
-  const [isOpen, setIsOpen] = useState(false);
-  const [country, setCountry] = useState<SelectMenuOption["value"]>("BE");
 
   const navigate = useNavigate();
+
+  const [countryNameList, setCountryNameList] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+
+  const getCountryNames = async () => {
+    try {
+      // Make a GET request to the REST Countries API
+      const response = await fetch("https://restcountries.com/v2/all");
+
+      // Parse the response data as JSON
+      const data = await response.json();
+
+      // Extract the country names from the response data
+      const countryNames = data.map((country: any) => country.name);
+      setCountryNameList(countryNames);
+      console.log(countryNames);
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to get country names");
+    }
+  };
+
+  useEffect(() => {
+    getCountryNames();
+  }, []);
 
   useEffect(() => {
     const authHeader = document.getElementById("auth-header");
@@ -102,6 +120,7 @@ export default function Register() {
       </div>
     </div>
   );
+
   // Create Account Progress 2
   const PrimaryResidenceComponent = (
     <div className="text-center w-[400px]">
@@ -120,17 +139,18 @@ export default function Register() {
         </button>
       </div>
       {/* Country Select Component */}
-      <div className="pt-8">
-        {/* <CountrySelector
-          id={"country-selector"}
-          open={true}
-          onToggle={() => setIsOpen(!isOpen)}
-          onChange={(ev) => console.log(ev)}
-          selectedValue={COUNTRIES.find(
-            (option: any) => option.value === country
-          )}
-        /> */}
-        Country Select Component
+      <div className="pt-8 text-base">
+        <select
+          id="country-select"
+          className="bg-black p-3 border border-white rounded-xl"
+          onChange={(ev) => setSelectedCountry(ev.target.value)}
+        >
+          {countryNameList.map((country: any) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
+        </select>
       </div>
       {/* Continue Next Step Button */}
       <div className="pt-4">

@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  background-color: black;
+  background-color: #040b11;
   color: white;
 }
 
@@ -17,6 +17,18 @@ body {
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+/* Logo Image Mask */
+.logoback-gradient-mask {
+  -webkit-mask-image: linear-gradient(to bottom, #2ebd85 0%, #0053aa 100%);
+  mask-image: linear-gradient(to bottom, #2ebd85 0%, #0053aa 100%);
+}
+
+.mask1 {
+  /* -webkit-mask-image: linear-gradient(to bottom, #2ebd85 0%, #0053aa 100%);
+  mask-image: linear-gradient(to bottom, #2ebd85 0%, #0053aa 100%); */
+  background: linear-gradient(to bottom, #2ebd85 0%, #0053aa 100%);
 }
 
 /* Full Screen Class for Chart Full Screen */

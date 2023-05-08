@@ -55,7 +55,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
     const dateStr: string = date;
     const dateArr: string[] = dateStr.split("-");
     const formattedDate: string =
-      dateArr[1] + "." + dateArr[2] + "." + dateArr[0];
+      dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
     return formattedDate;
   };
 
@@ -64,7 +64,8 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
 
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    // const sizes = ["B", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    const sizes = ["", "", "M", "B", "T", "Q"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
@@ -173,14 +174,18 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
                 <div>
                   {etfSummary
                     ? etfSummary["Technicals::52WeekLow"]["date"]
-                      ? etfSummary["Technicals::52WeekLow"]["date"]
+                      ? changeDateFormat(
+                          etfSummary["Technicals::52WeekLow"]["date"]
+                        )
                       : "N/A"
                     : "N/A"}
                 </div>
                 <div className="pl-2">
                   {etfSummary
                     ? etfSummary["Technicals::52WeekHigh"]["date"]
-                      ? etfSummary["Technicals::52WeekHigh"]["date"]
+                      ? changeDateFormat(
+                          etfSummary["Technicals::52WeekHigh"]["date"]
+                        )
                       : "N/A"
                     : "N/A"}
                 </div>
@@ -221,7 +226,9 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
               <div>Net Expense Ratio</div>
               <div className="text-white font-bold">
                 {etfSummary
-                  ? etfSummary["ETF_Data::NetExpenseRatio"] * 100 + "%"
+                  ? parseFloat(
+                      (etfSummary["ETF_Data::NetExpenseRatio"] * 100).toString()
+                    ).toFixed(2) + "%"
                   : "N/A"}
               </div>
             </div>

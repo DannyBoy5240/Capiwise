@@ -59,8 +59,13 @@ const login: FC = () => {
     <div className="w-full h-screen flex">
       {/* Back screen */}
       <div className="relative w-1/3">
-        <img src={backImage} className="w-full h-screen" />
-        <div className="absolute bottom-[64px] ml-6">
+        <div className="relative">
+          <div>
+            <img src={backImage} className="w-full h-screen" />
+          </div>
+          <div className="absolute w-full h-screen top-0 mask1 z-10 opacity-80"></div>
+        </div>
+        <div className="absolute bottom-[64px] ml-6 z-20">
           <div className="font-black text-[42px]">INVEST WITH</div>
           <div className="font-black text-[42px]">CONFIDENCE</div>
           <div className="text-base">
