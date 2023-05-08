@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import backImage from "../assets/background.png";
+import backImage from "../assets/background .png";
 import logo from "../assets/logo.svg";
 import googleIcon from "../assets/google_ico.svg";
 import facebookIcon from "../assets/facebook_ico.svg";
@@ -11,7 +11,8 @@ const Login: FC = () => {
     <div className="w-full h-screen flex">
       {/* Back screen */}
       <div className="relative w-1/3">
-        <img src={backImage} className="w-full h-screen" />
+        <img src={backImage} className="w-full h-screen image" />
+        <div className="gradient-mask"></div>
         <div className="absolute bottom-[64px] ml-6">
           <div className="font-black text-[42px]">INVEST WITH</div>
           <div className="font-black text-[42px]">CONFIDENCE</div>
@@ -84,9 +85,7 @@ const Login: FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-sm text-[#979797]">
-                Forgotten my password?
-              </div>
+              <div className="text-sm text-[#979797]">Forgots my password?</div>
             </div>
             {/*  */}
             <div className="w-full mt-6">

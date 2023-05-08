@@ -86,21 +86,42 @@ const SearchBox: FC = () => {
 
   return (
     <div className="grow flex items-center justify-center">
-      <div className="relative border-2 rounded-full w-11/12 md:w-7/12 lg:w-1/2">
+      <div
+        className={
+          "relative rounded-full w-11/12 md:w-7/12 lg:w-1/2 " +
+          (searchTerm == "" ? "border-2 border-[#979797] " : "")
+        }
+      >
         <input
-          className="py-2 text-base text-white bg-transparent focus:outline-none w-full rounded-full pl-5 pr-20"
+          className={
+            "py-3 text-base text-white focus:outline-none rounded-full border-[#979797] w-full pl-5 pr-20 " +
+            (searchTerm != "" ? "bg-[#0B1620]" : "bg-transparent")
+          }
+          style={{
+            borderRadius:
+              searchTerm == "" || filteredOptions.length == 0
+                ? ""
+                : "12px 12px 0px 0px",
+          }}
           id="search_box"
           placeholder="Search Symbols or Company Name"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
           onFocus={() => handleSearchFocus()}
           // onBlur={(e) => handleSearchBlur(e)}
-          onKeyDown={(e) => handleKeyDown(e)}
+          onKeyDown={(e) => {
+            handleKeyDown(e);
+          }}
         />
         <span className="absolute inset-y-0 right-0 flex items-center pl-2">
           {searchTerm !== "" ? (
-            <button onClick={() => clearSearchBox()}>
-              <svg
+            <button
+              className="text-white hover:text-[#F35530]"
+              onClick={() => clearSearchBox()}
+            >
+              {/* <svg
                 width="20"
                 height="12"
                 viewBox="0 0 20 12"
@@ -111,7 +132,8 @@ const SearchBox: FC = () => {
                   d="M2.94531 0.625L5.08594 4.59375L7.22656 0.625H9.90625L6.60156 6.26562L9.99219 12H7.28906L5.08594 7.95312L2.88281 12H0.164062L3.5625 6.26562L0.25 0.625H2.94531ZM19.2443 0.625V12H17.7365V0.625H19.2443Z"
                   fill="#979797"
                 />
-              </svg>
+              </svg> */}
+              X
             </button>
           ) : (
             <></>
@@ -139,7 +161,7 @@ const SearchBox: FC = () => {
         {showDropdown && (
           <div
             className={
-              "absolute z-10 w-full px-1 py-2 mt-1 bg-[#0B1620] rounded-md shadow-lg overflow-auto scrollbar-hide " +
+              "absolute z-10 w-full px-1 border-t-2 border-t-[#252A2D] bg-[#0B1620] rounded-md shadow-lg overflow-auto scrollbar-hide " +
               (filteredOptions.length > 0 ? "h-48" : "h-24")
             }
             id="symbol-list"

@@ -38,7 +38,7 @@ export default function RequestCode() {
             I've forgotten my password
           </div>
           <div className="text-sm text-[#979797] pt-3.5">
-            If you‘re logged out and can‘t remember your passwors, we can send
+            If you‘re logged out and can‘t remember your passwords, we can send
             you an email with a link to reset it.
           </div>
           <div className="pt-4">

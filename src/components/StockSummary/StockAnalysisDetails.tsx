@@ -105,11 +105,17 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                 <div className="text-[#F1B90B]">Fair Value</div>
               ) : currentPrice < fairPrice ? (
                 <div className="text-[#2EBD85]">
-                  {getCurrentPriceValuation()}% Undervalued
+                  {getCurrentPriceValuation() > 0
+                    ? getCurrentPriceValuation()
+                    : -getCurrentPriceValuation()}
+                  % Undervalued
                 </div>
               ) : (
                 <div className="text-[#E2433B]">
-                  {getCurrentPriceValuation()}% Overvalued
+                  {getCurrentPriceValuation() > 0
+                    ? getCurrentPriceValuation()
+                    : -getCurrentPriceValuation()}
+                  % Overvalued
                 </div>
               )}
             </div>
