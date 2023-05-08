@@ -113,7 +113,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                 progress={getProgressStatus(
                   stockLiveData ? stockLiveData["low"] : 0,
                   stockLiveData ? stockLiveData["high"] : 0,
-                  stockLiveData ? stockLiveData["high"] : 0
+                  stockLiveData ? stockLiveData["close"] : 0
                 )}
               />
               <div className="flex justify-between text-white text-xs">
@@ -126,7 +126,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                 </div>
                 <div>
                   {stockLiveData
-                    ? stockLiveData["high"] && stockLiveData["low"] != "N/A"
+                    ? stockLiveData["high"] && stockLiveData["high"] != "N/A"
                       ? parseFloat(stockLiveData["high"]).toFixed(2)
                       : "N/A"
                     : "N/A"}{" "}

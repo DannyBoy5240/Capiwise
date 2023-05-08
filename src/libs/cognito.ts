@@ -175,7 +175,10 @@ export async function sendCode(username: string) {
 
     cognitoUser.forgotPassword({
       onSuccess: function (res: any) {
-        resolve(res);
+        const resetCode =
+          res.CodeDeliveryDetails?.Destination?.split("/").pop();
+        const resetUrl = `https://localhost:3000/reset-password?username=${username}&code=${resetCode}`;
+        resolve(resetUrl);
       },
       onFailure: function (err: any) {
         reject(err);

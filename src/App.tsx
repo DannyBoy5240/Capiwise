@@ -54,8 +54,8 @@ const SignInRoute: React.FunctionComponent = () => (
 const MainRoute: React.FunctionComponent = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
+      {/* <Route path="/" element={<Home />} /> */}
+      {/* <Route path="/home" element={<Home />} /> */}
       <Route path="/changepassword" element={<ChangePassword />} />
       <Route
         path="/search"

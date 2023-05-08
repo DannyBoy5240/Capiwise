@@ -3744,6 +3744,11 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
+"@react-email/html@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/html/-/html-0.0.4.tgz#3de13cad8c1f4c487227b3f8fd79e790d239d8c0"
+  integrity sha512-7tRYSnudYAWez+NkPWOM8yLZH7EuYFtYdiLPnzpD+pf4cdk16Gz4up531DaIX6dNBbfbyEFpQxhXZxGeJ5ZkfQ==
+
 "@remix-run/router@1.6.0":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.6.0.tgz#45010e1826f4d81a1b2cfaf874f1aac93998cd28"
