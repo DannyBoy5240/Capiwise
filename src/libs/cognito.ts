@@ -267,16 +267,16 @@ export async function changePassword(oldPassword: string, newPassword: string) {
 
 export async function sendPhoneVerifyCode(phoneNumber: string) {
   return new Promise(function (resolve, reject) {
-    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-    var attributeList = [];
+    const attributeList = [];
 
-    var dataPhoneNumber = {
+    const dataPhoneNumber = {
       Name: "phone_number",
       Value: "+14434223717", // your phone number here with +country code
     };
 
-    var attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(
+    const attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(
       dataPhoneNumber
     );
 
@@ -292,7 +292,7 @@ export async function sendPhoneVerifyCode(phoneNumber: string) {
           alert(err.message || JSON.stringify(err));
           return;
         }
-        var cognitoUser = result.user;
+        const cognitoUser = result.user;
         console.log("user name is " + cognitoUser.getUsername());
       }
     );
@@ -367,7 +367,7 @@ export async function sendPasswordResetLink(email: string) {
 
   await currentUser.forgotPassword({
     onSuccess: (result: any) => {
-      var verificationCode =
+      const verificationCode =
         result.CodeDeliveryDetails.Destination.match(/\d{6}/)[0];
       console.log("Password reset email sent", verificationCode);
     },
