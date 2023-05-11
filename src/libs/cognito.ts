@@ -5,8 +5,12 @@ import {
   CognitoUserPool,
 } from "amazon-cognito-identity-js";
 
-const AWS = require("aws-sdk");
-const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
+// const AWS = require("aws-sdk");
+// const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
+
+import AWS from "aws-sdk";
+// import AmazonCognitoIdentity from "amazon-cognito-identity-js";
+
 AWS.config.region = "eu-north-1"; // replace with your AWS region
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
   IdentityPoolId: "eu-north-1:bff821a4-945f-4d51-a773-9e04f348a170", // "your_identity_pool_id"

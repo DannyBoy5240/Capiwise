@@ -6,11 +6,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript"
+    "plugin:@typescript-eslint/recommended"
   ],
   "overrides": [
     {
@@ -23,16 +19,10 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
-  "settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
-  },
   "rules": {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "quotes": [1, "single"],
-    "no-console": 1,
-    "@typescript-eslint/no-var-requires": "off"
+    "no-console": 1
   }
 }
