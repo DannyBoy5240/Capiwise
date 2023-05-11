@@ -176,13 +176,13 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   async function userLogin(email: string, password: string) {
-    try {
-      await cognito.userLogin(email, password);
-      // setAuthStatus(AuthStatus.SignedIn);
-    } catch (err) {
-      // setAuthStatus(AuthStatus.SignedOut);
-      throw err;
-    }
+    // try {
+    await cognito.userLogin(email, password);
+    // setAuthStatus(AuthStatus.SignedIn);
+    // } catch (err) {
+    // setAuthStatus(AuthStatus.SignedOut);
+    // throw err;
+    // }
   }
 
   async function userLogout() {
