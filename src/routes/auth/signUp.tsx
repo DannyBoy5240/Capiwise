@@ -89,7 +89,7 @@ const SignUp: React.FunctionComponent = () => {
       </Box> */}
 
       <div className="w-80 m-1">
-        <Email emailIsValid={emailIsValid} setEmail={setEmail} />
+        <Email emailIsValid={emailIsValid} email={email} setEmail={setEmail} />
       </div>
       <div className="w-80 m-1">
         <Username usernameIsValid={usernameIsValid} setUsername={setUsername} />
@@ -98,6 +98,7 @@ const SignUp: React.FunctionComponent = () => {
         <Password
           label="Password"
           passwordIsValid={passwordIsValid}
+          password={password}
           setPassword={setPassword}
         />
       </div>
@@ -105,6 +106,7 @@ const SignUp: React.FunctionComponent = () => {
         <Password
           label="Confirm Password"
           passwordIsValid={passwordConfirmIsValid}
+          password={passwordConfirm}
           setPassword={setPasswordConfirm}
         />
       </div>

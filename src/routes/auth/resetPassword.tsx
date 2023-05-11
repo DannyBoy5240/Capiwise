@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -25,13 +25,34 @@ export default function ResetPassword() {
 
   const authContext = useContext(AuthContext);
 
+  const confirmPasswordHandle = async (email: any, code: any) => {
+    try {
+      await authContext.confirmPassword(email, code);
+    } catch (err: any) {
+      console.log(err.message);
+    }
+    if (email && code) navigate("/");
+  };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const email = queryParams.get("email");
+    const code = queryParams.get("code");
+    confirmPasswordHandle(email, code);
+  }, []);
+
   const sendCodeClicked = async () => {
     try {
-      await authContext.sendCode(email.replace(".", "s").replace("@", "s"));
+      await authContext.sendCode(email);
       setResetSent(true);
     } catch (err) {
       setError("Unknown user");
     }
+  };
+
+  const sendPasswordResetLink = async () => {
+    await authContext.sendPasswordResetLink(email);
+    setResetSent(true);
   };
 
   const ResetPasswordComponent = (
@@ -42,24 +63,25 @@ export default function ResetPassword() {
       <div className="text-2xl text-white font-bold pt-11">Reset password</div>
       <div className="text-sm text-[#979797] pt-3.5">
         Just enter the email address you registered with and we‘ll send you a
-        link to rest your password.
+        link to reset your password.
       </div>
       <div className="pt-4">
         <div className="text-sm text-left text-[#979797]">
           Enter your email address
         </div>
         <div className="border-[#979797] rounded-md h-9 mt-1">
-          <Email emailIsValid={emailIsValid} setEmail={setEmail} />
+          <Email
+            emailIsValid={emailIsValid}
+            email={email}
+            setEmail={setEmail}
+          />
         </div>
       </div>
       <div className="pt-4">
         <button
           className="bg-[#2EBD85] hover:bg-[#E2E7ED] w-[400px] py-2 rounded-full text-black"
           disabled={!emailIsValid || email.length === 0}
-          onClick={() => {
-            sendCodeClicked();
-            setResetSent(true);
-          }}
+          onClick={() => sendPasswordResetLink()}
         >
           Send password reset link
         </button>

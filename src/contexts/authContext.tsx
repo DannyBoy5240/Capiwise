@@ -28,6 +28,13 @@ export interface IAuth {
   changePassword?: any;
   getAttributes?: any;
   setAttribute?: any;
+  // Verification parts
+  setPhoneVerifyCode?: any;
+  userRegister?: any;
+  userLogin?: any;
+  userLogout?: any;
+  sendPasswordResetLink?: any;
+  confirmPassword?: any;
 }
 
 const defaultState: IAuth = {
@@ -107,11 +114,7 @@ const AuthProvider = ({ children }: Props) => {
     email: string,
     password: string
   ) {
-    // try {
     await cognito.signUpUserWithEmail(username, email, password);
-    // } catch (err) {
-    // throw err;
-    // }
   }
 
   function signOut() {
@@ -120,38 +123,22 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   async function verifyCode(username: string, code: string) {
-    // try {
     await cognito.verifyCode(username, code);
-    // } catch (err) {
-    // throw err;
-    // }
   }
 
   async function getSession() {
-    // try {
     const session = await cognito.getSession();
     return session;
-    // } catch (err) {
-    // throw err;
-    // }
   }
 
   async function getAttributes() {
-    // try {
     const attr = await cognito.getAttributes();
     return attr;
-    // } catch (err) {
-    // throw err;
-    // }
   }
 
   async function setAttribute(attr: any) {
-    // try {
     const res = await cognito.setAttribute(attr);
     return res;
-    // } catch (err) {
-    // throw err;
-    // }
   }
 
   async function sendCode(username: string) {
@@ -163,19 +150,52 @@ const AuthProvider = ({ children }: Props) => {
     code: string,
     password: string
   ) {
-    // try {
     await cognito.forgotPassword(username, code, password);
-    // } catch (err) {
-    // throw err;
-    // }
   }
 
   async function changePassword(oldPassword: string, newPassword: string) {
-    // try {
     await cognito.changePassword(oldPassword, newPassword);
-    // } catch (err) {
-    // throw err;
-    // }
+  }
+
+  async function setPhoneVerifyCode(phoneNumber: string) {
+    await cognito.sendPhoneVerifyCode("+" + phoneNumber);
+  }
+
+  async function userRegister(
+    email: string,
+    country: string,
+    phonenumber: string,
+    password: string
+  ) {
+    try {
+      await cognito.userRegister(email, country, phonenumber, password);
+      return "succeed";
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+
+  async function userLogin(email: string, password: string) {
+    try {
+      await cognito.userLogin(email, password);
+      // setAuthStatus(AuthStatus.SignedIn);
+    } catch (err) {
+      // setAuthStatus(AuthStatus.SignedOut);
+      throw err;
+    }
+  }
+
+  async function userLogout() {
+    await cognito.userLogout();
+    // setAuthStatus(AuthStatus.SignedOut);
+  }
+
+  async function sendPasswordResetLink(username: string) {
+    await cognito.sendPasswordResetLink(username);
+  }
+
+  async function confirmPassword(username: string, verificationCode: string) {
+    await cognito.confirmPassword(username, verificationCode);
   }
 
   const state: IAuth = {
@@ -192,6 +212,13 @@ const AuthProvider = ({ children }: Props) => {
     changePassword,
     getAttributes,
     setAttribute,
+    // new verification part functions
+    setPhoneVerifyCode,
+    userRegister,
+    userLogin,
+    userLogout,
+    sendPasswordResetLink,
+    confirmPassword,
   };
 
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;

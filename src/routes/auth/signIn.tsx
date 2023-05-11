@@ -143,6 +143,7 @@ const SignIn: React.FunctionComponent<{}> = () => {
             <Password
               label="Password"
               passwordIsValid={passwordIsValid}
+              password={password}
               setPassword={setPassword}
             />
             <div

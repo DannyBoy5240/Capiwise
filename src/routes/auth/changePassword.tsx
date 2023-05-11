@@ -104,11 +104,13 @@ export default function ChangePassword() {
         <Password
           label="Old Password"
           passwordIsValid={oldPasswordIsValid}
+          password={oldPassword}
           setPassword={setOldPassword}
         />
         <Password
           label="Password"
           passwordIsValid={newPasswordIsValid}
+          password={newPassword}
           setPassword={setNewPassword}
         />
 
