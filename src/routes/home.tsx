@@ -39,8 +39,8 @@ export default function Home() {
 
   const auth = useContext(AuthContext);
 
-  function signOutClicked() {
-    auth.signOut();
+  async function signOutClicked() {
+    await auth.signOut();
     // navigatge.push("/");
     navigatge("/");
   }

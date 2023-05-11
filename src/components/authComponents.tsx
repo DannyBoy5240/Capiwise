@@ -2,15 +2,17 @@ import React from "react";
 
 export const Email: React.FunctionComponent<{
   emailIsValid: boolean;
+  email: string;
   setEmail: (_: string) => void;
-}> = ({ emailIsValid, setEmail }) => {
+}> = ({ emailIsValid, email, setEmail }) => {
   return (
     <input
       className={`bg-transparent border border-[#979797] text-white focus:outline-none rounded-md w-full h-full px-2 ${
         !emailIsValid ? "border-red-500" : ""
       }`}
       type="email"
-      // placeholder={emailIsValid ? "" : "Invalid Email"}
+      value={email}
+      placeholder={emailIsValid ? "" : "Email is invalid!"}
       onChange={(evt) => setEmail(evt.target.value)}
     />
   );
@@ -19,14 +21,16 @@ export const Email: React.FunctionComponent<{
 export const Password: React.FunctionComponent<{
   label: string;
   passwordIsValid: boolean;
+  password: string;
   setPassword: (_: string) => void;
-}> = ({ label, passwordIsValid, setPassword }) => {
+}> = ({ label, passwordIsValid, password, setPassword }) => {
   return (
     <input
       className={`bg-transparent border border-[#979797] text-white focus:outline-none rounded-md w-full h-full px-2 ${
         !passwordIsValid ? "border-red-500" : ""
       }`}
       type="password"
+      value={password}
       // placeholder={passwordIsValid ? label : "Minimum 8 characters"}
       onChange={(evt) => setPassword(evt.target.value)}
     />

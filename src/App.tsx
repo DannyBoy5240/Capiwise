@@ -33,8 +33,6 @@ import SearchBox from "./components/SearchBox";
 
 import Logo from "./assets/logo.svg";
 
-import TestPage from "./pages/TestPage";
-
 const SignInRoute: React.FunctionComponent = () => (
   <BrowserRouter>
     <Routes>
@@ -46,7 +44,6 @@ const SignInRoute: React.FunctionComponent = () => (
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/test" element={<TestPage />} />
     </Routes>
   </BrowserRouter>
 );
@@ -54,8 +51,23 @@ const SignInRoute: React.FunctionComponent = () => (
 const MainRoute: React.FunctionComponent = () => (
   <BrowserRouter>
     <Routes>
-      {/* <Route path="/" element={<Home />} /> */}
-      {/* <Route path="/home" element={<Home />} /> */}
+      <Route
+        path="/search"
+        element={
+          <div className="flex flex-col h-screen justify-between">
+            <div className="flex flex-col">
+              <div className="self-end m-4">
+                <MenuProfileSettings />
+              </div>
+              <div className="pt-12">
+                <SearchStock />
+              </div>
+            </div>
+            <Footer />
+          </div>
+        }
+      />
+      <Route path="/home" element={<Home />} />
       <Route path="/changepassword" element={<ChangePassword />} />
       <Route
         path="/search"

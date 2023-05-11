@@ -212,7 +212,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
     labels,
     datasets: [
       {
-        label: "Hello",
+        label: "Value",
         data: data_datasets,
         borderColor: "#FFFFFF",
         backgroundColor: "#FFFFFF00",

@@ -1,6 +1,22 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
+
+import { useNavigate } from "react-router-dom";
+
+import { AuthContext } from "../contexts/authContext";
+
+import logoutIcon from "../assets/logout_ico.svg";
 
 const MenuProfileSettings: FC = () => {
+  const navigatge = useNavigate();
+
+  const auth = useContext(AuthContext);
+
+  async function logOutClicked() {
+    await auth.signOut();
+    navigatge("/");
+    window.location.reload();
+  }
+
   return (
     <div className="flex items-center">
       <div className="p-2.5 rounded-full bg-[#040B11]">
@@ -20,6 +36,12 @@ const MenuProfileSettings: FC = () => {
             fill="#464F56"
           />
         </svg>
+      </div>
+      <div
+        className="ml-4 hover:cursor-pointer"
+        onClick={() => logOutClicked()}
+      >
+        <img src={logoutIcon} />
       </div>
     </div>
   );

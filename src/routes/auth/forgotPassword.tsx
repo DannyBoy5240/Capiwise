@@ -57,11 +57,13 @@ export default function ForgotPassword() {
         <Password
           label="Password"
           passwordIsValid={passwordIsValid}
+          password={password}
           setPassword={setPassword}
         />
         <Password
           label="Confirm Password"
           passwordIsValid={passwordConfirmIsValid}
+          password={passwordConfirm}
           setPassword={setPasswordConfirm}
         />
       </div>
