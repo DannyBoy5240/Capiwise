@@ -23,6 +23,7 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "quotes": [1, "single"],
-    "no-console": 1
+    "no-console": 1,
+    "@typescript-eslint/no-var-requires": "off"
   }
 }

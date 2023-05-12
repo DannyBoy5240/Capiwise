@@ -297,6 +297,8 @@ export async function sendPhoneVerifyCode(phoneNumber: string) {
   });
 }
 
+// --- Authentication part ---
+
 export async function userRegister(
   email: string,
   country: string,
@@ -386,4 +388,82 @@ export async function confirmPassword(email: string, verificationCode: string) {
       console.log("Password reset failed:", error);
     },
   });
+}
+
+export async function googleLogin(email: string, googleToken: string) {
+  currentUser = getCognitoUser(email);
+
+  console.log("email -> ", email);
+  console.log("googleToken -> ", googleToken);
+
+  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: "eu-north-1:bff821a4-945f-4d51-a773-9e04f348a170",
+    Logins: {
+      "accounts.google.com": googleToken,
+    },
+  });
+
+  // Make the call to obtain credentials
+  AWS.config.credentials.get(function (err: any) {
+    if (err) {
+      console.log("AWS.config.credentials failed!");
+      console.log(err);
+      return;
+    }
+
+    // User is now signed in to your Cognito User Pool with Google
+    const cognitoUser = userPool.getCurrentUser();
+    console.log("succed!!!");
+
+    if (cognitoUser != null) {
+      cognitoUser.getSession(function (err: any, session: any) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("session validity: " + session.isValid());
+      });
+    }
+  });
+
+  // const authenticationData = {
+  //   Username: email,
+  //   Token: googleToken,
+  // };
+  // const authenticationDetails = new AuthenticationDetails(authenticationData);
+
+  // currentUser.authenticateUser(authenticationDetails, {
+  //   onSuccess: (result: any) => {
+  //     const accessToken = result.getAccessToken().getJwtToken();
+  //     const googleToken = result.getIdToken().getJwtToken();
+
+  //     // Use the access token and ID token to make API calls to your backend
+  //     console.log("Google login succeed!!!");
+  //   },
+  //   onFailure: (error: any) => {
+  //     console.log("failed!!!");
+  //     console.error(error);
+  //   },
+  // });
+
+  // const emailAttribute = new CognitoUserAttribute({
+  //   Name: "email",
+  //   Value: email,
+  // });
+
+  // currentUser.authenticateUser(googleToken, {
+  //   name: "google",
+  //   emailAttribute,
+  //   validationData: null,
+  //   onSuccess: (result: any) => {
+  //     // User is authenticated, obtain AWS access token
+  //     const accessToken = result.getAccessToken().getJwtToken();
+  //     // Use the access token to access AWS resources
+  //     console.log("accessToken -> ", accessToken);
+  //   },
+  //   onFailure: (error: any) => {
+  //     console.log("failed!");
+  //     console.log(error);
+  //   },
+  // });
 }

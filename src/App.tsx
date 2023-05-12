@@ -56,23 +56,10 @@ const MainRoute: React.FunctionComponent = () => (
         element={
           <div className="flex flex-col h-screen justify-between">
             <div className="flex flex-col">
-              <div className="self-end m-4">
-                <MenuProfileSettings />
-              </div>
-              <div className="pt-12">
-                <SearchStock />
-              </div>
-            </div>
-            <Footer />
-          </div>
-        }
-      />
-      <Route
-        path="/search"
-        element={
-          <div className="flex flex-col h-screen justify-between">
-            <div className="flex flex-col">
-              <div className="self-end m-4">
+              <div
+                className="m-4"
+                style={{ display: "flex", justifyContent: "end" }}
+              >
                 <MenuProfileSettings />
               </div>
               <div className="pt-12">

@@ -8,6 +8,8 @@ import {
   useGoogleOneTapLogin,
 } from "@react-oauth/google";
 
+import jwt_decode from "jwt-decode";
+
 import backImage from "../../assets/background.png";
 import logo from "../../assets/logo.svg";
 import googleIcon from "../../assets/google_ico.svg";
@@ -83,6 +85,13 @@ const login: FC = () => {
 
   const passwordResetClicked = async () => {
     navigate(`/forgetpassword`, { state: { email: email } });
+  };
+
+  const googleLoginHandleSucceed = async (credentialResponse: any) => {
+    const decoded_token: any = jwt_decode(credentialResponse.credential);
+    const googleToken = decoded_token.jti;
+    const email = decoded_token.email;
+    await authContext.googleLogin(email, googleToken, true);
   };
 
   return (
@@ -200,28 +209,26 @@ const login: FC = () => {
               </div>
               <div className="flex justify-between py-6">
                 <div className="w-1/3 px-1">
-                  <div className="rounded-full bg-transparent border-[#979797] border flex justify-center">
-                    <GoogleOAuthProvider clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com">
-                      <GoogleLogin
-                        onSuccess={(credentialResponse) => {
-                          console.log(credentialResponse);
-                        }}
-                        onError={() => {
-                          console.log("Login Failed");
-                        }}
+                  <GoogleOAuthProvider clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com">
+                    <div className="rounded-full bg-transparent hover:bg-[#979797] hover:cursor-pointer border-[#979797] border flex justify-center py-2">
+                      {/* <GoogleLogin
+                        onSuccess={(credentialResponse) =>
+                          googleLoginHandleSucceed(credentialResponse)
+                        }
+                        onError={() => console.log("google login failed!")}
                         useOneTap
-                      />
-                    </GoogleOAuthProvider>
-                    {/* <img src={googleIcon} className="w-5 h-5" /> */}
-                  </div>
+                      /> */}
+                      <img src={googleIcon} className="w-5 h-5" />
+                    </div>
+                  </GoogleOAuthProvider>
                 </div>
                 <div className="w-1/3 px-1">
-                  <div className="rounded-full bg-transparent border-[#979797] border flex justify-center">
+                  <div className="rounded-full bg-transparent border-[#979797] border flex justify-center py-2">
                     <img src={facebookIcon} />
                   </div>
                 </div>
                 <div className="w-1/3 px-1">
-                  <div className="rounded-full bg-transparent border-[#979797] border flex justify-center">
+                  <div className="rounded-full bg-transparent border-[#979797] border flex justify-center py-2">
                     <img src={appleIcon} />
                   </div>
                 </div>

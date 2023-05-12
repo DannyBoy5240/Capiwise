@@ -35,6 +35,7 @@ export interface IAuth {
   userLogout?: any;
   sendPasswordResetLink?: any;
   confirmPassword?: any;
+  googleLogin?: any;
 }
 
 const defaultState: IAuth = {
@@ -161,6 +162,8 @@ const AuthProvider = ({ children }: Props) => {
     await cognito.sendPhoneVerifyCode("+" + phoneNumber);
   }
 
+  // --- Authentication part ---
+
   async function userRegister(
     email: string,
     country: string,
@@ -176,18 +179,18 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   async function userLogin(email: string, password: string) {
-    // try {
-    await cognito.userLogin(email, password);
-    // setAuthStatus(AuthStatus.SignedIn);
-    // } catch (err) {
-    // setAuthStatus(AuthStatus.SignedOut);
-    // throw err;
-    // }
+    try {
+      await cognito.userLogin(email, password);
+      setAuthStatus(AuthStatus.SignedIn);
+    } catch (err) {
+      setAuthStatus(AuthStatus.SignedOut);
+      throw err;
+    }
   }
 
   async function userLogout() {
     await cognito.userLogout();
-    // setAuthStatus(AuthStatus.SignedOut);
+    setAuthStatus(AuthStatus.SignedOut);
   }
 
   async function sendPasswordResetLink(username: string) {
@@ -196,6 +199,10 @@ const AuthProvider = ({ children }: Props) => {
 
   async function confirmPassword(username: string, verificationCode: string) {
     await cognito.confirmPassword(username, verificationCode);
+  }
+
+  async function googleLogin(email: string, googleToken: string) {
+    await cognito.googleLogin(email, googleToken);
   }
 
   const state: IAuth = {
@@ -219,6 +226,7 @@ const AuthProvider = ({ children }: Props) => {
     userLogout,
     sendPasswordResetLink,
     confirmPassword,
+    googleLogin,
   };
 
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;
