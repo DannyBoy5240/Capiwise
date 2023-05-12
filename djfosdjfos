@@ -1,0 +1,239 @@
+[33mcommit 881dfafca7f10aca4044b3afe660872ced3fb73d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Wed Apr 26 10:29:50 2023 -0700
+
+    update stock valulation
+
+[33mcommit b4eaba1a69be0b8b75db6667d509ec7ad8b69f1a[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Wed Apr 26 06:07:47 2023 -0700
+
+    stock valuation update
+
+[33mcommit f3c9aebeb9a71a75d00685921d91b97139d0b6c3[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Wed Apr 26 04:23:53 2023 -0700
+
+    update route urls for checking
+
+[33mcommit 7c57cdf453ad5416a10108117f57746eb9e2b346[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Wed Apr 26 04:20:16 2023 -0700
+
+    fix vercel bug - googleAuth function
+
+[33mcommit 162ffec49b7d6a127fa9e420ae7a009b341e3a15[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 25 23:54:39 2023 -0700
+
+    fix vercel bug
+
+[33mcommit 06a4b3f39e3b5453d28b76d4bd332bac72b92779[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 25 23:52:29 2023 -0700
+
+    chartjs customize-annotation, stock valulation custoimze
+
+[33mcommit 8a69c223cf999ce260da2d7d6e0715675595245f[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 25 05:27:45 2023 -0700
+
+    fix stockSummary/Valuation fair value
+
+[33mcommit e2580d4df9aa47c0c4ad61a9852c1497f599d980[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 25 05:01:32 2023 -0700
+
+    update responsive & stock EPS api
+
+[33mcommit bb6b7360b1a379a1950bfeee05e9badcf20c735f[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 24 04:59:44 2023 -0700
+
+    update searchbox no-data record show
+
+[33mcommit e12eb5490838b8fee62daa178f0168def834e254[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 24 04:50:43 2023 -0700
+
+    remove open-ai for testing - miss
+
+[33mcommit 0d205349b3764e8b2f6664a48facdab294e87e82[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 24 04:48:42 2023 -0700
+
+    update searchbox no-data case, add summary menu-topics
+
+[33mcommit 8a07df5e9cca5856311261ffdc4ffaca36455d6c[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Sat Apr 22 16:38:38 2023 -0700
+
+    update range progress bar and chart & details ui
+
+[33mcommit 51b05e500373d3f2482fee5c374557055f886c47[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Thu Apr 20 23:14:53 2023 -0700
+
+    Stock Summary Page Valuation fair price api update, ETF page UI update
+
+[33mcommit 7bd52c408e33b6eed9d8adcf47c05b5991ffd0b0[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Thu Apr 20 05:49:23 2023 -0700
+
+    update bug fix when browsing same page (ETF->ETF, Stock->Stock)
+
+[33mcommit 0a84477f1c716bdc44c9a803c32930a750b05c24[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Thu Apr 20 05:08:20 2023 -0700
+
+    update Vercel bug fix let->const
+
+[33mcommit f6f474f85d41827f85cc9164360d1e78514c6f8c[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Thu Apr 20 01:53:03 2023 -0700
+
+    update ETFSummary page and make SummaryChart, TotalSummaryInfo component
+
+[33mcommit 2d0f25361d255d3b4193945ccfea2e43823b218b[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Thu Apr 20 01:01:05 2023 -0700
+
+    update StockSummary page UI and API
+
+[33mcommit d497114dc4c6ac10fad68b111a9e900065a5fc5a[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Wed Apr 19 12:57:13 2023 -0700
+
+    update SearchBox onBlur function
+
+[33mcommit 6ab7f831944daae8313cd87272d312641c5fed94[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Wed Apr 19 05:26:43 2023 -0700
+
+    update SearchBox, no Data loading exception handling
+
+[33mcommit faf54506a54bfbe0d47ac9d524148b1ec169dd00[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 18 05:23:50 2023 -0700
+
+    update StockSummary valuation fairprice api update
+
+[33mcommit e54ea84b5b572ab652b959d4ea317026904378ad[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 18 05:06:36 2023 -0700
+
+    update chartjs api over 1Y
+
+[33mcommit c20a82474ee2e5b17254cc8c6bff996966f9d099[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 18 04:57:23 2023 -0700
+
+    update chartjs datetime
+
+[33mcommit f00ef6239f0ad9a759d4afedb9e2f9b301a13a29[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 17 15:34:23 2023 -0700
+
+    add stocksummary page and update summary detail info
+
+[33mcommit 2a447b57ee34fb50cc6e0cf9c5b25c6b23ea10c6[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 17 13:36:02 2023 -0700
+
+    update chartjs api and summary bar style update
+
+[33mcommit 563e9968c36a6cbab558035117c3e96ee49e931a[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 17 05:15:48 2023 -0700
+
+    update labels
+
+[33mcommit a41a05430ebf53a095c6fe322bc383e2a207c81a[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 17 05:10:16 2023 -0700
+
+    update ETH -> ETF
+
+[33mcommit 9a23687b54b1cc1f0c2c26a5c405370dd6b35240[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 17 05:09:14 2023 -0700
+
+    update ethsummary detail
+
+[33mcommit 2db8653d2671ba792c426c3b7cfed553487facc2[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 17 04:58:17 2023 -0700
+
+    update chart.js loading, style
+
+[33mcommit 0b32a9a11805d9aee563fcf188cb4e0178a16404[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 17 00:52:27 2023 -0700
+
+    fix vercel error - var, const...
+
+[33mcommit 427df5d5a2df9e75a314c47acdd260535a26ffc3[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Mon Apr 17 00:47:55 2023 -0700
+
+    update chartjs and risk-return valation
+
+[33mcommit 4e57954af082ee4442d9d5a0b7003ad74f95f09e[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Sun Apr 16 15:04:27 2023 -0700
+
+    ETFSummary Risk-Return Valuation GradientSlider
+
+[33mcommit 52991d812fbc4444b11ed8399ce46084bccce3a0[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Thu Apr 13 13:07:39 2023 -0700
+
+    remove @ts-ignore statements for Vecel deploy error
+
+[33mcommit 44e97d779c36464da9e43b932256d7718e797e7e[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Thu Apr 13 13:02:51 2023 -0700
+
+    add ethsummarychart and valuation
+
+[33mcommit 7068879c5dd352b6974de2f6fcd98971fdb67121[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Wed Apr 12 11:50:00 2023 -0700
+
+    bug fix src/pages/EthSummary ethContext variable type
+
+[33mcommit e9709e7d9369f1f1b77a2cf81353374a296d2fa7[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Wed Apr 12 11:40:08 2023 -0700
+
+    add ETH summary page with api
+
+[33mcommit 07f717457fd3e39f7fa26958a0b03b248b9bb439[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 11 13:27:32 2023 -0700
+
+    update searchbox clear button show
+
+[33mcommit 50cff26ba0189448ec2d42971746d3cc591f7b34[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 11 13:00:45 2023 -0700
+
+    search box letter overflow fix
+
+[33mcommit b05550613da48f82417ab41cbe60fc04bfccbcd2[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 11 12:57:06 2023 -0700
+
+    clear SearchBox button
+
+[33mcommit 48722d5770d16f441a465e9532c883d242493400[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 11 12:51:01 2023 -0700
+
+    Add API key
+
+[33mcommit b586bcdd2f9e0c6b060e8ec034c5921f8957b76e[m
+Author: DannyBoy <dannyboy05240@gmail.com>
+Date:   Tue Apr 11 06:02:19 2023 -0700
+
+    Build Search Stock page UI
