@@ -396,33 +396,28 @@ export async function googleLogin(email: string, googleToken: string) {
   console.log("email -> ", email);
   console.log("googleToken -> ", googleToken);
 
+  AWS.config.update({
+    region: "eu-north-1",
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: "eu-north-1:e3008a85-1439-40c7-865b-35babe185210",
+    }),
+  });
+
+  // const id_token = googleResponse.getAuthResponse().id_token;
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: "eu-north-1:bff821a4-945f-4d51-a773-9e04f348a170",
+    IdentityPoolId: "eu-north-1:e3008a85-1439-40c7-865b-35babe185210",
     Logins: {
       "accounts.google.com": googleToken,
     },
   });
 
-  // Make the call to obtain credentials
-  AWS.config.credentials.get(function (err: any) {
-    if (err) {
-      console.log("AWS.config.credentials failed!");
-      console.log(err);
-      return;
-    }
-
-    // User is now signed in to your Cognito User Pool with Google
-    const cognitoUser = userPool.getCurrentUser();
-    console.log("succed!!!");
-
-    if (cognitoUser != null) {
-      cognitoUser.getSession(function (err: any, session: any) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        console.log("session validity: " + session.isValid());
-      });
+  //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
+  AWS.config.credentials.refresh((error: any) => {
+    if (error) {
+      console.error(error);
+    } else {
+      // Instantiate aws sdk service objects now that the credentials have been updated.
+      console.log("Successfully logged!");
     }
   });
 
