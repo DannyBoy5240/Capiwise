@@ -2,6 +2,12 @@ import React, { useState, useEffect, useContext, FC } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import {
+  GoogleOAuthProvider,
+  GoogleLogin,
+  useGoogleOneTapLogin,
+} from "@react-oauth/google";
+
 import backImage from "../../assets/background.png";
 import logo from "../../assets/logo.svg";
 import googleIcon from "../../assets/google_ico.svg";
@@ -17,10 +23,6 @@ import {
 import { Password, Username, Email } from "../../components/authComponents";
 
 import { AuthContext } from "../../contexts/authContext";
-
-import GoogleLogin from "react-google-login";
-import FacebookLogin from "@greatsumini/react-facebook-login";
-import AppleLogin from "react-apple-login";
 
 const login: FC = () => {
   const { username, setUsername, usernameIsValid } = useValidUsername("");
@@ -199,104 +201,28 @@ const login: FC = () => {
               <div className="flex justify-between py-6">
                 <div className="w-1/3 px-1">
                   <div className="rounded-full bg-transparent border-[#979797] border flex justify-center">
-                    <GoogleLogin
-                      clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com"
-                      onSuccess={() => console.log("success")}
-                      onFailure={(err) => console.log(err)}
-                      cookiePolicy={"single_host_origin"}
-                      render={(renderProps) => (
-                        <button
-                          onClick={renderProps.onClick}
-                          disabled={renderProps.disabled}
-                          style={{
-                            background: "transparent",
-                            border: "none",
-                            margin: 0,
-                            padding: "5px 5px",
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textAlign: "center",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <img src={googleIcon} className="w-5 h-5" />
-                        </button>
-                      )}
-                    />
+                    <GoogleOAuthProvider clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com">
+                      <GoogleLogin
+                        onSuccess={(credentialResponse) => {
+                          console.log(credentialResponse);
+                        }}
+                        onError={() => {
+                          console.log("Login Failed");
+                        }}
+                        useOneTap
+                      />
+                    </GoogleOAuthProvider>
+                    {/* <img src={googleIcon} className="w-5 h-5" /> */}
                   </div>
                 </div>
                 <div className="w-1/3 px-1">
                   <div className="rounded-full bg-transparent border-[#979797] border flex justify-center">
-                    <FacebookLogin
-                      appId="1088597931155576"
-                      onSuccess={(response) => {
-                        console.log("Login Success!", response);
-                      }}
-                      onFail={(error) => {
-                        console.log("Login Failed!", error);
-                      }}
-                      onProfileSuccess={(response) => {
-                        console.log("Get Profile Success!", response);
-                      }}
-                      render={(renderProps) => (
-                        <button
-                          onClick={renderProps.onClick}
-                          className="my-facebook-button"
-                          style={{
-                            alignItems: "center",
-                            justifyContent: "center",
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            padding: "5px 5px",
-                            border: "none",
-                            margin: 0,
-                            borderRadius: "100%",
-                            color: "#fff",
-                            cursor: "pointer",
-                            background: "transparent",
-                          }}
-                        >
-                          <img src={facebookIcon} />
-                        </button>
-                      )}
-                    />
+                    <img src={facebookIcon} />
                   </div>
                 </div>
                 <div className="w-1/3 px-1">
                   <div className="rounded-full bg-transparent border-[#979797] border flex justify-center">
-                    <AppleLogin
-                      clientId="dannyboy05240@gmail.com"
-                      redirectURI="http://localhost:3000"
-                      scope="name email"
-                      responseType="code"
-                      usePopup={true}
-                      responseMode="form_post"
-                      render={(props: any) => (
-                        <button
-                          onClick={props.onClick}
-                          style={{
-                            alignItems: "center",
-                            justifyContent: "center",
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            padding: "5px 5px",
-                            border: "none",
-                            margin: 0,
-                            borderRadius: "100%",
-                            color: "#fff",
-                            cursor: "pointer",
-                            background: "transparent",
-                          }}
-                        >
-                          <img src={appleIcon} />
-                        </button>
-                      )}
-                    />
+                    <img src={appleIcon} />
                   </div>
                 </div>
               </div>

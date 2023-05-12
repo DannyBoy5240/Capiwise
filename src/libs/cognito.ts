@@ -5,11 +5,8 @@ import {
   CognitoUserPool,
 } from "amazon-cognito-identity-js";
 
-// const AWS = require("aws-sdk");
-// const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
-
-import AWS from "aws-sdk";
-// import AmazonCognitoIdentity from "amazon-cognito-identity-js";
+const AWS = require("aws-sdk");
+const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 
 AWS.config.region = "eu-north-1"; // replace with your AWS region
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -18,9 +15,6 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
 
 // const userPoolId = process.env.REACT_APP_USERPOOL_ID;
 // const clientId = process.env.REACT_APP_CLIENT_ID;
-
-// const userPoolId = "eu-north-1_t8oqWPQtD";
-// const clientId = "61q7jmu2t5h45js9vm5r1d7jlh";
 
 const userPoolId = "eu-north-1_OvPUt38zP";
 const clientId = "4to4nlv6d3n363hds5tftdh2vn";
@@ -290,7 +284,7 @@ export async function sendPhoneVerifyCode(phoneNumber: string) {
       "+14434223717",
       "Qwer!234",
       attributeList,
-      null,
+      [],
       function (err: any, result: any) {
         if (err) {
           alert(err.message || JSON.stringify(err));
