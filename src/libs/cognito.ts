@@ -8,16 +8,13 @@ import {
 const AWS = require("aws-sdk");
 const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 
-AWS.config.region = "eu-north-1"; // replace with your AWS region
+AWS.config.region = process.env.REACT_APP_AWS_REGION; // replace with your AWS region
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  IdentityPoolId: "eu-north-1:bff821a4-945f-4d51-a773-9e04f348a170", // "your_identity_pool_id"
+  IdentityPoolId: process.env.REACT_APP_AWS_IDENTITY_POOL,
 });
 
-// const userPoolId = process.env.REACT_APP_USERPOOL_ID;
-// const clientId = process.env.REACT_APP_CLIENT_ID;
-
-const userPoolId = "eu-north-1_OvPUt38zP";
-const clientId = "4to4nlv6d3n363hds5tftdh2vn";
+const userPoolId = process.env.REACT_APP_USERPOOL_ID;
+const clientId = process.env.REACT_APP_CLIENT_ID;
 
 const poolData = {
   UserPoolId: `${userPoolId}`,
@@ -399,13 +396,13 @@ export async function googleLogin(email: string, googleToken: string) {
   AWS.config.update({
     region: "eu-north-1",
     credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: "eu-north-1:e3008a85-1439-40c7-865b-35babe185210",
+      IdentityPoolId: process.env.REACT_APP_AWS_IDENTITY_POOL,
     }),
   });
 
   // const id_token = googleResponse.getAuthResponse().id_token;
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: "eu-north-1:e3008a85-1439-40c7-865b-35babe185210",
+    IdentityPoolId: process.env.REACT_APP_AWS_IDENTITY_POOL,
     Logins: {
       "accounts.google.com": googleToken,
     },
@@ -420,45 +417,4 @@ export async function googleLogin(email: string, googleToken: string) {
       console.log("Successfully logged!");
     }
   });
-
-  // const authenticationData = {
-  //   Username: email,
-  //   Token: googleToken,
-  // };
-  // const authenticationDetails = new AuthenticationDetails(authenticationData);
-
-  // currentUser.authenticateUser(authenticationDetails, {
-  //   onSuccess: (result: any) => {
-  //     const accessToken = result.getAccessToken().getJwtToken();
-  //     const googleToken = result.getIdToken().getJwtToken();
-
-  //     // Use the access token and ID token to make API calls to your backend
-  //     console.log("Google login succeed!!!");
-  //   },
-  //   onFailure: (error: any) => {
-  //     console.log("failed!!!");
-  //     console.error(error);
-  //   },
-  // });
-
-  // const emailAttribute = new CognitoUserAttribute({
-  //   Name: "email",
-  //   Value: email,
-  // });
-
-  // currentUser.authenticateUser(googleToken, {
-  //   name: "google",
-  //   emailAttribute,
-  //   validationData: null,
-  //   onSuccess: (result: any) => {
-  //     // User is authenticated, obtain AWS access token
-  //     const accessToken = result.getAccessToken().getJwtToken();
-  //     // Use the access token to access AWS resources
-  //     console.log("accessToken -> ", accessToken);
-  //   },
-  //   onFailure: (error: any) => {
-  //     console.log("failed!");
-  //     console.log(error);
-  //   },
-  // });
 }
