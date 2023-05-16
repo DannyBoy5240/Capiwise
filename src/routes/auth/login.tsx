@@ -106,7 +106,7 @@ const login: FC = () => {
         client_id:
           "1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com", //"your-client-id",
         client_secret: "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", //"your-client-secret",
-        redirect_uri: "http://localhost:3000",
+        redirect_uri: "https://capiwise.vercel.app",
         grant_type: "authorization_code",
         code: code,
       }),
