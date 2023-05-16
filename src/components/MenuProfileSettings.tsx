@@ -13,17 +13,22 @@ const MenuProfileSettings: FC = () => {
 
   async function logOutClicked() {
     await auth.signOut();
+    window.localStorage.setItem("socialAuthStatus", "false");
     navigatge("/");
     window.location.reload();
   }
 
   return (
     <div className="flex items-center">
-      <div className="p-2.5 rounded-full bg-[#040B11]">
-        <p className="text-[#2EBD85] font-bold text-base">JA</p>
+      <div className="p-2.5 rounded-full bg-[#040B11] hover:cursor-pointer">
+        <p className="text-[#2EBD85] font-bold text-base">
+          {(
+            localStorage.useremail[0] + localStorage.useremail[1]
+          ).toUpperCase()}
+        </p>
       </div>
-      <div className="flex items-center">
-        <p className="text-sm font-bold mx-2">Jimmy Adams</p>
+      <div className="flex items-center hover:cursor-pointer">
+        <p className="text-sm font-bold mx-2">{localStorage.useremail}</p>
         <svg
           width="12"
           height="8"

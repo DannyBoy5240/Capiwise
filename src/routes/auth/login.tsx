@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   GoogleOAuthProvider,
   GoogleLogin,
+  useGoogleLogin,
   useGoogleOneTapLogin,
 } from "@react-oauth/google";
 
@@ -87,12 +88,49 @@ const login: FC = () => {
     navigate(`/forgetpassword`, { state: { email: email } });
   };
 
-  const googleLoginHandleSucceed = async (credentialResponse: any) => {
-    const decoded_token: any = jwt_decode(credentialResponse.credential);
-    const googleToken = decoded_token.jti;
-    const email = decoded_token.email;
-    // await authContext.googleLogin(email, googleToken, true);
-  };
+  // const googleLoginHandleSucceed = async (credentialResponse: any) => {
+  //   const decoded_token: any = jwt_decode(credentialResponse.credential);
+  //   console.log("decoded_token => ", decoded_token);
+  //   const googleToken = decoded_token.iat;
+  //   const email = decoded_token.email;
+  //   await authContext.googleLogin(email, googleToken, true);
+  // };
+
+  async function getIdToken(code: string) {
+    const response = await fetch("https://oauth2.googleapis.com/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        client_id:
+          "1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com", //"your-client-id",
+        client_secret: "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", //"your-client-secret",
+        redirect_uri: "http://localhost:3000",
+        grant_type: "authorization_code",
+        code: code,
+      }),
+    })
+      .then((response) => response.json())
+      .then(async (data) => {
+        const idToken = data.id_token;
+        const decoded_token: any = jwt_decode(idToken);
+        console.log("decoded_token.email", decoded_token.email);
+        await authContext.googleLogin(decoded_token.email, idToken);
+        navigate("/search");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  const googleLoginHandle = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: async (code: any) => {
+      await getIdToken(code.code);
+    },
+    onError: (errorResponse: any) => console.log(errorResponse),
+  });
 
   return (
     <div className="w-full h-screen flex">
@@ -209,26 +247,20 @@ const login: FC = () => {
               </div>
               <div className="flex justify-between py-6">
                 <div className="w-1/3 px-1">
-                  {/* <GoogleOAuthProvider clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com"> */}
-                  <div className="rounded-full bg-transparent hover:bg-[#979797] hover:cursor-pointer border-[#979797] border flex justify-center py-2">
-                    {/* <GoogleLogin
-                        onSuccess={(credentialResponse) =>
-                          googleLoginHandleSucceed(credentialResponse)
-                        }
-                        onError={() => console.log("google login failed!")}
-                        useOneTap
-                      /> */}
+                  <div
+                    className="rounded-full bg-transparent hover:bg-[#0053AA33] hover:cursor-pointer border-[#979797] border flex justify-center py-2"
+                    onClick={() => googleLoginHandle()}
+                  >
                     <img src={googleIcon} className="w-5 h-5" />
                   </div>
-                  {/* </GoogleOAuthProvider> */}
                 </div>
                 <div className="w-1/3 px-1">
-                  <div className="rounded-full bg-transparent hover:bg-[#979797] hover:cursor-pointer border-[#979797] border flex justify-center py-2">
+                  <div className="rounded-full bg-transparent hover:cursor-pointer border-[#979797] border flex justify-center py-2">
                     <img src={facebookIcon} />
                   </div>
                 </div>
                 <div className="w-1/3 px-1">
-                  <div className="rounded-full bg-transparent hover:bg-[#979797] hover:cursor-pointer border-[#979797] border flex justify-center py-2">
+                  <div className="rounded-full bg-transparent hover:cursor-pointer border-[#979797] border flex justify-center py-2">
                     <img src={appleIcon} />
                   </div>
                 </div>

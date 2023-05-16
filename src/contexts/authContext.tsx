@@ -8,6 +8,14 @@ export enum AuthStatus {
   SignedOut,
 }
 
+export enum SocialAuthStatus {
+  Loading,
+  GoogleSign,
+  FacebookSign,
+  AppleSign,
+  SignOut,
+}
+
 export interface IAuth {
   sessionInfo?: {
     username?: string;
@@ -52,6 +60,8 @@ export const AuthContext = React.createContext(defaultState);
 export const AuthIsSignedIn = ({ children }: Props) => {
   const { authStatus }: IAuth = useContext(AuthContext);
 
+  console.log("authStatus --> ", authStatus);
+
   return <>{authStatus === AuthStatus.SignedIn ? children : null}</>;
 };
 
@@ -65,6 +75,7 @@ const AuthProvider = ({ children }: Props) => {
   const [authStatus, setAuthStatus] = useState(AuthStatus.Loading);
   const [sessionInfo, setSessionInfo] = useState({});
   const [attrInfo, setAttrInfo] = useState([]);
+  const [socialStatus, setSocialStatus] = useState(SocialAuthStatus.Loading);
 
   useEffect(() => {
     async function getSessionInfo() {
@@ -90,10 +101,19 @@ const AuthProvider = ({ children }: Props) => {
         setAttrInfo(attr);
         setAuthStatus(AuthStatus.SignedIn);
       } catch (err) {
+        // console.log("useEffect authStatus error --> ", err);
         setAuthStatus(AuthStatus.SignedOut);
       }
     }
-    getSessionInfo();
+
+    if (
+      !localStorage.socialAuthStatus ||
+      localStorage.socialAuthStatus == "false"
+    )
+      getSessionInfo();
+    else {
+      setAuthStatus(AuthStatus.SignedIn);
+    }
   }, [setAuthStatus, authStatus]);
 
   if (authStatus === AuthStatus.Loading) {
@@ -202,8 +222,18 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   async function googleLogin(email: string, googleToken: string) {
-    // await cognito.googleLogin(email, googleToken);
-    setAuthStatus(AuthStatus.SignedIn);
+    try {
+      await cognito.googleLogin(email, googleToken);
+      setAuthStatus(AuthStatus.SignedIn);
+      setSocialStatus(SocialAuthStatus.GoogleSign);
+      window.localStorage.setItem("useremail", email);
+      window.localStorage.setItem("socialAuthStatus", "true");
+    } catch (err) {
+      setAuthStatus(AuthStatus.SignedOut);
+      setSocialStatus(SocialAuthStatus.SignOut);
+      window.localStorage.setItem("socialAuthStatus", "false");
+      throw err;
+    }
   }
 
   const state: IAuth = {

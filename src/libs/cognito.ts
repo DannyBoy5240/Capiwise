@@ -6,12 +6,12 @@ import {
 } from "amazon-cognito-identity-js";
 
 const AWS = require("aws-sdk");
-const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
+// const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 
-AWS.config.region = process.env.REACT_APP_AWS_REGION; // replace with your AWS region
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  IdentityPoolId: process.env.REACT_APP_AWS_IDENTITY_POOL,
-});
+// AWS.config.region = process.env.REACT_APP_AWS_REGION; // replace with your AWS region
+// AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+//   IdentityPoolId: process.env.REACT_APP_AWS_IDENTITY_POOL,
+// });
 
 const userPoolId = process.env.REACT_APP_USERPOOL_ID;
 const clientId = process.env.REACT_APP_CLIENT_ID;
@@ -262,35 +262,30 @@ export async function changePassword(oldPassword: string, newPassword: string) {
 
 export async function sendPhoneVerifyCode(phoneNumber: string) {
   return new Promise(function (resolve, reject) {
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
-    const attributeList = [];
-
-    const dataPhoneNumber = {
-      Name: "phone_number",
-      Value: "+14434223717", // your phone number here with +country code
-    };
-
-    const attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(
-      dataPhoneNumber
-    );
-
-    attributeList.push(attributePhoneNumber);
-
-    userPool.signUp(
-      "+14434223717",
-      "Qwer!234",
-      attributeList,
-      [],
-      function (err: any, result: any) {
-        if (err) {
-          alert(err.message || JSON.stringify(err));
-          return;
-        }
-        const cognitoUser = result.user;
-        console.log("user name is " + cognitoUser.getUsername());
-      }
-    );
+    // const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+    // const attributeList = [];
+    // const dataPhoneNumber = {
+    //   Name: "phone_number",
+    //   Value: "+14434223717", // your phone number here with +country code
+    // };
+    // const attributePhoneNumber = new AmazonCognitoIdentity.CognitoUserAttribute(
+    //   dataPhoneNumber
+    // );
+    // attributeList.push(attributePhoneNumber);
+    // userPool.signUp(
+    //   "+14434223717",
+    //   "Qwer!234",
+    //   attributeList,
+    //   [],
+    //   function (err: any, result: any) {
+    //     if (err) {
+    //       alert(err.message || JSON.stringify(err));
+    //       return;
+    //     }
+    //     const cognitoUser = result.user;
+    //     console.log("user name is " + cognitoUser.getUsername());
+    //   }
+    // );
   });
 }
 
@@ -388,33 +383,31 @@ export async function confirmPassword(email: string, verificationCode: string) {
 }
 
 export async function googleLogin(email: string, googleToken: string) {
-  currentUser = getCognitoUser(email);
+  return new Promise(function (resolve, reject) {
+    currentUser = getCognitoUser(email);
 
-  console.log("email -> ", email);
-  console.log("googleToken -> ", googleToken);
+    console.log("googleToken -> ", googleToken);
+    console.log("currentUser -> ", currentUser);
 
-  AWS.config.update({
-    region: "eu-north-1",
-    credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: process.env.REACT_APP_AWS_IDENTITY_POOL,
-    }),
-  });
+    AWS.config.region = "eu-north-1"; // your AWS region
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: "eu-north-1:e3008a85-1439-40c7-865b-35babe185210", // your identity pool id
+      Logins: {
+        "accounts.google.com": googleToken,
+      },
+    });
 
-  // const id_token = googleResponse.getAuthResponse().id_token;
-  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: process.env.REACT_APP_AWS_IDENTITY_POOL,
-    Logins: {
-      "accounts.google.com": googleToken,
-    },
-  });
-
-  //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
-  AWS.config.credentials.refresh((error: any) => {
-    if (error) {
-      console.error(error);
-    } else {
-      // Instantiate aws sdk service objects now that the credentials have been updated.
-      console.log("Successfully logged!");
-    }
+    // refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
+    AWS.config.credentials.refresh((error: any) => {
+      if (error) {
+        console.error(error);
+        reject(error);
+      } else {
+        console.log("Successfully logged in!");
+        resolve("succeed");
+      }
+    });
+  }).catch((err: any) => {
+    throw err;
   });
 }

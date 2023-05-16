@@ -20,8 +20,8 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
   const [stockSummary, setStockSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
 
-  const [currentPrice, setCurrentPrice] = useState(0);
-  const [fairPrice, setFairPrice] = useState(0);
+  const [currentPrice, setCurrentPrice] = useState(-1);
+  const [fairPrice, setFairPrice] = useState(-1);
 
   useEffect(() => {
     getAnalysticInfo();
@@ -81,7 +81,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
           <div className="py-3 text-sm">Share Price vs. Fair Value</div>
           <div className="flex justify-between items-center">
             <div className="text-xs font-bold flex">
-              {currentPrice == 0 || fairPrice == 0 ? (
+              {currentPrice == -1 || fairPrice == -1 ? (
                 <div className="text-white">{code}</div>
               ) : currentPrice == fairPrice ? (
                 <div className="text-[#F1B90B]">{code}</div>
@@ -93,13 +93,13 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               <div className="ml-2">Fair Price</div>
             </div>
             <div className="text-sm font-bold">
-              {fairPrice == 0 ? "No data available" : "US$" + fairPrice}
+              {fairPrice == -1 ? "No data available" : "US$" + fairPrice}
             </div>
           </div>
           <div className="flex justify-between items-center">
             <div className="text-xs">Current Price Valuation</div>
             <div className="text-sm font-bold">
-              {currentPrice == 0 || fairPrice == 0 ? (
+              {currentPrice == -1 || fairPrice == -1 ? (
                 <div className="text-white">No data available</div>
               ) : currentPrice == fairPrice ? (
                 <div className="text-[#F1B90B]">Fair Value</div>
@@ -121,35 +121,54 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             </div>
           </div>
           <div className="h-[90px] mt-8 relative">
-            {fairPrice == 0 || currentPrice == 0 ? (
-              <div className="h-[72px]"></div>
-            ) : (
-              <StockGradientSlider progress={getCurrentPriceValuation()} />
-            )}
-            <div
-              className={
-                "text-xs absolute z-50 mt-[-84px] py-2 bg-[#0B1620AA] text-right pr-3"
-              }
-              style={{ width: getCurrentPriceBarWidth() + "%" }}
-            >
-              <div>Current Price</div>
-              <div className="font-bold">
-                US$
-                {currentPrice}
+            {fairPrice == -1 || currentPrice == -1 ? (
+              <div>
+                {/* <div className="h-[72px]"></div> */}
+                <StockGradientSlider progress={50} />
               </div>
-            </div>
+            ) : (
+              <div>
+                <StockGradientSlider progress={getCurrentPriceValuation()} />
+                <div
+                  className={
+                    "text-xs absolute z-50 mt-[-84px] py-2 bg-[#0B1620AA] text-right pr-3"
+                  }
+                  style={{ width: getCurrentPriceBarWidth() + "%" }}
+                >
+                  <div>
+                    <div>Current Price</div>
+                    <div className="font-bold">
+                      US$
+                      {currentPrice}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <div className="text-xs">
             <div className="flex p-1 items-center">
               <div style={{ transform: "scale(2)" }}>
-                {currentPrice == 0 || fairPrice == 0 ? (
-                  <img src={nodataIcon} width={22} height={22} />
+                {currentPrice == -1 || fairPrice == -1 ? (
+                  <img
+                    src={nodataIcon}
+                    style={{ width: "20px", height: "20px" }}
+                  />
                 ) : currentPrice < fairPrice ? (
-                  <img src={undervaluedIcon} width={22} height={22} />
+                  <img
+                    src={undervaluedIcon}
+                    style={{ width: "20px", height: "20px" }}
+                  />
                 ) : currentPrice > fairPrice ? (
-                  <img src={overvaluedIcon} width={22} height={22} />
+                  <img
+                    src={overvaluedIcon}
+                    style={{ width: "20px", height: "20px" }}
+                  />
                 ) : (
-                  <img src={fairvalueIcon} width={22} height={22} />
+                  <img
+                    src={fairvalueIcon}
+                    style={{ width: "20px", height: "20px" }}
+                  />
                 )}
               </div>
               <div className="pl-3">
@@ -178,14 +197,26 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
             </div>
             <div className="flex p-1 items-center">
               <div style={{ transform: "scale(2)" }}>
-                {currentPrice == 0 || fairPrice == 0 ? (
-                  <img src={nodataIcon} width={22} height={22} />
+                {currentPrice == -1 || fairPrice == -1 ? (
+                  <img
+                    src={nodataIcon}
+                    style={{ width: "20px", height: "20px" }}
+                  />
                 ) : currentPrice < fairPrice ? (
-                  <img src={undervaluedIcon} width={22} height={22} />
+                  <img
+                    src={undervaluedIcon}
+                    style={{ width: "20px", height: "20px" }}
+                  />
                 ) : currentPrice > fairPrice ? (
-                  <img src={overvaluedIcon} width={22} height={22} />
+                  <img
+                    src={overvaluedIcon}
+                    style={{ width: "20px", height: "20px" }}
+                  />
                 ) : (
-                  <img src={fairvalueIcon} width={22} height={22} />
+                  <img
+                    src={fairvalueIcon}
+                    style={{ width: "20px", height: "20px" }}
+                  />
                 )}
               </div>
               <div className="pl-3">
