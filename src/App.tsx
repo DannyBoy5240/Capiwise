@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 
 import AuthProvider, {
   AuthIsSignedIn,
@@ -31,6 +31,7 @@ import ResetPassword from "./routes/auth/resetPassword";
 import SearchStock from "./pages/SearchStock";
 import ETFSummary from "./pages/ETFSummary";
 import StockSummary from "./pages/StockSummary";
+import StockDetailsPage from "./pages/StockDetailsPage";
 
 import MenuProfileSettings from "./components/MenuProfileSettings";
 import MenuBar from "./components/MenuBar";
@@ -44,8 +45,8 @@ const SignInRoute: React.FunctionComponent = () => (
     <GoogleOAuthProvider clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com">
       <Routes>
         {/* <Route path="/signup" element={<SignUp />} />
-      <Route path="/verify" element={<VerifyCode />} />
-      <Route path="/forgotpassword" element={<ForgotPassword />} /> */}
+        <Route path="/verify" element={<VerifyCode />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} /> */}
 
         {/* Authorization */}
         <Route path="/" element={<Login />} />
@@ -117,7 +118,25 @@ const MainRoute: React.FunctionComponent = () => (
           </div>
         }
       />
-      {/* <Route path="/changepassword" element={<ChangePassword />} /> */}
+      <Route
+        path="/stockdetails"
+        element={
+          <div className="flex flex-col h-screen">
+            <div className="flex bg-[#0B1620] justify-between items-center p-6">
+              <div>
+                <img src={Logo} />
+              </div>
+              <SearchBox />
+              <MenuProfileSettings />
+            </div>
+            <div>
+              <MenuBar />
+              <StockDetailsPage />
+            </div>
+            <Footer />
+          </div>
+        }
+      />
     </Routes>
   </BrowserRouter>
 );

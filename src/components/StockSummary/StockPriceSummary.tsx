@@ -146,7 +146,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                   stockSummary
                     ? stockSummary["Technicals::52WeekHigh"]["price"]
                     : 0,
-                  stockLiveData ? stockLiveData["high"] : 0
+                  stockLiveData ? stockLiveData["close"] : 0
                 )}
               />
               <div className="flex justify-between text-white text-xs">
