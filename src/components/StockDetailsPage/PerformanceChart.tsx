@@ -145,7 +145,7 @@ const PerformanceChart = () => {
               </div>
               <div className="pl-2 flex flex-wrap items-center">
                 <span className="text-[#2EBD85]">Growing Profit Margin: </span>
-                AAPL's current net profit margins (21.7%) are higher than last
+                AAPL`s current net profit margins (21.7%) are higher than last
                 year (21.5%).
               </div>
             </div>
