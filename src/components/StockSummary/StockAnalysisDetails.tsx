@@ -72,7 +72,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
   };
 
   return (
-    <div className="bg-[#0B1620] text-white md:ml-6 mt-6 md:mt-0 p-5 w-full md:w-1/2 lg:w-1/4 flex flex-col justify-between">
+    <div className="h-full bg-[#0B1620] text-white mt-6 md:mt-0 p-5 flex flex-col justify-between">
       <div>
         <div className="text-base font-bold pb-3 pl-1 border-b-2 border-b-[#252A2D]">
           Valuation

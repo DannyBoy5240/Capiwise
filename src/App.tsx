@@ -14,15 +14,6 @@ import {
   useGoogleOneTapLogin,
 } from "@react-oauth/google";
 
-// import Home from "./routes/home";
-// import SignIn from "./routes/auth/signIn";
-// import SignUp from "./routes/auth/signUp";
-// import VerifyCode from "./routes/auth/verify";
-// import RequestCode from "./routes/auth/requestCode";
-
-// import ForgotPassword from "./routes/auth/forgotPassword";
-// import ChangePassword from "./routes/auth/changePassword";
-
 import Login from "./routes/auth/login";
 import Register from "./routes/auth/register";
 import ForgetPassword from "./routes/auth/forgetPassword";
@@ -31,7 +22,6 @@ import ResetPassword from "./routes/auth/resetPassword";
 import SearchStock from "./pages/SearchStock";
 import ETFSummary from "./pages/ETFSummary";
 import StockSummary from "./pages/StockSummary";
-import StockDetailsPage from "./pages/StockDetailsPage";
 
 import MenuProfileSettings from "./components/MenuProfileSettings";
 import MenuBar from "./components/MenuBar";
@@ -44,11 +34,6 @@ const SignInRoute: React.FunctionComponent = () => (
   <BrowserRouter>
     <GoogleOAuthProvider clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com">
       <Routes>
-        {/* <Route path="/signup" element={<SignUp />} />
-        <Route path="/verify" element={<VerifyCode />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} /> */}
-
-        {/* Authorization */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
@@ -113,25 +98,6 @@ const MainRoute: React.FunctionComponent = () => (
             <div>
               <MenuBar />
               <StockSummary />
-            </div>
-            <Footer />
-          </div>
-        }
-      />
-      <Route
-        path="/stockdetails"
-        element={
-          <div className="flex flex-col h-screen">
-            <div className="flex bg-[#0B1620] justify-between items-center p-6">
-              <div>
-                <img src={Logo} />
-              </div>
-              <SearchBox />
-              <MenuProfileSettings />
-            </div>
-            <div>
-              <MenuBar />
-              <StockDetailsPage />
             </div>
             <Footer />
           </div>

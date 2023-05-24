@@ -395,11 +395,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
   };
 
   return (
-    <div
-      className={
-        isFullScreen ? "full-screen" : "p-6 bg-[#0B1620] w-full md:w-1/2"
-      }
-    >
+    <div className={isFullScreen ? "full-screen" : "h-full p-5 bg-[#0B1620]"}>
       <div className="flex justify-between items-center">
         <div className="text-sm mb-2" id="modeGroup">
           <button

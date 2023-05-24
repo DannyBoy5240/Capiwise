@@ -88,13 +88,13 @@ const SearchBox: FC = () => {
     <div className="grow flex items-center justify-center">
       <div
         className={
-          "relative rounded-full w-11/12 md:w-7/12 lg:w-1/2 " +
+          "relative rounded-full w-11/12 md:w-9/12 lg:w-7/12 " +
           (searchTerm == "" ? "border-2 border-[#979797] " : "")
         }
       >
         <input
           className={
-            "py-3 text-base text-white focus:outline-none rounded-full border-[#979797] w-full pl-5 pr-20 " +
+            "py-1 text-base text-white focus:outline-none rounded-full border-[#979797] w-full pl-5 pr-20 " +
             (searchTerm != "" ? "bg-[#0B1620]" : "bg-transparent")
           }
           style={{
