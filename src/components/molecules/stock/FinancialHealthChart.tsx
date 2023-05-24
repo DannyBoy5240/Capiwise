@@ -174,7 +174,7 @@ const FinancialHealthChart = () => {
             <div className="pl-2 flex items-center">
               <span className="text-[#2EBD85]">Debt Coverage: </span>
               <span className="pl-1">
-                AAPL's debt is well covered by operating cash flow (87%).
+                AAPL`s debt is well covered by operating cash flow (87%).
               </span>
             </div>
           </div>
