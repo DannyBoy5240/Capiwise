@@ -11,7 +11,7 @@ const FundermentalChart = () => {
         <div className="flex flex-col justify-end">
           <div className="text-sm text-white">NasdaqGS:AAPL</div>
           <div className="text-xs text-[#979797]">
-            Provided by S&P Global Market Intelligence ​as of 04/23/2023
+            Provided by S&P Global Market Intelligence as of 04/23/2023
           </div>
         </div>
       </div>

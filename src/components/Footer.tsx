@@ -22,7 +22,7 @@ const Footer: FC = () => {
               <img src={logoIcon} />
             </div>
             <div className="pr-2 py-2 text-[#979797] font-thin">
-              The "CapiWise App" is about a pioneer of AI checking the valuation
+              The `CapiWise App` is about a pioneer of AI checking the valuation
               of a large variety of stocks, ETFs, with a fast, reliable, and
               easy-to-use platform. Free to try, quick to sign up.
             </div>
@@ -84,7 +84,7 @@ const Footer: FC = () => {
           <div className="pt-8">
             <div className="font-bold">Support</div>
             <div className="pt-2">
-              <div>FAQ's</div>
+              <div>FAQ`s</div>
               <div>Help centre</div>
               <div>Contact us</div>
             </div>
@@ -112,7 +112,7 @@ const Footer: FC = () => {
                 <div className="text-white">
                   Scan this code with
                   <br />
-                  your phone's camera
+                  your phone`s camera
                 </div>
               </div>
             </div>
