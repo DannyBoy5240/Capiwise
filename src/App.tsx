@@ -61,7 +61,7 @@ const MainRoute: React.FunctionComponent = () => (
                 <SearchStock />
               </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         }
       />
@@ -108,14 +108,14 @@ const MainRoute: React.FunctionComponent = () => (
 );
 
 const App: React.FunctionComponent = () => (
-  <AuthProvider>
-    <AuthIsSignedIn>
-      <MainRoute />
-    </AuthIsSignedIn>
-    <AuthIsNotSignedIn>
-      <SignInRoute />
-    </AuthIsNotSignedIn>
-  </AuthProvider>
+  // <AuthProvider>
+  // <AuthIsSignedIn>
+  <MainRoute />
+  // </AuthIsSignedIn>
+  // <AuthIsNotSignedIn>
+  // <SignInRoute />
+  // </AuthIsNotSignedIn>
+  // </AuthProvider>
 );
 
 export default App;

@@ -94,7 +94,7 @@ const SearchBox: FC = () => {
       >
         <input
           className={
-            "py-1 text-base text-white focus:outline-none rounded-full border-[#979797] w-full pl-5 pr-20 " +
+            "py-3 text-base text-white focus:outline-none rounded-full border-[#979797] w-full pl-5 pr-20 " +
             (searchTerm != "" ? "bg-[#0B1620]" : "bg-transparent")
           }
           style={{
