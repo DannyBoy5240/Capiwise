@@ -148,27 +148,15 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
           </div>
           <div className="text-xs">
             <div className="flex p-1 items-center">
-              <div style={{ transform: "scale(2)" }}>
+              <div>
                 {currentPrice == -1 || fairPrice == -1 ? (
-                  <img
-                    src={nodataIcon}
-                    style={{ width: "20px", height: "20px" }}
-                  />
+                  <img src={nodataIcon} className="max-w-none w-5 h-5" />
                 ) : currentPrice < fairPrice ? (
-                  <img
-                    src={undervaluedIcon}
-                    style={{ width: "20px", height: "20px" }}
-                  />
+                  <img src={undervaluedIcon} className="max-w-none w-5 h-5" />
                 ) : currentPrice > fairPrice ? (
-                  <img
-                    src={overvaluedIcon}
-                    style={{ width: "20px", height: "20px" }}
-                  />
+                  <img src={overvaluedIcon} className="max-w-none w-5 h-5" />
                 ) : (
-                  <img
-                    src={fairvalueIcon}
-                    style={{ width: "20px", height: "20px" }}
-                  />
+                  <img src={fairvalueIcon} className="max-w-none w-5 h-5" />
                 )}
               </div>
               <div className="pl-3">
@@ -196,27 +184,15 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
               </div>
             </div>
             <div className="flex p-1 items-center">
-              <div style={{ transform: "scale(2)" }}>
+              <div>
                 {currentPrice == -1 || fairPrice == -1 ? (
-                  <img
-                    src={nodataIcon}
-                    style={{ width: "20px", height: "20px" }}
-                  />
+                  <img src={nodataIcon} className="max-w-none w-5 h-5" />
                 ) : currentPrice < fairPrice ? (
-                  <img
-                    src={undervaluedIcon}
-                    style={{ width: "20px", height: "20px" }}
-                  />
+                  <img src={undervaluedIcon} className="max-w-none w-5 h-5" />
                 ) : currentPrice > fairPrice ? (
-                  <img
-                    src={overvaluedIcon}
-                    style={{ width: "20px", height: "20px" }}
-                  />
+                  <img src={overvaluedIcon} className="max-w-none w-5 h-5" />
                 ) : (
-                  <img
-                    src={fairvalueIcon}
-                    style={{ width: "20px", height: "20px" }}
-                  />
+                  <img src={fairvalueIcon} className="max-w-none w-5 h-5" />
                 )}
               </div>
               <div className="pl-3">
