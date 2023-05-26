@@ -172,7 +172,7 @@ const PerformanceChart = () => {
   return (
     <div className="bg-[#0B1620] p-4 h-full">
       <div className="border-b-2 border-b-[#252A2D] py-2 text-base font-bold">
-        Performance
+        Fees
       </div>
       <div className="flex py-2">
         <div className="w-2/3 flex flex-col pr-2 border-r-2 border-r-[#252A2D] h-full">

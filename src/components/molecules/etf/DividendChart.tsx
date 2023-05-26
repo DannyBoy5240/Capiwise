@@ -238,8 +238,8 @@ const DividendChart = () => {
           const chart = context.chart;
           const ctx = chart.canvas.getContext("2d");
           const gradient = ctx.createLinearGradient(0, 0, 0, max_datasets);
-          gradient.addColorStop(0, "rgba(28, 166, 94, 0.6)");
-          gradient.addColorStop(1, "rgba(28, 166, 94, 0.1)");
+          gradient.addColorStop(0, "rgba(46, 189, 133, 0.78)");
+          gradient.addColorStop(1, "rgba(46, 189, 133, 0.08)");
           return gradient;
         },
         borderWidth: 1,
@@ -253,12 +253,12 @@ const DividendChart = () => {
           const chart = context.chart;
           const ctx = chart.canvas.getContext("2d");
           const gradient = ctx.createLinearGradient(0, 0, 0, max_datasetsA);
-          gradient.addColorStop(0, "rgba(184, 185, 187, 0.78)");
-          gradient.addColorStop(1, "rgba(184, 185, 187, 0.1)");
+          gradient.addColorStop(0, "rgba(237, 137, 40, 0.78)");
+          gradient.addColorStop(1, "rgba(237, 137, 40, 0.1)");
           return gradient;
         },
         borderWidth: 1,
-        borderColor: "#B8B9BB",
+        borderColor: "#ED8928",
         // stack: "Stack 1",
       },
     ],
@@ -289,102 +289,7 @@ const DividendChart = () => {
         </div>
       </div>
       <div className="grow flex py-2">
-        <div className="w-1/3 text-sm text-white">
-          <div className="text-white py-2">Strength Dividend Yield</div>
-          <div className="py-2">
-            <div className="py-3 font-medium">AAPL</div>
-            <div className="flex w-full items-center">
-              <div
-                style={{
-                  width: "6.2%",
-                  height: "26px",
-                  background: "#0F69FE",
-                }}
-              ></div>
-              <div className="text-[28px] pl-2">0.62%</div>
-            </div>
-            <div className="py-2 text-xs text-[#979797]">Ann. Div. / Yield</div>
-          </div>
-          <div className="py-2">
-            <div className="py-3 font-medium">Market Average</div>
-            <div className="flex w-full items-center">
-              <div
-                style={{
-                  width: "23%",
-                  height: "26px",
-                  background: "#B8B9BB",
-                }}
-              ></div>
-              <div className="text-[28px] pl-2">2.38%</div>
-            </div>
-            <div className="py-2 text-xs text-[#979797]">Ann. Div. / Yield</div>
-          </div>
-        </div>
-        <div className="w-1/3 px-2 border-l border-r border-l-[#252A2D] border-r-[#252A2D]">
-          <div className="py-2">
-            <div>Sustainability</div>
-            <div className="text-xs text-[#979797]">Dividend Payout Ratio</div>
-          </div>
-          <div className="py-3 flex">
-            <div className="relative w-1/2 pr-2">
-              <Doughnut options={options1} data={data1} />
-              <div className="text-xs text-center pt-2 pb-1">
-                Last Year Payout
-              </div>
-              <div className="text-[10px] text-center text-[#979797]">
-                (12 Months)
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  top: "50%",
-                  left: 0,
-                  textAlign: "center",
-                  marginTop: "-36px",
-                  lineHeight: "20px",
-                }}
-                className="pr-2"
-              >
-                <span>24%</span>
-              </div>
-            </div>
-            <div className="relative w-1/2 pl-2">
-              <Doughnut options={options1} data={data1} />
-              <div className="text-xs text-center pt-2 pb-1">
-                Current Payout
-              </div>
-              <div className="text-[10px] text-center text-[#979797]">
-                (12 Months)
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  top: "50%",
-                  left: 0,
-                  textAlign: "center",
-                  marginTop: "-36px",
-                  lineHeight: "20px",
-                }}
-                className="pl-2"
-              >
-                22%
-              </div>
-            </div>
-          </div>
-          <div className="py-2 text-xs">
-            <div className="flex items-center">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#2EBD85]"></div>
-              <div className="px-2">Paid as dividend</div>
-            </div>
-            <div className="flex items-center">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#B8B9BB]"></div>
-              <div className="px-2">Earnings retained</div>
-            </div>
-          </div>
-        </div>
-        <div className="w-1/3 pl-2">
+        <div className="w-2/3 pr-2">
           <div className="py-2">
             <div>Growth of Dividend</div>
             <div className="text-xs text-[#979797]">
@@ -394,15 +299,46 @@ const DividendChart = () => {
           <div className="py-2">
             <Line options={options} data={data} />
           </div>
-          <div className="py-2 text-xs">
+          <div className="flex justify-end py-2 text-xs">
             <div className="flex items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-[#0F69FE]"></div>
-              <div className="px-2">AAPL</div>
+              <div className="px-2">QQQ</div>
             </div>
             <div className="flex items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-[#B8B9BB]"></div>
               <div className="px-2">Market Average</div>
             </div>
+          </div>
+        </div>
+        <div className="w-1/3 pl-2 text-sm text-white">
+          <div className="text-white py-2">Strength Dividend Yield</div>
+          <div className="py-2">
+            <div className="py-3 font-medium">QQQ</div>
+            <div className="flex w-full items-center">
+              <div
+                style={{
+                  width: "5.5%",
+                  height: "26px",
+                  background: "#0F69FE",
+                }}
+              ></div>
+              <div className="text-[28px] pl-2">0.55%</div>
+            </div>
+            <div className="py-2 text-xs text-[#979797]">Ann. Div. / Yield</div>
+          </div>
+          <div className="py-2">
+            <div className="py-3 font-medium">Market Average</div>
+            <div className="flex w-full items-center">
+              <div
+                style={{
+                  width: "18%",
+                  height: "26px",
+                  background: "#B8B9BB",
+                }}
+              ></div>
+              <div className="text-[28px] pl-2">1.8%</div>
+            </div>
+            <div className="py-2 text-xs text-[#979797]">Ann. Div. / Yield</div>
           </div>
         </div>
       </div>

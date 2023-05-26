@@ -28,7 +28,7 @@ const EarningsChart = () => {
   function generateRandom() {
     const myArray: number[] = [];
     labels.map((idx) => {
-      myArray.push(Math.floor(Math.random() * 500) + 500);
+      myArray.push(Math.floor(Math.random() * 5));
     });
     return myArray;
   }
@@ -74,12 +74,12 @@ const EarningsChart = () => {
       {
         data: generateRandom(),
         backgroundColor: "#B8B9BB",
-        // stack: "Stack 0",
+        stack: "Stack 0",
       },
       {
         data: generateRandom(),
         backgroundColor: "#0F69FE",
-        // stack: "Stack 1",
+        stack: "Stack 1",
       },
     ],
   };
@@ -87,16 +87,14 @@ const EarningsChart = () => {
   return (
     <div className="bg-[#0B1620] p-4 h-full">
       <div className="border-b-2 border-b-[#252A2D] py-2 text-base font-bold">
-        Earnings
+        Performance
       </div>
       <div className="flex py-2">
         <div className="grow flex flex-col pr-2 border-r-2 border-r-[#252A2D]">
           <div className="font-medium text-sm pt-2 pb-1">
-            Earnings Per Share
+            Average Annual Returns
           </div>
-          <div className="text-[#979797] text-xs">
-            I/B/E/S Consensus Estimates vs Adjusted Actuals
-          </div>
+          <div className="text-[#979797] text-xs">AS OF 03/31/2021</div>
           <div className="py-2 grow flex items-center">
             <Bar options={options} data={data} />
           </div>
@@ -104,11 +102,11 @@ const EarningsChart = () => {
             <div className="flex text-sm">
               <div className="flex items-center">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#B8B9BB]"></div>
-                <div className="pl-2">Estimation</div>
+                <div className="pl-2">QQQ</div>
               </div>
               <div className="flex items-center p-3">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#0F69FE]"></div>
-                <div className="pl-2">Actual</div>
+                <div className="pl-2">NASDAQ 100 TR USD</div>
               </div>
             </div>
           </div>
@@ -118,52 +116,36 @@ const EarningsChart = () => {
         </div>
         <div className="grow pl-2 text-xs">
           <div className="text-[#979797] pt-2 pb-1">
-            <span className="text-white text-sm">Earnings Metrics</span> GA AP
+            <span className="text-white text-sm">How is it performing?</span>
           </div>
-          <div className="text-[#979797]">
-            vs. Industry: Technology Hardware, Storage & Periphera
-          </div>
+          <div className="text-[#979797]">QQQ vs. Index</div>
           <div className="text-sm text-white font-bold">
             <div className="flex border-b-2 border-b-white">
-              <div className="w-2/3 flex justify-end">APPL</div>
-              <div className="w-1/3 flex text-right">Industry Average</div>
+              <div className="w-2/3 flex justify-end">QQQ</div>
+              <div className="w-1/3 flex text-right">NASDAQ 100 R USD</div>
             </div>
             <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
-              <div className="w-1/3 text-left">
-                EPS<span className="font-normal text-xs">(TTM)</span>
-              </div>
-              <div className="w-1/3 text-right">$3.69</div>
-              <div className="w-1/3 text-right">$3.53</div>
+              <div className="w-1/3 text-left">1 Year</div>
+              <div className="w-1/3 text-right">+68.66%</div>
+              <div className="w-1/3 text-right">+68.88%</div>
             </div>
             <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
-              <div className="w-1/3 text-left">
-                P/E<span className="font-normal text-xs">(TTM)</span>
-              </div>
-              <div className="w-1/3 text-right">36.38</div>
-              <div className="w-1/3 text-right">35.18</div>
+              <div className="w-1/3 text-left">3 Year</div>
+              <div className="w-1/3 text-right">+26.83%</div>
+              <div className="w-1/3 text-right">+27.01%</div>
             </div>
             <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
-              <div className="w-1/3 text-left">
-                P/E<span className="font-normal text-xs">(5-Year Avg)</span>
-              </div>
-              <div className="w-1/3 text-right">18.82</div>
-              <div className="w-1/3 text-right">19.96</div>
+              <div className="w-1/3 text-left">5 Year</div>
+              <div className="w-1/3 text-right">+24.97%</div>
+              <div className="w-1/3 text-right">+25.22%</div>
             </div>
             <div className="flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
-              <div className="w-1/3 text-left">
-                <div>EPS Growth</div>
-                <div className="font-normal text-xs">(TTM vs Prior TTM)</div>
-              </div>
-              <div className="w-1/3 text-right text-[#2EBD85]">+16.67%</div>
-              <div className="w-1/3 text-right text-[#2EBD85]">+12.28%</div>
+              <div className="w-1/3 text-left">10 Year</div>
+              <div className="w-1/3 text-right text-[#2EBD85]">+19.92%</div>
+              <div className="w-1/3 text-right text-[#2EBD85]">+20.18%</div>
             </div>
             <div className="flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
-              <div className="w-1/3 text-left">
-                <div>EPS Growth</div>
-                <div className="font-normal text-xs">
-                  (Last Qtr vs Same Qtr Prior Year)
-                </div>
-              </div>
+              <div className="w-1/3 text-left">Life</div>
               <div className="w-1/3 text-right text-[#2EBD85]">+34.67%</div>
               <div className="w-1/3 text-right text-[#2EBD85]">+38.72%</div>
             </div>

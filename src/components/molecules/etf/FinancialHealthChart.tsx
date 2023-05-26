@@ -173,7 +173,7 @@ const FinancialHealthChart = () => {
   return (
     <div className="bg-[#0B1620] p-4 h-full">
       <div className="border-b-2 border-b-[#252A2D] py-2 text-base font-bold">
-        Financial Health
+        Risk-Return Comparison
       </div>
       <div className="flex py-2">
         <div className="flex flex-col">
