@@ -7,10 +7,10 @@ import AnalysisDetails from "../components/ETFSummary/AnalysisDetails";
 import SummaryChart from "../components/molecules/SummaryChart";
 
 import FundementalChart from "../components/molecules/etf/FundermentalChart";
-import EarningsChart from "../components/molecules/etf/EarningsChart";
-import PerformanceChart from "../components/molecules/etf/PerformanceChart";
+import PerformanceeChart from "../components/molecules/etf/PerformanceeChart";
 import FinancialHealthChart from "../components/molecules/etf/FinancialHealthChart";
 import DividendChart from "../components/molecules/etf/DividendChart";
+import FeeChart from "../components/molecules/etf/FeeChart";
 
 import TopHoldings from "../components/molecules/etf/TopHoldings";
 import PortfolioComposition from "../components/molecules/etf/PortfolioComposition";
@@ -41,7 +41,7 @@ const ETFSummary = () => {
       {/* Earnings & Performance Chart */}
       <div className="flex py-2 justify-items-stretch">
         <div className="w-1/2 pr-2">
-          <EarningsChart />
+          <PerformanceeChart />
         </div>
         <div className="w-1/2 pl-2">
           <FinancialHealthChart />
@@ -53,7 +53,7 @@ const ETFSummary = () => {
           <DividendChart />
         </div>
         <div className="w-1/2 pl-2">
-          <PerformanceChart />
+          <FeeChart />
         </div>
       </div>
       {/* Top Holdings & Portfolio Composition */}

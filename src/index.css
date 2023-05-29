@@ -126,3 +126,15 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.netexpensesratio-progress {
+  background: linear-gradient(
+    90deg,
+    #079325 29.05%,
+    #bb9d13 46.08%,
+    #c36816 63.11%,
+    #d1041b 69.55%,
+    #990313 96.17%
+  );
+  height: 10px;
+}
