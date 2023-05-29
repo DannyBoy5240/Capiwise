@@ -48,7 +48,7 @@ const PortfolioComposition = () => {
       </div>
       {curStatus == 0 ? (
         <div className="text-sm text-white">
-          <div>QQQ doesn't have a specific geographic objective</div>
+          <div>QQQ doesn`t have a specific geographic objective</div>
           <div className="py-2 flex">
             <div className="w-1/2 pr-2">
               <div className="py-1 border-b border-[#252A2D]">
