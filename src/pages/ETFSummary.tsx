@@ -11,10 +11,11 @@ import EarningsChart from "../components/molecules/etf/EarningsChart";
 import PerformanceChart from "../components/molecules/etf/PerformanceChart";
 import FinancialHealthChart from "../components/molecules/etf/FinancialHealthChart";
 import DividendChart from "../components/molecules/etf/DividendChart";
-import FundCharacteristics from "../components/molecules/etf/FundCharacteristics";
 
 import TopHoldings from "../components/molecules/etf/TopHoldings";
 import PortfolioComposition from "../components/molecules/etf/PortfolioComposition";
+import FundCharacteristics from "../components/molecules/etf/FundCharacteristics";
+import AnalystRatings from "../components/molecules/etf/AnalystRatings";
 
 import CompanyProfile from "../components/molecules/etf/CompanyProfile";
 import TechnicalAnalysis from "../components/molecules/etf/TechnicalAnalysis";
@@ -70,7 +71,7 @@ const ETFSummary = () => {
           <CompanyProfile />
         </div>
         <div className="w-1/4 px-2">
-          <FundCharacteristics />
+          <AnalystRatings />
         </div>
         <div className="w-1/4 px-2">
           <FundCharacteristics />
