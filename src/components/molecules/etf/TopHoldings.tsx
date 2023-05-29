@@ -1,5 +1,35 @@
 import { FC } from "react";
 
+import { Doughnut } from "react-chartjs-2";
+
+export const options = {
+  plugins: {
+    legend: {
+      display: false,
+      position: "top" as const,
+    },
+    title: {
+      display: false,
+      text: "Earning Chart",
+    },
+    tooltip: {
+      enabled: false,
+    },
+  },
+  responsive: true,
+};
+
+export const data = {
+  labels: ["", ""],
+  datasets: [
+    {
+      data: [50.95, 49.05],
+      backgroundColor: ["rgba(46, 189, 133)", "rgba(184, 185, 187)"],
+      borderWidth: 0,
+    },
+  ],
+};
+
 const TopHoldings = () => {
   return (
     <div className="bg-[#0B1620] flex flex-col p-4 h-full">
@@ -13,9 +43,14 @@ const TopHoldings = () => {
           </div>
           <div className="text-[10px] text-[#979797]">As of 02/28/2021</div>
         </div>
-        <div>
-          <div className="text-sm text-white font-bold">50.95%</div>
-          <div className="text-[10px] text-[#979797]">of 102 total</div>
+        <div className="flex">
+          <div className="pt-1">
+            <div className="text-sm text-white font-bold">50.95%</div>
+            <div className="text-[10px] text-[#979797]">of 102 total</div>
+          </div>
+          <div className="pl-2 w-12 h-12">
+            <Doughnut options={options} data={data} />
+          </div>
         </div>
       </div>
       {/* Symbol + Weight */}

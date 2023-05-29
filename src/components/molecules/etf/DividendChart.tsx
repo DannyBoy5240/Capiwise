@@ -196,19 +196,19 @@ const DividendChart = () => {
     scales: {
       x: {
         ticks: {
-          maxTicksLimit: 5,
+          maxTicksLimit: 10,
         },
         grid: {
           color: "transparent",
         },
       },
       y: {
-        // beginAtZero: true,
         grid: {
           lineWidth: 0.6,
           color: "#E7EBEF23",
         },
         ticks: {
+          maxTicksLimit: 3,
           callback: function (value: any, index: any, values: any) {
             // Append your subtext here
             return `${value}%`;
@@ -277,11 +277,11 @@ const DividendChart = () => {
       <div className="flex text-sm border-b-2 border-b-[#252A2D]">
         <div className="w-1/3 my-2">
           <div className="text-[#979797]">Dividend Amount (Recent)</div>
-          <div className="font-bold">$0.21</div>
+          <div className="font-bold">$0.40</div>
         </div>
         <div className="w-1/3 px-2 border-l border-r border-l-[#252A2D] border-r-[#252A2D] my-2">
           <div className="text-[#979797]">Pay Date</div>
-          <div className="font-bold">02/11/2022</div>
+          <div className="font-bold">03/31/2022</div>
         </div>
         <div className="w-1/3 pl-2 my-2">
           <div className="text-[#979797]">Dividend Frequency</div>
@@ -289,25 +289,30 @@ const DividendChart = () => {
         </div>
       </div>
       <div className="grow flex py-2">
-        <div className="w-2/3 pr-2">
+        <div className="flex flex-col w-2/3 pr-2 border-r border-r-[#252A2D]">
           <div className="py-2">
-            <div>Growth of Dividend</div>
+            <div className="text-sm">Growth of Dividend</div>
             <div className="text-xs text-[#979797]">
               Annualized Dividend (YoY % chg.)
             </div>
           </div>
-          <div className="py-2">
-            <Line options={options} data={data} />
+          <div className="grow flex flex-col justify-center">
+            <div className="py-4 h-full">
+              <Line options={options} data={data} />
+            </div>
+            <div className="flex justify-end py-2 text-xs">
+              <div className="flex items-center">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#0F69FE]"></div>
+                <div className="px-2">QQQ</div>
+              </div>
+              <div className="flex items-center pl-6">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#B8B9BB]"></div>
+                <div className="px-2">Market Average</div>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-end py-2 text-xs">
-            <div className="flex items-center">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#0F69FE]"></div>
-              <div className="px-2">QQQ</div>
-            </div>
-            <div className="flex items-center">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#B8B9BB]"></div>
-              <div className="px-2">Market Average</div>
-            </div>
+          <div className="text-[10px] text-[#979797]">
+            (Annualized as of last ex-date 02/05/2023)
           </div>
         </div>
         <div className="w-1/3 pl-2 text-sm text-white">
