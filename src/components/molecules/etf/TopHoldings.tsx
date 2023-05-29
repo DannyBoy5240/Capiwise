@@ -21,7 +21,7 @@ const TopHoldings = () => {
       {/* Symbol + Weight */}
       <div className="flex w-full">
         <div className="w-1/2 pr-2">
-          <div className="text-xs font-bold flex justify-between border-b border-b-white py-2">
+          <div className="text-xs font-bold flex justify-between border-b border-b-[#979797] py-2">
             <div>Symbol</div>
             <div>Weight</div>
           </div>
@@ -62,7 +62,7 @@ const TopHoldings = () => {
           </div>
         </div>
         <div className="w-1/2 pL-2">
-          <div className="text-xs font-bold flex justify-between border-b border-b-white py-2">
+          <div className="text-xs font-bold flex justify-between border-b border-b-[#979797] py-2">
             <div>Symbol</div>
             <div>Weight</div>
           </div>

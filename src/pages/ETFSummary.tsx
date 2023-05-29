@@ -13,6 +13,7 @@ import FinancialHealthChart from "../components/molecules/etf/FinancialHealthCha
 import DividendChart from "../components/molecules/etf/DividendChart";
 
 import TopHoldings from "../components/molecules/etf/TopHoldings";
+import PortfolioComposition from "../components/molecules/etf/PortfolioComposition";
 
 import CompanyProfile from "../components/molecules/etf/CompanyProfile";
 import TechnicalAnalysis from "../components/molecules/etf/TechnicalAnalysis";
@@ -59,7 +60,7 @@ const ETFSummary = () => {
           <TopHoldings />
         </div>
         <div className="w-1/2 pl-2">
-          <div className="bg-[#0B1620] flex flex-col p-4 h-full ml-2"></div>
+          <PortfolioComposition />
         </div>
       </div>
       {/* Company Profile & Equity Summary & Fundamental Event & Technical Analysis */}
