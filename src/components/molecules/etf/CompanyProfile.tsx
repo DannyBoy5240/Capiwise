@@ -2,62 +2,69 @@ import { FC } from "react";
 
 const CompanyProfile = () => {
   return (
-    <div className="bg-[#0B1620] flex flex-col p-4 h-full">
+    <div className="bg-[#0B1620] flex flex-col p-4 h-full text-xs">
       <div className="text-base font-bold py-2 border-b border-b-[#252A2D]">
         Company Profile
       </div>
-      {/* Sector & Industry */}
-      <div className="py-2 border-b border-b-[#040B11] text-xs">
-        <div className="flex py-1">
-          <div className="text-[#979797]">Sector</div>
-          <div className="pl-2 text-[#20A5F1]">Information Technology</div>
-        </div>
-        <div className="flex py-1">
-          <div className="text-[#979797]">Industry</div>
-          <div className="pl-2 text-[#20A5F1]">
-            Technology Hardware, Storage & Peripherals
-          </div>
-        </div>
-      </div>
       {/* Biography */}
-      <div className="py-2 border-b border-b-[#040B11] text-xs">
-        <div className="font-bold text-[#979797]">Biography</div>
+      <div className="py-2 border-b border-b-[#040B11]">
+        <div className="font-bold py-1">Biography</div>
         <div className="py-1">
-          Apple Inc. is an American multinational technology company
-          headquartered in Cupertino, California, that designs, develops and
-          sells consumer electronics, computer software, and online services…
+          The investment seeks investment results that generally correspond to
+          the price and yield performance of the NASDAQ-100 Index®. To maintain
+          the correspondence between the composition and weights…
           <span className="text-[#20A5F1]">Show more</span>
         </div>
       </div>
+      {/* What is it holding */}
+      <div className="py-2 border-b border-b-[#040B11]">
+        <div className="font-bold py-1">What is it holding?</div>
+        <div className="font-bold text-[#979797]">
+          Top Sector
+          <span className="pl-1 text-[#20A5F1] font-normal">
+            Information Technology
+          </span>
+        </div>
+        <div className="font-bold text-[#979797]">
+          Top Industry
+          <span className="pl-1 text-[#20A5F1] font-normal">
+            Software, Semiconductors & Semicond...
+          </span>
+        </div>
+      </div>
       {/* Address */}
-      <div className="py-2 border-b border-b-[#040B11] text-xs">
+      <div className="py-2">
+        <div className="font-bold py-1">How is it structured?</div>
         <div className="font-bold text-[#979797]">
-          Country<span className="pl-1 text-white font-normal">US</span>
-        </div>
-        <div className="font-bold text-[#979797]">
-          Exchange
+          Sponsor
           <span className="pl-1 text-white font-normal">
-            NASDAQ/NGS (GLOBAL SELECT MARKET)
+            Invesco Capital Management LLC
           </span>
         </div>
         <div className="font-bold text-[#979797]">
-          Founded
+          Inception
+          <span className="pl-1 text-white font-normal">03/10/1999</span>
+        </div>
+        <div className="font-bold text-[#979797]">
+          Country
+          <span className="pl-1 text-white font-normal">US</span>
+        </div>
+        <div className="font-bold text-[#979797]">
+          ETF Structure
           <span className="pl-1 text-white font-normal">
-            April 1, 1976, Cupertino, California, US
+            Unit Investment Trust
           </span>
         </div>
         <div className="font-bold text-[#979797]">
-          Headquarters
-          <span className="pl-1 text-white font-normal">
-            Cupertino, California, US
-          </span>
+          Asset Class<span className="pl-1 text-white font-normal">Equity</span>
         </div>
         <div className="font-bold text-[#979797]">
-          CEO<span className="pl-1 text-white font-normal">Tim Cook</span>
+          Investment Philosophy
+          <span className="pl-1 text-white font-normal">Passively Managed</span>
         </div>
         <div className="font-bold text-[#979797]">
           Website
-          <span className="pl-1 text-[#20A5F1] font-normal">apple.com</span>
+          <span className="pl-1 text-[#20A5F1] font-normal">invesco.com</span>
         </div>
       </div>
     </div>
