@@ -236,7 +236,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
     const fetchURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockHistoricalData?ticker=" +
       code +
-      ".US&period=";
+      "&period=";
 
     let fperiod = "1w";
     if (viewMode == 1) fperiod = "1d";

@@ -18,10 +18,11 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   }, []);
 
   const getSummaryInfo = async () => {
+    console.log("stockpricesummary -> ", context.symbol);
     // Get Stock INFO
     const stockURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
-      context.Code +
+      context.symbol +
       ".US&token=demo";
 
     fetch(stockURL)
@@ -34,7 +35,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
     // Get Stock Live Data
     const stockLiveURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
-      context.Code +
+      context.symbol +
       ".US";
 
     fetch(stockLiveURL)
@@ -82,7 +83,7 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
     <div className="p-6 bg-[#0B1620] text-xs">
       <div className="border-b-2 pb-6 border-[#040B11]">
         <div className="text-2xl font-bold">
-          {context.Name} ({context.Code})
+          {context.instrument_name} ({context.symbol})
         </div>
         <div className="text-sm mt-1">
           {stockSummary

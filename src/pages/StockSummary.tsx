@@ -24,10 +24,10 @@ const StockSummary = () => {
       <StockPriceSummary context={context} />
       <div className="pt-4 pb-2 flex">
         <div className="w-1/2 pr-2">
-          <SummaryChart code={context.Code} />
+          <SummaryChart code={context.symbol} />
         </div>
         <div className="w-1/4 px-2">
-          <StockAnalysisDetails code={context.Code} />
+          <StockAnalysisDetails code={context.symbol} />
         </div>
         <div className="w-1/4 pl-2">
           <FundementalChart />

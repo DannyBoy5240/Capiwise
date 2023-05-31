@@ -106,14 +106,14 @@ const AuthProvider = ({ children }: Props) => {
       }
     }
 
-    if (
-      !localStorage.socialAuthStatus ||
-      localStorage.socialAuthStatus == "false"
-    )
+    // if (
+    //   !localStorage.socialAuthStatus ||
+    //   localStorage.socialAuthStatus == "false"
+    // )
       getSessionInfo();
-    else {
-      setAuthStatus(AuthStatus.SignedIn);
-    }
+    // else {
+    //   setAuthStatus(AuthStatus.SignedIn);
+    // }
   }, [setAuthStatus, authStatus]);
 
   if (authStatus === AuthStatus.Loading) {

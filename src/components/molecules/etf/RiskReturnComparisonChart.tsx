@@ -29,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-const FinancialHealthChart = () => {
+const RiskReturnComparisonChart = () => {
   const labels = [
     "2011",
     "2012",
@@ -58,28 +58,27 @@ const FinancialHealthChart = () => {
   const [data_labels, setData_Labels] = useState<string[]>([]);
   const [data_datasets, setData_Datasets] = useState<number[]>([]);
   const [data_datasetsA, setData_DatasetsA] = useState<number[]>([]);
-  const [max_datasets, setMaxx_Datasets] = useState(0);
-  const [max_datasetsA, setMaxx_DatasetsA] = useState(0);
+  const [data_datasetsB, setData_DatasetsB] = useState<number[]>([]);
 
   const generateRandom = () => {
     const myArray: number[] = [];
     const myArrayA: number[] = [];
     const myArrayB: number[] = [];
+    const myArrayC: number[] = [];
 
     const loopArray: number[] = Array(totalCount).fill(0);
     loopArray.map((idx) => {
-      myArray.push(Math.floor(Math.random() * 200));
-      myArrayA.push(Math.floor(Math.random() * 240));
-      myArrayB.push(Math.floor(Math.random() * 10 + 2012));
+      myArray.push(Math.floor(Math.random() * 70));
+      myArrayA.push(Math.floor(Math.random() * 70));
+      myArrayB.push(Math.floor(Math.random() * 70));
+      myArrayC.push(Math.floor(Math.random() * 10 + 2024));
     });
-    myArrayB.sort((a, b) => a - b);
+    myArrayC.sort((a, b) => a - b);
 
     setData_Datasets(myArray);
     setData_DatasetsA(myArrayA);
-    setData_Labels(myArrayB.map(String));
-
-    setMaxx_Datasets(Math.max(...myArray));
-    setMaxx_DatasetsA(Math.max(...myArrayA));
+    setData_DatasetsB(myArrayB);
+    setData_Labels(myArrayC.map(String));
   };
 
   const options = {
@@ -113,7 +112,7 @@ const FinancialHealthChart = () => {
         ticks: {
           callback: function (value: any, index: any, values: any) {
             // Append your subtext here
-            return `${value}B`;
+            return `${value}k`;
           },
         },
       },
@@ -136,31 +135,22 @@ const FinancialHealthChart = () => {
       {
         data: data_datasets,
         fill: true,
-        backgroundColor: (context: any) => {
-          const chart = context.chart;
-          const ctx = chart.canvas.getContext("2d");
-          const gradient = ctx.createLinearGradient(0, 0, 0, max_datasets);
-          gradient.addColorStop(0, "rgba(226, 67, 59, 0.78)");
-          gradient.addColorStop(1, "rgba(226, 67, 59, 0.07)");
-          return gradient;
-        },
         borderWidth: 1,
-        borderColor: "#E2433B",
+        borderColor: "#F1B90B",
         // stack: "Stack 0",
       },
       {
         fill: true,
         data: data_datasetsA,
-        backgroundColor: (context: any) => {
-          const chart = context.chart;
-          const ctx = chart.canvas.getContext("2d");
-          const gradient = ctx.createLinearGradient(0, 0, 0, max_datasetsA);
-          gradient.addColorStop(0, "rgba(15, 105, 254, 1)");
-          gradient.addColorStop(1, "rgba(1, 86, 168, 0)");
-          return gradient;
-        },
         borderWidth: 1,
-        borderColor: "#0F69FE",
+        borderColor: "#F35530",
+        // stack: "Stack 1",
+      },
+      {
+        fill: true,
+        data: data_datasetsB,
+        borderWidth: 1,
+        borderColor: "#2EBD85",
         // stack: "Stack 1",
       },
     ],
@@ -171,65 +161,52 @@ const FinancialHealthChart = () => {
   }, []);
 
   return (
-    <div className="bg-[#0B1620] p-4 h-full">
+    <div className="bg-[#0B1620] p-4 h-full flex flex-col">
       <div className="border-b-2 border-b-[#252A2D] py-2 text-base font-bold">
         Risk-Return Comparison
       </div>
-      <div className="flex py-2">
-        <div className="flex flex-col">
+      <div className="grow flex py-2">
+        <div className="flex flex-col w-full">
           <div className="font-medium text-sm pt-2 pb-1">
-            Debt to Equity History and Analysis
+            10 Years Comparison
           </div>
+          <div className="text-[10px] text-[#979797]">AS OF 02/28/2023</div>
           <div className="py-2 grow flex items-center h-[240px]">
             <Line options={options} data={data} />
           </div>
-          <div className="flex justify-end">
-            <div className="flex text-sm">
+          {/* Comments */}
+          <div className="border-t border-t-[#252A2D] flex justify-center">
+            <div className="px-4 my-2">
+              <div className="flex items-center">
+                <div className="w-2.5 h-2.5 rounded-full bg-transparent"></div>
+                <div className="text-sm font-bold pl-2 text-transparent">A</div>
+              </div>
+              <div className="py-[4px] text-[8px] text-[#979797]">Risk</div>
+              <div className="py-[4px] text-[8px] text-[#979797]">Return</div>
+            </div>
+            <div className="px-4 my-2">
+              <div className="flex items-center">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#2EBD85]"></div>
+                <div className="text-sm font-bold pl-2">QQQ</div>
+              </div>
+              <div className="text-sm">2.14%</div>
+              <div className="text-sm">24.10%</div>
+            </div>
+            <div className="px-4 my-2 border-l-2 border-l-[#979797] border-r-2 border-[#979797]">
               <div className="flex items-center">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#E2433B]"></div>
-                <div className="px-2">Debt</div>
+                <div className="text-sm font-bold pl-2">Index</div>
               </div>
+              <div className="text-sm">4.45%</div>
+              <div className="text-sm">17.11%</div>
+            </div>
+            <div className="px-4 my-2">
               <div className="flex items-center">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#0F69FE]"></div>
-                <div className="px-2">Equity</div>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#F1B90B]"></div>
+                <div className="text-sm font-bold pl-2">Category</div>
               </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full border-2 border-[#2EBD85]"></div>
-                <div className="px-2 text-[#979797]">Cash and equivalents</div>
-              </div>
-            </div>
-          </div>
-          {/* Comments */}
-          <div className="text-sm flex pt-3 pb-1">
-            <div>
-              <img src={closeRedIcon} />
-            </div>
-            <div className="pl-2 flex items-center">
-              <span className="text-[#E2433B]">Debt Level: </span>
-              <span className="pl-1">
-                AAPL`s debt to equity ratio (154.3%) is considered high.
-              </span>
-            </div>
-          </div>
-          <div className="text-sm flex py-1">
-            <div>
-              <img src={closeRedIcon} className="max-w-none " />
-            </div>
-            <div className="pl-2">
-              <span className="text-[#E2433B] pr-1">Reducing Debt: </span>
-              AAPL`s debt to equity ratio has increased from 49.4% to 154.3%
-              over the past 5 years.
-            </div>
-          </div>
-          <div className="text-sm flex py-1">
-            <div>
-              <img src={checkGreenIcon} />
-            </div>
-            <div className="pl-2 flex items-center">
-              <span className="text-[#2EBD85]">Debt Coverage: </span>
-              <span className="pl-1">
-                AAPL`s debt is well covered by operating cash flow (87%).
-              </span>
+              <div className="text-sm">3.85%</div>
+              <div className="text-sm">15.80%</div>
             </div>
           </div>
         </div>
@@ -238,4 +215,4 @@ const FinancialHealthChart = () => {
   );
 };
 
-export default FinancialHealthChart;
+export default RiskReturnComparisonChart;

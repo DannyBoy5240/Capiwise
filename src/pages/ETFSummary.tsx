@@ -8,9 +8,11 @@ import SummaryChart from "../components/molecules/SummaryChart";
 
 import FundementalChart from "../components/molecules/etf/FundermentalChart";
 import PerformanceeChart from "../components/molecules/etf/PerformanceeChart";
-import FinancialHealthChart from "../components/molecules/etf/FinancialHealthChart";
+import RiskReturnComparisonChart from "../components/molecules/etf/RiskReturnComparisonChart";
 import DividendChart from "../components/molecules/etf/DividendChart";
 import FeeChart from "../components/molecules/etf/FeeChart";
+import GrowthChart from "../components/molecules/etf/GrowthChart";
+import FundAnalysisChart from "../components/molecules/etf/FundAnalysisChart";
 
 import TopHoldings from "../components/molecules/etf/TopHoldings";
 import PortfolioComposition from "../components/molecules/etf/PortfolioComposition";
@@ -29,22 +31,31 @@ const ETFSummary = () => {
       <ETFPriceSummary context={context} />
       <div className="pt-4 pb-2 flex">
         <div className="w-1/2 pr-2">
-          <SummaryChart code={context.Code} />
+          <SummaryChart code={context.symbol} />
         </div>
         <div className="w-1/4 px-2">
-          <AnalysisDetails code={context.Code} />
+          <AnalysisDetails code={context.symbol} />
         </div>
         <div className="w-1/4 pl-2">
           <FundementalChart />
         </div>
       </div>
-      {/* Earnings & Performance Chart */}
+      {/* Performance & Risk-Return Comparison Chart */}
       <div className="flex py-2 justify-items-stretch">
         <div className="w-1/2 pr-2">
           <PerformanceeChart />
         </div>
         <div className="w-1/2 pl-2">
-          <FinancialHealthChart />
+          <RiskReturnComparisonChart />
+        </div>
+      </div>
+      {/* Growth & Fund Analysis Chart */}
+      <div className="flex py-2 justify-items-stretch">
+        <div className="w-1/2 pr-2">
+          <GrowthChart />
+        </div>
+        <div className="w-1/2 pl-2">
+          <FundAnalysisChart />
         </div>
       </div>
       {/* Financial Health & Dividend Chart */}

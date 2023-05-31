@@ -20,7 +20,7 @@ const SearchBox: FC = () => {
     setSearchTerm("");
     setShowDropdown(false);
 
-    if (option.Type == "Common Stock")
+    if (option.instrument_type == "Common Stock")
       navigate("/stocksummary", {
         state: {
           item: option,
@@ -121,18 +121,6 @@ const SearchBox: FC = () => {
               className="text-white hover:text-[#F35530]"
               onClick={() => clearSearchBox()}
             >
-              {/* <svg
-                width="20"
-                height="12"
-                viewBox="0 0 20 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2.94531 0.625L5.08594 4.59375L7.22656 0.625H9.90625L6.60156 6.26562L9.99219 12H7.28906L5.08594 7.95312L2.88281 12H0.164062L3.5625 6.26562L0.25 0.625H2.94531ZM19.2443 0.625V12H17.7365V0.625H19.2443Z"
-                  fill="#979797"
-                />
-              </svg> */}
               X
             </button>
           ) : (
@@ -162,7 +150,11 @@ const SearchBox: FC = () => {
           <div
             className={
               "absolute z-10 w-full px-1 border-t-2 border-t-[#252A2D] bg-[#0B1620] rounded-md shadow-lg overflow-auto scrollbar-hide " +
-              (filteredOptions.length > 0 ? "h-48" : "h-24")
+              (filteredOptions.length >= 3
+                ? "h-48"
+                : filteredOptions.length == 2
+                ? "h-36"
+                : "h-24")
             }
             id="symbol-list"
           >
@@ -179,17 +171,17 @@ const SearchBox: FC = () => {
                   >
                     <div className="flex text-sm w-full items-center">
                       <div className="w-3/12 text-left font-bold">
-                        {option.Code}
+                        {option.symbol}
                       </div>
                       <div className="w-7/12 text-left text-xs font-bold">
-                        {option.Name}
+                        {option.instrument_name}
                       </div>
                       <div className="w-2/12 text-right text-xs">
-                        {(option.Type === "Common Stock"
+                        {(option.instrument_type === "Common Stock"
                           ? "Equity"
-                          : option.Type) +
+                          : option.instrument_type) +
                           " - " +
-                          option.Exchange}
+                          option.mic_code}
                       </div>
                     </div>
                   </li>

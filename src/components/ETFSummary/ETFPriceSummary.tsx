@@ -22,7 +22,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
     // Get ETF INFO
     const etfURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/ETFSummary?ticker=" +
-      context.Code +
+      context.symbol +
       ".US&token=demo";
 
     fetch(etfURL)
@@ -35,7 +35,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
     // Get Stock Live Data
     const stockLiveURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
-      context.Code +
+      context.symbol +
       ".US";
 
     fetch(stockLiveURL)
@@ -80,7 +80,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
       <div className="border-b-2 pb-6 border-[#040B11]">
         <div className="flex items-center">
           <div className="text-2xl font-bold">
-            {context.Name} ({context.Code})
+            {context.instrument_name} ({context.symbol})
           </div>
           <div className="text-base bg-[#040B11] p-1 ml-2">ETF</div>
         </div>
