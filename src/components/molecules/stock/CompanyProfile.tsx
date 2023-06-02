@@ -30,7 +30,7 @@ const CompanyProfile = () => {
         </div>
       </div>
       {/* Address */}
-      <div className="py-2 border-b border-b-[#040B11] text-xs">
+      <div className="py-2 text-xs">
         <div className="font-bold text-[#979797]">
           Country<span className="pl-1 text-white font-normal">US</span>
         </div>

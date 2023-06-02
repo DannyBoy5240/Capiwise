@@ -110,7 +110,7 @@ const AuthProvider = ({ children }: Props) => {
     //   !localStorage.socialAuthStatus ||
     //   localStorage.socialAuthStatus == "false"
     // )
-      getSessionInfo();
+    getSessionInfo();
     // else {
     //   setAuthStatus(AuthStatus.SignedIn);
     // }
@@ -222,18 +222,18 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   async function googleLogin(email: string, googleToken: string) {
-    try {
-      await cognito.googleLogin(email, googleToken);
-      setAuthStatus(AuthStatus.SignedIn);
-      setSocialStatus(SocialAuthStatus.GoogleSign);
-      window.localStorage.setItem("useremail", email);
-      window.localStorage.setItem("socialAuthStatus", "true");
-    } catch (err) {
-      setAuthStatus(AuthStatus.SignedOut);
-      setSocialStatus(SocialAuthStatus.SignOut);
-      window.localStorage.setItem("socialAuthStatus", "false");
-      throw err;
-    }
+    // try {
+    //   await cognito.googleLogin(email, googleToken);
+    //   setAuthStatus(AuthStatus.SignedIn);
+    //   setSocialStatus(SocialAuthStatus.GoogleSign);
+    //   window.localStorage.setItem("useremail", email);
+    //   window.localStorage.setItem("socialAuthStatus", "true");
+    // } catch (err) {
+    //   setAuthStatus(AuthStatus.SignedOut);
+    //   setSocialStatus(SocialAuthStatus.SignOut);
+    //   window.localStorage.setItem("socialAuthStatus", "false");
+    //   throw err;
+    // }
   }
 
   const state: IAuth = {

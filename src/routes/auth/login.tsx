@@ -124,13 +124,13 @@ const login: FC = () => {
       });
   }
 
-  const googleLoginHandle = useGoogleLogin({
-    flow: "auth-code",
-    onSuccess: async (code: any) => {
-      await getIdToken(code.code);
-    },
-    onError: (errorResponse: any) => console.log(errorResponse),
-  });
+  // const googleLoginHandle = useGoogleLogin({
+  //   flow: "auth-code",
+  //   onSuccess: async (code: any) => {
+  //     await getIdToken(code.code);
+  //   },
+  //   onError: (errorResponse: any) => console.log(errorResponse),
+  // });
 
   return (
     <div className="w-full h-screen flex">
@@ -249,7 +249,7 @@ const login: FC = () => {
                 <div className="w-1/3 px-1">
                   <div
                     className="rounded-full bg-transparent hover:bg-[#0053AA33] hover:cursor-pointer border-[#979797] border flex justify-center py-2"
-                    onClick={() => googleLoginHandle()}
+                    // onClick={() => googleLoginHandle()}
                   >
                     <img src={googleIcon} className="w-5 h-5" />
                   </div>

@@ -7,12 +7,7 @@ import AuthProvider, {
   AuthIsNotSignedIn,
 } from "./contexts/authContext";
 
-import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  useGoogleLogin,
-  useGoogleOneTapLogin,
-} from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Login from "./routes/auth/login";
 import Register from "./routes/auth/register";
@@ -32,14 +27,14 @@ import Logo from "./assets/logo.svg";
 
 const SignInRoute: React.FunctionComponent = () => (
   <BrowserRouter>
-    <GoogleOAuthProvider clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com">
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgetpassword" element={<ForgetPassword />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-      </Routes>
-    </GoogleOAuthProvider>
+    {/* <GoogleOAuthProvider clientId="1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com"> */}
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgetpassword" element={<ForgetPassword />} />
+      <Route path="/resetpassword" element={<ResetPassword />} />
+    </Routes>
+    {/* </GoogleOAuthProvider> */}
   </BrowserRouter>
 );
 

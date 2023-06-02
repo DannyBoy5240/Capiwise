@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -14,10 +14,32 @@ import DividendChart from "../components/molecules/stock/DividendChart";
 
 import CompanyProfile from "../components/molecules/stock/CompanyProfile";
 import TechnicalAnalysis from "../components/molecules/stock/TechnicalAnalysis";
+import EquitySummaryScore from "../components/molecules/stock/EquitySummaryScore";
+import FundamentalEvents from "../components/molecules/stock/FundamentalEvents";
 
 const StockSummary = () => {
   const location = useLocation();
   const context = location.state.item;
+
+  const [stockData, setStockData] = useState(null);
+
+  const getStockDetails = async () => {
+    const stockURL =
+      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
+      context.symbol;
+
+    await fetch(stockURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setStockData(data);
+        console.log("stockData -> ", stockData);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getStockDetails();
+  }, []);
 
   return (
     <div className="p-5">
@@ -56,11 +78,11 @@ const StockSummary = () => {
         <div className="w-1/4 pr-2">
           <CompanyProfile />
         </div>
-        <div className="w-1/4 pl-2">
-          <div className="bg-[#0B1620] flex flex-col p-4 h-full mr-2"></div>
+        <div className="w-1/4 px-2">
+          <EquitySummaryScore />
         </div>
-        <div className="w-1/4 pr-2">
-          <div className="bg-[#0B1620] flex flex-col p-4 h-full ml-2"></div>
+        <div className="w-1/4 px-2">
+          <FundamentalEvents />
         </div>
         <div className="w-1/4 pl-2">
           <TechnicalAnalysis />

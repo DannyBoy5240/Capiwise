@@ -383,31 +383,28 @@ export async function confirmPassword(email: string, verificationCode: string) {
 }
 
 export async function googleLogin(email: string, googleToken: string) {
-  return new Promise(function (resolve, reject) {
-    currentUser = getCognitoUser(email);
-
-    console.log("googleToken -> ", googleToken);
-    console.log("currentUser -> ", currentUser);
-
-    AWS.config.region = "eu-north-1"; // your AWS region
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: "eu-north-1:e3008a85-1439-40c7-865b-35babe185210", // your identity pool id
-      Logins: {
-        "accounts.google.com": googleToken,
-      },
-    });
-
-    // refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
-    AWS.config.credentials.refresh((error: any) => {
-      if (error) {
-        console.error(error);
-        reject(error);
-      } else {
-        console.log("Successfully logged in!");
-        resolve("succeed");
-      }
-    });
-  }).catch((err: any) => {
-    throw err;
-  });
+  // return new Promise(function (resolve, reject) {
+  //   currentUser = getCognitoUser(email);
+  //   console.log("googleToken -> ", googleToken);
+  //   console.log("currentUser -> ", currentUser);
+  //   AWS.config.region = "eu-north-1"; // your AWS region
+  //   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+  //     IdentityPoolId: "eu-north-1:e3008a85-1439-40c7-865b-35babe185210", // your identity pool id
+  //     Logins: {
+  //       "accounts.google.com": googleToken,
+  //     },
+  //   });
+  //   // refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
+  //   AWS.config.credentials.refresh((error: any) => {
+  //     if (error) {
+  //       console.error(error);
+  //       reject(error);
+  //     } else {
+  //       console.log("Successfully logged in!");
+  //       resolve("succeed");
+  //     }
+  //   });
+  // }).catch((err: any) => {
+  //   throw err;
+  // });
 }
