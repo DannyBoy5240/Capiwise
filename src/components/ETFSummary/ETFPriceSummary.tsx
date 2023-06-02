@@ -101,7 +101,7 @@ const ETFPriceSummary: FC<ETFPriceSummaryProps> = ({ context }) => {
       </div>
       <div className="flex py-6 flex justify-between w-full">
         <div className="w-1/2 md:w-1/4">
-          <TotalSummaryInfo stockLiveData={stockLiveData} />
+          <TotalSummaryInfo context={stockLiveData} />
         </div>
         {/*  */}
         <div className="w-1/2 md:w-3/4 md:flex">

@@ -21,6 +21,8 @@ const StockSummary = () => {
   const location = useLocation();
   const context = location.state.item;
 
+  console.log("stockSummary -> ", context);
+
   const [stockData, setStockData] = useState(null);
 
   const getStockDetails = async () => {
@@ -43,22 +45,22 @@ const StockSummary = () => {
 
   return (
     <div className="p-5">
-      <StockPriceSummary context={context} />
-      <div className="pt-4 pb-2 flex">
+      <StockPriceSummary context={stockData} />
+      <div className="pb-2 flex">
         <div className="w-1/2 pr-2">
           <SummaryChart code={context.symbol} />
         </div>
-        <div className="w-1/4 px-2">
+        <div className="pt-4 w-1/4 px-2">
           <StockAnalysisDetails code={context.symbol} />
         </div>
-        <div className="w-1/4 pl-2">
+        <div className="pt-4 w-1/4 pl-2">
           <FundementalChart />
         </div>
       </div>
       {/* Earnings & Performance Chart */}
       <div className="flex py-2 justify-items-stretch">
         <div className="w-1/2 pr-2">
-          <EarningsChart />
+          <EarningsChart context={stockData} />
         </div>
         <div className="w-1/2 pl-2">
           <PerformanceChart />
@@ -67,7 +69,7 @@ const StockSummary = () => {
       {/* Financial Health & Dividend Chart */}
       <div className="flex py-2 justify-items-stretch">
         <div className="w-1/2 pr-2">
-          <FinancialHealthChart />
+          <FinancialHealthChart context={stockData} />
         </div>
         <div className="w-1/2 pl-2">
           <DividendChart />
@@ -76,7 +78,11 @@ const StockSummary = () => {
       {/* Company Profile & Equity Summary & Fundamental Event & Technical Analysis */}
       <div className="flex py-2 justify-items-stretch">
         <div className="w-1/4 pr-2">
-          <CompanyProfile />
+          {stockData && stockData["profile"] ? (
+            <CompanyProfile context={stockData["profile"]} />
+          ) : (
+            <CompanyProfile context={null} />
+          )}
         </div>
         <div className="w-1/4 px-2">
           <EquitySummaryScore />

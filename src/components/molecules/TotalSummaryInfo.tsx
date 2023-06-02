@@ -3,10 +3,10 @@ import { FC } from "react";
 import { useEffect } from "react";
 
 interface TotalSummaryInfoProps {
-  stockLiveData: any;
+  context: any;
 }
 
-const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
+const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ context }) => {
   const getNumber = (num: any) => {
     if (num > 0) return "+" + num;
     else return num;
@@ -40,39 +40,40 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
     <div
       className={
         "flex flex-col border-l-4 pl-4 pr-1" +
-        (stockLiveData && stockLiveData["change"] > 0
+        (context && context["day1Range"] && context["day1Range"]["change"] > 0
           ? " border-[#2EBD85]"
           : " border-[#e2433b]")
       }
     >
       <div className="text-2xl font-bold">
-        $
-        {stockLiveData
-          ? stockLiveData["close"]
-            ? stockLiveData["close"]
-            : "N/A"
+        {context && context["day1Range"]
+          ? context["isMarketOpen"]
+            ? parseFloat(context["day1Range"]["open"]).toFixed(2)
+            : parseFloat(context["day1Range"]["close"]).toFixed(2)
           : "N/A"}
       </div>
       <div
         className={
           "text-xl" +
-          (stockLiveData && stockLiveData["change"] > 0
+          (context && context["day1Range"] && context["day1Range"]["change"] > 0
             ? " text-[#2EBD85]"
             : " text-[#e2433b]")
         }
       >
-        {stockLiveData
-          ? stockLiveData["change"]
+        {context && context["day1Range"]
+          ? context["day1Range"]["change"]
             ? getNumber(
-                parseFloat(stockLiveData["change"]).toFixed(2).toString()
+                parseFloat(context["day1Range"]["change"]).toFixed(2).toString()
               )
             : "N/A"
           : "N/A"}{" "}
         (
-        {stockLiveData
-          ? stockLiveData["change_p"]
+        {context && context["day1Range"]
+          ? context["day1Range"]["percentChange"]
             ? getNumber(
-                parseFloat(stockLiveData["change_p"]).toFixed(2).toString()
+                parseFloat(context["day1Range"]["percentChange"])
+                  .toFixed(2)
+                  .toString()
               ) + "%"
             : "N/A"
           : "N/A"}
@@ -80,9 +81,9 @@ const TotalSummaryInfo: FC<TotalSummaryInfoProps> = ({ stockLiveData }) => {
       </div>
       <div className="">
         Data as of{" "}
-        {stockLiveData
-          ? stockLiveData["timestamp"]
-            ? changeDateFormat(stockLiveData["timestamp"].substr(0, 10))
+        {context
+          ? context["time"]
+            ? changeDateFormat(convertingTimestamp(context["time"]))
             : "N/A"
           : "N/A"}
       </div>

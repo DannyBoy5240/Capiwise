@@ -22,7 +22,11 @@ ChartJS.register(
   Legend
 );
 
-const EarningsChart = () => {
+interface EarningsChartProps {
+  context: any;
+}
+
+const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
   const labels = ["Q3 2020", "Q4 2020", "Q1 2021", "Q2 2021"];
 
   function generateRandom() {
@@ -32,6 +36,11 @@ const EarningsChart = () => {
     });
     return myArray;
   }
+
+  const getNumber = (num: any) => {
+    if (num > 0) return "+" + num;
+    else return num;
+  };
 
   const options = {
     plugins: {
@@ -87,7 +96,7 @@ const EarningsChart = () => {
   return (
     <div className="bg-[#0B1620] p-4 h-full">
       <div className="border-b-2 border-b-[#252A2D] py-2 text-base font-bold">
-        Performance
+        Earnings
       </div>
       <div className="flex py-2">
         <div className="grow flex flex-col pr-2 border-r-2 border-r-[#252A2D]">
@@ -113,40 +122,57 @@ const EarningsChart = () => {
             </div>
           </div>
           <div className="text-xs">
-            <span className="font-bold">Expected Report Date</span> 04/28/2021
+            <span className="font-bold">Expected Report Date</span> N/A
           </div>
         </div>
         <div className="grow pl-2 text-xs">
           <div className="text-[#979797] pt-2 pb-1">
-            <span className="text-white text-sm">Earnings Metrics</span> GA AP
+            <span className="text-white text-sm">Earnings Metrics</span> GAAP
           </div>
           <div className="text-[#979797]">
             vs. Industry: Technology Hardware, Storage & Periphera
           </div>
           <div className="text-sm text-white font-bold">
             <div className="flex border-b-2 border-b-white">
-              <div className="w-2/3 flex justify-end">APPL</div>
+              <div className="w-2/3 flex justify-end">
+                {context && context["profile"]
+                  ? context["profile"]["symbol"]
+                  : "N/A"}
+              </div>
               <div className="w-1/3 flex text-right">Industry Average</div>
             </div>
             <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
               <div className="w-1/3 text-left">
                 EPS<span className="font-normal text-xs">(TTM)</span>
               </div>
-              <div className="w-1/3 text-right">$3.69</div>
+              <div className="w-1/3 text-right">
+                $
+                {context && context["earnings"]
+                  ? parseFloat(context["earnings"]["eps"]).toFixed(2)
+                  : "N/A"}
+              </div>
               <div className="w-1/3 text-right">$3.53</div>
             </div>
             <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
               <div className="w-1/3 text-left">
                 P/E<span className="font-normal text-xs">(TTM)</span>
               </div>
-              <div className="w-1/3 text-right">36.38</div>
+              <div className="w-1/3 text-right">
+                {context && context["earnings"]
+                  ? parseFloat(context["earnings"]["peRatio"]).toFixed(2)
+                  : "N/A"}
+              </div>
               <div className="w-1/3 text-right">35.18</div>
             </div>
             <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
               <div className="w-1/3 text-left">
                 P/E<span className="font-normal text-xs">(5-Year Avg)</span>
               </div>
-              <div className="w-1/3 text-right">18.82</div>
+              <div className="w-1/3 text-right">
+                {context && context["earnings"]
+                  ? parseFloat(context["earnings"]["pegRatio"]).toFixed(2)
+                  : "N/A"}
+              </div>
               <div className="w-1/3 text-right">19.96</div>
             </div>
             <div className="flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
@@ -154,7 +180,21 @@ const EarningsChart = () => {
                 <div>EPS Growth</div>
                 <div className="font-normal text-xs">(TTM vs Prior TTM)</div>
               </div>
-              <div className="w-1/3 text-right text-[#2EBD85]">+16.67%</div>
+              <div
+                className={
+                  "w-1/3 text-right " +
+                  (context &&
+                  context["earnings"] &&
+                  context["earnings"]["epsGrowthTTM"] >= 0
+                    ? "text-[#2EBD85]"
+                    : "text-[#E2433B]")
+                }
+              >
+                {context && context["earnings"]
+                  ? getNumber(context["earnings"]["epsGrowthTTM"])
+                  : "N/A"}
+                %
+              </div>
               <div className="w-1/3 text-right text-[#2EBD85]">+12.28%</div>
             </div>
             <div className="flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
@@ -164,11 +204,25 @@ const EarningsChart = () => {
                   (Last Qtr vs Same Qtr Prior Year)
                 </div>
               </div>
-              <div className="w-1/3 text-right text-[#2EBD85]">+34.67%</div>
+              <div
+                className={
+                  "w-1/3 text-right " +
+                  (context &&
+                  context["earnings"] &&
+                  context["earnings"]["epsGrowthQrt"] >= 0
+                    ? "text-[#2EBD85]"
+                    : "text-[#E2433B]")
+                }
+              >
+                {context && context["earnings"]
+                  ? getNumber(context["earnings"]["epsGrowthQrt"])
+                  : "N/A"}
+                %
+              </div>
               <div className="w-1/3 text-right text-[#2EBD85]">+38.72%</div>
             </div>
           </div>
-          <div className="text-[#979797] text-[10px]">As of 02/28/2023</div>
+          <div className="text-[#979797] text-[10px]">As of N/A</div>
         </div>
       </div>
     </div>

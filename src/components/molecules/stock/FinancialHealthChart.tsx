@@ -29,7 +29,11 @@ ChartJS.register(
   Legend
 );
 
-const FinancialHealthChart = () => {
+interface FinancialHealthChartProps {
+  context: any;
+}
+
+const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
   const labels = [
     "2011",
     "2012",

@@ -25,16 +25,8 @@ const PriceBarSlider: FC<PriceBarSliderProps> = ({ progress }) => {
           left: progress + "%",
         }}
       >
-        <div className="absolute top-[5px] left-[-5px] w-[200px]">
-          <svg
-            width="12"
-            height="9"
-            viewBox="0 0 12 9"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M6 0L11.1962 9H0.803848L6 0Z" fill="#979797" />
-          </svg>
+        <div className="absolute top-[-2px] left-[-3px] w-[200px]">
+          <div className="w-2.5 h-2.5 bg-[#979797] border border-white rounded-full"></div>
         </div>
       </div>
     </div>

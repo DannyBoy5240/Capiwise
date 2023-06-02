@@ -257,12 +257,10 @@ const SummaryChart: FC<SummaryChartProps> = ({
         const nums: number[] = new Array(count);
         let chart_min = 0,
           chart_max = 0;
-        if (count > 0) chart_min = chart_max = data[0].open.toFixed(2);
+        if (count > 0) chart_min = chart_max = data[0].open;
         for (let i = 0; i < count; i++) {
-          if (chart_min > data[i].open.toFixed(2))
-            chart_min = data[i].open.toFixed(2);
-          if (chart_max < data[i].open.toFixed(2))
-            chart_max = data[i].open.toFixed(2);
+          if (chart_min > data[i].open) chart_min = data[i].open;
+          if (chart_max < data[i].open) chart_max = data[i].open;
           nums[i] = data[i].open;
         }
         setChartMin(chart_min);
@@ -395,7 +393,9 @@ const SummaryChart: FC<SummaryChartProps> = ({
   };
 
   return (
-    <div className={isFullScreen ? "full-screen" : "h-full p-5 bg-[#0B1620]"}>
+    <div
+      className={isFullScreen ? "full-screen" : "h-full p-5 pt-9 bg-[#0B1620]"}
+    >
       <div className="flex justify-between items-center">
         <div className="text-sm mb-2" id="modeGroup">
           <button

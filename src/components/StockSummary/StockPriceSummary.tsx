@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import PriceBarSlider from "../atom/PriceBarSlider";
 import TotalSummaryInfo from "../molecules/TotalSummaryInfo";
 
+import numPositiveIcon from "../../assets/num_positive_ico.svg";
+import numNegativeIcon from "../../assets/num_negative_ico.svg";
+
 interface StockPriceSummaryProps {
   context: any;
 }
@@ -12,39 +15,6 @@ interface StockPriceSummaryProps {
 const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   const [stockSummary, setStockSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
-
-  useEffect(() => {
-    getSummaryInfo();
-  }, []);
-
-  const getSummaryInfo = async () => {
-    console.log("stockpricesummary -> ", context.symbol);
-    // Get Stock INFO
-    const stockURL =
-      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
-      context.symbol +
-      ".US&token=demo";
-
-    fetch(stockURL)
-      .then((response) => response.json())
-      .then((data) => {
-        setStockSummary(data);
-      })
-      .catch((error) => console.log(error));
-
-    // Get Stock Live Data
-    const stockLiveURL =
-      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
-      context.symbol +
-      ".US";
-
-    fetch(stockLiveURL)
-      .then((response) => response.json())
-      .then((data) => {
-        setStockLiveData(data);
-      })
-      .catch((error) => console.log(error));
-  };
 
   const getNumber = (num: any) => {
     if (num > 0) return "+" + num;
@@ -75,61 +45,71 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   };
 
   const getProgressStatus = (low: any, high: any, current: any): number => {
-    console.log((100 * (current - low)) / (high - low));
     return (100 * (current - low)) / (high - low);
   };
 
   return (
     <div className="p-6 bg-[#0B1620] text-xs">
-      <div className="border-b-2 pb-6 border-[#040B11]">
+      <div className="border-b-2 pb-6 border-b-2 border-[#252A2D]">
         <div className="text-2xl font-bold">
-          {context.instrument_name} ({context.symbol})
+          {context && context["profile"] ? context["profile"]["name"] : "N/A"} (
+          {context && context["profile"] ? context["profile"]["symbol"] : "N/A"}
+          )
         </div>
         <div className="text-sm mt-1">
-          {stockSummary
-            ? stockSummary["General::Exchange"]
-              ? stockSummary["General::Exchange"]
-              : "N/A"
+          {context && context["profile"]
+            ? context["profile"]["exchange"]
             : "N/A"}{" "}
           -{" "}
-          {stockSummary
-            ? stockSummary["General::Exchange"]
-              ? stockSummary["General::Exchange"]
-              : "N/A"
+          {context && context["profile"]
+            ? context["profile"]["exchange"]
             : "N/A"}{" "}
-          Real Time Price. Currency in {context.Currency}
+          Real Time Price. Currency in{" "}
+          {context && context["profile"]
+            ? context["profile"]["currency"]
+            : "N/A"}
         </div>
       </div>
       <div className="flex py-6 w-full justify-between">
         <div className="w-1/2 md:w-1/4">
-          <TotalSummaryInfo stockLiveData={stockLiveData} />
+          <TotalSummaryInfo context={context} />
         </div>
         {/*  */}
         <div className="w-1/2 md:w-3/4 md:flex">
-          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
-            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
+          <div className="flex grow flex-col border-l px-3 border-[#252A2D] text-sm lg:my-2">
+            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Price Day Range</div>
               <PriceBarSlider
                 progress={getProgressStatus(
-                  stockLiveData ? stockLiveData["low"] : 0,
-                  stockLiveData ? stockLiveData["high"] : 0,
-                  stockLiveData ? stockLiveData["close"] : 0
+                  context && context["day1Range"]
+                    ? context["day1Range"]["low"]
+                    : 0,
+                  context && context["day1Range"]
+                    ? context["day1Range"]["high"]
+                    : 0,
+                  context && context["day1Range"]
+                    ? context
+                      ? context["isMarketOpen"]
+                        ? context["day1Range"]
+                          ? context["day1Range"]["open"]
+                          : 0
+                        : context["day1Range"]
+                        ? context["day1Range"]["close"]
+                        : 0
+                      : 0
+                    : 0
                 )}
               />
               <div className="flex justify-between text-white text-xs">
                 <div>
-                  {stockLiveData
-                    ? stockLiveData["low"] && stockLiveData["low"] != "N/A"
-                      ? parseFloat(stockLiveData["low"]).toFixed(2)
-                      : "N/A"
-                    : "N/A"}{" "}
+                  {context && context["day1Range"]
+                    ? parseFloat(context["day1Range"]["low"]).toFixed(2)
+                    : "N/A"}
                 </div>
                 <div>
-                  {stockLiveData
-                    ? stockLiveData["high"] && stockLiveData["high"] != "N/A"
-                      ? parseFloat(stockLiveData["high"]).toFixed(2)
-                      : "N/A"
-                    : "N/A"}{" "}
+                  {context && context["day1Range"]
+                    ? parseFloat(context["day1Range"]["high"]).toFixed(2)
+                    : "N/A"}
                 </div>
               </div>
               <div className="flex justify-between text-[10px] text-[#979797]">
@@ -141,151 +121,103 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               <div>Price 52-Week Range</div>
               <PriceBarSlider
                 progress={getProgressStatus(
-                  stockSummary
-                    ? stockSummary["Technicals::52WeekLow"]["price"]
+                  context && context["weeks52Range"]
+                    ? context["weeks52Range"]["low"]
                     : 0,
-                  stockSummary
-                    ? stockSummary["Technicals::52WeekHigh"]["price"]
+                  context && context["weeks52Range"]
+                    ? context["weeks52Range"]["high"]
                     : 0,
-                  stockLiveData ? stockLiveData["close"] : 0
+                  context && context["weeks52Range"]
+                    ? context["weeks52Range"]["mid"]
+                    : 0
                 )}
               />
               <div className="flex justify-between text-white text-xs">
                 <div>
-                  {stockSummary
-                    ? stockSummary["Technicals::52WeekLow"]["price"] &&
-                      stockSummary["Technicals::52WeekLow"]["price"] != "N/A"
-                      ? parseFloat(
-                          stockSummary["Technicals::52WeekLow"]["price"]
-                        ).toFixed(2)
-                      : "N/A"
+                  {context && context["weeks52Range"]
+                    ? parseFloat(context["weeks52Range"]["low"]).toFixed(2)
                     : "N/A"}
                 </div>
                 <div>
-                  {stockSummary
-                    ? stockSummary["Technicals::52WeekHigh"]["price"] &&
-                      stockSummary["Technicals::52WeekHigh"]["price"] != "N/A"
-                      ? parseFloat(
-                          stockSummary["Technicals::52WeekHigh"]["price"]
-                        ).toFixed(2)
-                      : "N/A"
+                  {context && context["weeks52Range"]
+                    ? parseFloat(context["weeks52Range"]["high"]).toFixed(2)
                     : "N/A"}
                 </div>
               </div>
               <div className="flex justify-between text-[10px] text-[#979797]">
                 <div>
-                  {stockSummary
-                    ? stockSummary["Technicals::52WeekLow"]["date"] &&
-                      stockSummary["Technicals::52WeekLow"]["date"] != "N/A"
-                      ? changeDateFormat(
-                          stockSummary["Technicals::52WeekLow"]["date"]
-                        )
-                      : "N/A"
+                  Low on{" "}
+                  {context && context["weeks52Range"]
+                    ? changeDateFormat(context["weeks52Range"]["onLow"])
                     : "N/A"}
                 </div>
                 <div className="pl-2">
-                  {stockSummary
-                    ? stockSummary["Technicals::52WeekHigh"]["date"] &&
-                      stockSummary["Technicals::52WeekHigh"]["date"] != "N/A"
-                      ? changeDateFormat(
-                          stockSummary["Technicals::52WeekHigh"]["date"]
-                        )
-                      : "N/A"
+                  High on{" "}
+                  {context && context["weeks52Range"]
+                    ? changeDateFormat(context["weeks52Range"]["onHigh"])
                     : "N/A"}
                 </div>
               </div>
             </div>
           </div>
           {/*  */}
-          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
-            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
+          <div className="flex grow flex-col border-l px-3 border-[#252A2D] text-sm lg:my-2">
+            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div className="flex flex-row justify-between items-center">
                 <div>Market Cap</div>
               </div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["Highlights::MarketCapitalizationMln"] != "" &&
-                    stockSummary["Highlights::MarketCapitalizationMln"] != "N/A"
-                    ? formatBytes(
-                        stockSummary["Highlights::MarketCapitalizationMln"]
-                      )
-                    : "N/A"
+                {context && context["statistics"]
+                  ? formatBytes(
+                      context["statistics"]["marketCapitalization"] / 10 ** 6,
+                      3
+                    )
                   : "N/A"}
               </div>
             </div>
             <div className="grow text-[#979797] pt-1">
               <div>Shares Outstanding</div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["SharesStats::SharesOutstanding"] != "" &&
-                    stockSummary["SharesStats::SharesOutstanding"] != "N/A"
-                    ? formatBytes(
-                        stockSummary["SharesStats::SharesOutstanding"]
-                      )
-                    : "N/A"
+                {context && context["statistics"]
+                  ? formatBytes(
+                      context["statistics"]["sharesOutstanding"] / 10 ** 6,
+                      2
+                    )
                   : "N/A"}
               </div>
             </div>
           </div>
           {/*  */}
-          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
-            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
+          <div className="flex grow flex-col border-l px-3 border-[#252A2D] text-sm lg:my-2">
+            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>P/E Ratio (TTM)</div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["Highlights::PERatio"] &&
-                    stockSummary["Highlights::PERatio"] != "N/A"
-                    ? parseFloat(stockSummary["Highlights::PERatio"]).toFixed(2)
-                    : "N/A"
+                {context && context["earnings"]
+                  ? parseFloat(context["earnings"]["peRatio"]).toFixed(2)
                   : "N/A"}
               </div>
             </div>
             <div className="grow text-[#979797] pt-1">
               <div>PEG Ratio (5-Yr)</div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["Highlights::PEGRatio"] &&
-                    stockSummary["Highlights::PEGRatio"] != "N/A"
-                    ? parseFloat(stockSummary["Highlights::PEGRatio"]).toFixed(
-                        2
-                      )
-                    : "N/A"
+                {context && context["earnings"]
+                  ? parseFloat(context["earnings"]["pegRatio"]).toFixed(2)
                   : "N/A"}
               </div>
             </div>
           </div>
           {/*  */}
-          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
-            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
+          <div className="flex grow flex-col border-l px-3 border-[#252A2D] text-sm lg:my-2">
+            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>Ann. Div. / Yield</div>
               <div className="text-white font-bold">
                 $
-                {stockSummary
-                  ? stockSummary["SplitsDividends::ForwardAnnualDividendRate"]
-                    ? stockSummary[
-                        "SplitsDividends::ForwardAnnualDividendRate"
-                      ] != "N/A"
-                      ? parseFloat(
-                          stockSummary[
-                            "SplitsDividends::ForwardAnnualDividendRate"
-                          ]
-                        ).toFixed(2)
-                      : "0"
-                    : "N/A"
+                {context && context["dividends"]
+                  ? parseFloat(context["dividends"]["annDivRate"]).toFixed(2)
                   : "N/A"}{" "}
                 /{" "}
-                {stockSummary
-                  ? stockSummary["SplitsDividends::ForwardAnnualDividendYield"]
-                    ? stockSummary[
-                        "SplitsDividends::ForwardAnnualDividendYield"
-                      ] != "N/A"
-                      ? parseFloat(
-                          stockSummary[
-                            "SplitsDividends::ForwardAnnualDividendYield"
-                          ]
-                        ).toFixed(2)
-                      : "0.00"
-                    : "N/A"
+                {context && context["dividends"]
+                  ? parseFloat(context["dividends"]["annDivYield"]).toFixed(2)
                   : "N/A"}
                 %
               </div>
@@ -293,28 +225,19 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
             <div className="grow text-[#979797] pt-1">
               <div>Dividend Ex-Date</div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["SplitsDividends::ExDividendDate"]
-                    ? stockSummary["SplitsDividends::ExDividendDate"] !=
-                      "0000-00-00"
-                      ? changeDateFormat(
-                          stockSummary["SplitsDividends::ExDividendDate"]
-                        )
-                      : "N/A"
-                    : "N/A"
+                {context && context["dividends"]
+                  ? changeDateFormat(context["dividends"]["payDate"])
                   : "N/A"}
               </div>
             </div>
           </div>
           {/*  */}
-          <div className="flex grow flex-col border-l px-3 border-[#040B11] text-sm lg:my-2">
-            <div className="grow text-[#979797] border-b border-dashed border-[#040B11] pb-1">
+          <div className="flex grow flex-col border-l px-3 border-[#252A2D] text-sm lg:my-2">
+            <div className="grow text-[#979797] border-b border-dashed border-[#252A2D] pb-1">
               <div>EPS (TTM)</div>
               <div className="text-white font-bold">
-                {stockSummary
-                  ? stockSummary["Highlights::EarningsShare"]
-                    ? stockSummary["Highlights::EarningsShare"]
-                    : "N/A"
+                {context && context["earnings"]
+                  ? parseFloat(context["earnings"]["eps"]).toFixed(2)
                   : "N/A"}
               </div>
             </div>
@@ -322,31 +245,11 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
               <div>Price Performance (52-Wk)</div>
               <div className="font-bold flex items-center">
                 <span>
-                  {stockSummary && stockSummary["Price::Performance"] != "" ? (
-                    stockSummary["Price::Performance"] > 0 ? (
-                      <svg
-                        width="12"
-                        height="9"
-                        viewBox="0 0 12 9"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M6 0L11.1962 9H0.803848L6 0Z" fill="#2EBD85" />
-                      </svg>
+                  {context && context["performance"] ? (
+                    context["performance"]["profitMargin"] > 0 ? (
+                      <img src={numPositiveIcon} className="max-w-none" />
                     ) : (
-                      <svg
-                        width="12"
-                        height="9"
-                        viewBox="0 0 12 9"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M6 0L11.1962 9H0.803848L6 0Z"
-                          fill="#e2433b"
-                          transform="rotate(180 6 4.5)"
-                        />
-                      </svg>
+                      <img src={numNegativeIcon} className="max-w-none" />
                     )
                   ) : (
                     <></>
@@ -354,16 +257,17 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
                 </span>
                 <span
                   className={
-                    stockSummary && stockSummary["Price::Performance"] > 0
+                    context &&
+                    context["performance"] &&
+                    context["performance"]["profitMargin"] > 0
                       ? "text-[#2EBD85]"
                       : "text-[#e2433b]"
                   }
                 >
-                  {stockSummary
-                    ? stockSummary["Price::Performance"] &&
-                      stockSummary["Price::Performance"] != "N/A"
-                      ? getNumber(stockSummary["Price::Performance"]) + "%"
-                      : "N/A"
+                  {context && context["performance"]
+                    ? getNumber(
+                        context["performance"]["profitMargin"].toFixed(2)
+                      ) + "%"
                     : "N/A"}
                 </span>
               </div>
