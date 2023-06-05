@@ -34,56 +34,78 @@ interface FinancialHealthChartProps {
 }
 
 const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
-  const labels = [
-    "2011",
-    "2012",
-    "2013",
-    "2014",
-    "2015",
-    "2016",
-    "2017",
-    "2018",
-    "2019",
-    "2020",
-  ];
-
-  const labelsA = Array(500)
-    .fill(null)
-    .map((_, index) => {
-      return;
-      // year: (2011 + Math.floor(index / 10)).toString(), // increment year every 10 items
-      // value: index,
-      2011 + Math.floor(index / 10); // increment year every 10 items
-    });
-
   const chartRef = useRef(null);
 
-  const totalCount = 500;
-  const [data_labels, setData_Labels] = useState<string[]>([]);
-  const [data_datasets, setData_Datasets] = useState<number[]>([]);
-  const [data_datasetsA, setData_DatasetsA] = useState<number[]>([]);
-  const [max_datasets, setMaxx_Datasets] = useState(0);
-  const [max_datasetsA, setMaxx_DatasetsA] = useState(0);
+  let maxDataSetsA = 0;
+  let maxDataSetsB = 0;
+  let maxDataSetsC = 0;
 
-  const generateRandom = () => {
-    const myArray: number[] = [];
-    const myArrayA: number[] = [];
-    const myArrayB: number[] = [];
+  const getDataLabels = () => {
+    const arr: string[] = [];
+    if (context && context.finHealth) {
+      context.finHealth.map((idx: any) => {
+        arr.push(idx.fiscal_date);
+      });
+      arr.reverse();
+    }
+    return arr;
+  };
+  const getDataSetsA = () => {
+    const arr: number[] = [];
+    if (context && context.finHealth) {
+      let tmax = 0;
+      context.finHealth.map((idx: any) => {
+        arr.push(idx.debt);
+        tmax = tmax < idx.debt ? idx.debt : tmax;
+      });
+      maxDataSetsA = tmax;
+      arr.reverse();
+    }
+    return arr;
+  };
+  const getDataSetsB = () => {
+    const arr: number[] = [];
+    if (context && context.finHealth) {
+      let tmax = 0;
+      context.finHealth.map((idx: any) => {
+        arr.push(idx.equity);
+        tmax = tmax < idx.equity ? idx.equity : tmax;
+      });
+      maxDataSetsB = tmax;
+      arr.reverse();
+    }
+    return arr;
+  };
+  const getDataSetsC = () => {
+    const arr: number[] = [];
+    if (context && context.finHealth) {
+      let tmax = 0;
+      context.finHealth.map((idx: any) => {
+        arr.push(idx.cash_and_cash_equivalents);
+        tmax =
+          tmax < idx.cash_and_cash_equivalents
+            ? idx.cash_and_cash_equivalents
+            : tmax;
+      });
+      maxDataSetsC = tmax;
+      arr.reverse();
+    }
+    return arr;
+  };
 
-    const loopArray: number[] = Array(totalCount).fill(0);
-    loopArray.map((idx) => {
-      myArray.push(Math.floor(Math.random() * 200));
-      myArrayA.push(Math.floor(Math.random() * 240));
-      myArrayB.push(Math.floor(Math.random() * 10 + 2012));
-    });
-    myArrayB.sort((a, b) => a - b);
+  const formatBytes = (bytes: number, decimals = 2): string => {
+    if (bytes === 0) return "0 B";
 
-    setData_Datasets(myArray);
-    setData_DatasetsA(myArrayA);
-    setData_Labels(myArrayB.map(String));
+    const k = 1000;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["", "", "M", "B", "T", "P"];
+    const i = Math.floor(Math.log(bytes * 10 ** 6) / Math.log(k));
 
-    setMaxx_Datasets(Math.max(...myArray));
-    setMaxx_DatasetsA(Math.max(...myArrayA));
+    return (
+      parseFloat(((bytes * 10 ** 6) / Math.pow(k, i)).toFixed(dm)) +
+      " " +
+      sizes[i]
+    );
   };
 
   const options = {
@@ -117,7 +139,7 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
         ticks: {
           callback: function (value: any, index: any, values: any) {
             // Append your subtext here
-            return `${value}B`;
+            return `${formatBytes(value)}`;
           },
         },
       },
@@ -135,16 +157,16 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
   };
 
   const data = {
-    labels,
+    labels: getDataLabels(),
     datasets: [
       {
-        data: data_datasets,
+        data: getDataSetsA(),
         fill: true,
         backgroundColor: (context: any) => {
           const chart = context.chart;
           const ctx = chart.canvas.getContext("2d");
-          const gradient = ctx.createLinearGradient(0, 0, 0, max_datasets);
-          gradient.addColorStop(0, "rgba(226, 67, 59, 0.78)");
+          const gradient = ctx.createLinearGradient(0, 0, 0, maxDataSetsA / 2);
+          gradient.addColorStop(0, "rgba(226, 67, 59, 0.08)");
           gradient.addColorStop(1, "rgba(226, 67, 59, 0.07)");
           return gradient;
         },
@@ -154,25 +176,40 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
       },
       {
         fill: true,
-        data: data_datasetsA,
+        data: getDataSetsB(),
         backgroundColor: (context: any) => {
           const chart = context.chart;
           const ctx = chart.canvas.getContext("2d");
-          const gradient = ctx.createLinearGradient(0, 0, 0, max_datasetsA);
-          gradient.addColorStop(0, "rgba(15, 105, 254, 1)");
-          gradient.addColorStop(1, "rgba(1, 86, 168, 0)");
+          const gradient = ctx.createLinearGradient(0, 0, 0, maxDataSetsB / 2);
+          gradient.addColorStop(0, "rgba(15, 105, 254, 0.08)");
+          gradient.addColorStop(1, "rgba(1, 86, 168, 0.02)");
           return gradient;
         },
         borderWidth: 1,
         borderColor: "#0F69FE",
         // stack: "Stack 1",
       },
+      {
+        fill: true,
+        data: getDataSetsC(),
+        backgroundColor: (context: any) => {
+          const chart = context.chart;
+          const ctx = chart.canvas.getContext("2d");
+          const gradient = ctx.createLinearGradient(0, 0, 0, maxDataSetsC / 2);
+          gradient.addColorStop(0, "rgba(46, 188, 133, 0.2)");
+          gradient.addColorStop(1, "rgba(46, 189, 133, 0.04)");
+          return gradient;
+        },
+        borderWidth: 1,
+        borderColor: "#2EBD85",
+        // stack: "Stack 1",
+      },
     ],
   };
 
-  useEffect(() => {
-    generateRandom();
-  }, []);
+  // useEffect(() => {
+  //   generateRandom();
+  // }, []);
 
   return (
     <div className="bg-[#0B1620] p-4 h-full">
@@ -211,7 +248,8 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
             <div className="pl-2 flex items-center">
               <span className="text-[#E2433B]">Debt Level: </span>
               <span className="pl-1">
-                AAPL`s debt to equity ratio (154.3%) is considered high.
+                {context && context.profile ? context.profile.symbol : "N/A"}`s
+                debt to equity ratio (154.3%) is considered high.
               </span>
             </div>
           </div>
@@ -221,8 +259,9 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
             </div>
             <div className="pl-2">
               <span className="text-[#E2433B] pr-1">Reducing Debt: </span>
-              AAPL`s debt to equity ratio has increased from 49.4% to 154.3%
-              over the past 5 years.
+              {context && context.profile ? context.profile.symbol : "N/A"}`s
+              debt to equity ratio has increased from 49.4% to 154.3% over the
+              past 5 years.
             </div>
           </div>
           <div className="text-sm flex py-1">
@@ -232,7 +271,8 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
             <div className="pl-2 flex items-center">
               <span className="text-[#2EBD85]">Debt Coverage: </span>
               <span className="pl-1">
-                AAPL`s debt is well covered by operating cash flow (87%).
+                {context && context.profile ? context.profile.symbol : "N/A"}`s
+                debt is well covered by operating cash flow (87%).
               </span>
             </div>
           </div>
