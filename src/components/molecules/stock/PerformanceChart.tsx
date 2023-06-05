@@ -149,7 +149,7 @@ const PerformanceChart: FC<PerformanceChartProps> = ({ context }) => {
           const chart = context.chart;
           const ctx = chart.canvas.getContext("2d");
           const gradient = ctx.createLinearGradient(0, 0, 0, maxDataSetsA / 2);
-          gradient.addColorStop(0, "rgba(15, 105, 254, 0.394)");
+          gradient.addColorStop(0, "rgba(15, 105, 254, 0.124)");
           gradient.addColorStop(1, "rgba(1, 86, 168, 0.03)");
           return gradient;
         },

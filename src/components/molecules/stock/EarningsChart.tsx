@@ -37,6 +37,54 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
     return myArray;
   }
 
+  let maxDataSetsA = 0;
+  let maxDataSetsB = 0;
+
+  const convertDateFormat = (dateString: any) => {
+    const date = new Date(dateString);
+    const quarter = Math.floor((date.getMonth() + 3) / 3); // get the quarter (1-4) based on the month
+    const year = date.getFullYear(); // get the year
+    const quarterStr = `Q${quarter} ${year}`; // concatenate the quarter and year into the desired format
+    return quarterStr;
+  };
+
+  const getDataLabels = () => {
+    const arr: string[] = [];
+    if (context && context.earnings && context.earnings.earningsHisCurrYr) {
+      context.earnings.earningsHisCurrYr.map((idx: any) => {
+        arr.push(convertDateFormat(idx.date));
+      });
+      arr.reverse();
+    }
+    return arr;
+  };
+  const getDataSetsA = () => {
+    const arr: number[] = [];
+    if (context && context.earnings && context.earnings.earningsHisCurrYr) {
+      let tmax = 0;
+      context.earnings.earningsHisCurrYr.map((idx: any) => {
+        arr.push(idx.eps_estimate);
+        tmax = tmax < idx.eps_estimate ? idx.eps_estimate : tmax;
+      });
+      maxDataSetsA = tmax;
+      arr.reverse();
+    }
+    return arr;
+  };
+  const getDataSetsB = () => {
+    const arr: number[] = [];
+    if (context && context.earnings && context.earnings.earningsHisCurrYr) {
+      let tmax = 0;
+      context.earnings.earningsHisCurrYr.map((idx: any) => {
+        arr.push(idx.eps_actual);
+        tmax = tmax < idx.eps_actual ? idx.eps_actual : tmax;
+      });
+      maxDataSetsB = tmax;
+      arr.reverse();
+    }
+    return arr;
+  };
+
   const getNumber = (num: any) => {
     if (num > 0) return "+" + num;
     else return num;
@@ -59,10 +107,10 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
     },
     scales: {
       x: {
-        stacked: true,
+        // stacked: true,
       },
       y: {
-        stacked: true,
+        // stacked: true,
         grid: {
           lineWidth: 0.6,
           color: "#E7EBEF23",
@@ -78,15 +126,15 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
   };
 
   const data = {
-    labels,
+    labels: getDataLabels(),
     datasets: [
       {
-        data: generateRandom(),
+        data: getDataSetsA(),
         backgroundColor: "#B8B9BB",
         // stack: "Stack 0",
       },
       {
-        data: generateRandom(),
+        data: getDataSetsB(),
         backgroundColor: "#0F69FE",
         // stack: "Stack 1",
       },

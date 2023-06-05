@@ -152,7 +152,7 @@ const DividendChart: FC<DividendChartProps> = ({ context }) => {
       let tmax = 0;
       context.dividends.divHistoryAnnual.map((idx: any) => {
         arr.push(idx.amount);
-        tmax = tmax < idx.earnings ? idx.earnings : tmax;
+        tmax = tmax < idx.amount ? idx.amount : tmax;
       });
       maxDataSetsA = tmax;
       arr.reverse();
@@ -218,8 +218,8 @@ const DividendChart: FC<DividendChartProps> = ({ context }) => {
           const chart = context.chart;
           const ctx = chart.canvas.getContext("2d");
           const gradient = ctx.createLinearGradient(0, 0, 0, maxDataSetsA);
-          gradient.addColorStop(0, "rgba(28, 166, 94, 0.6)");
-          gradient.addColorStop(1, "rgba(28, 166, 94, 0.1)");
+          gradient.addColorStop(0, "rgba(28, 166, 94, 0.18)");
+          gradient.addColorStop(1, "rgba(28, 166, 94, 0.05)");
           return gradient;
         },
         borderWidth: 1,
