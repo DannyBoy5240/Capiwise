@@ -127,57 +127,37 @@ export const data2 = {
   ],
 };
 
-const DividendChart = () => {
-  const labels = [
-    "2011",
-    "2012",
-    "2013",
-    "2014",
-    "2015",
-    "2016",
-    "2017",
-    "2018",
-    "2019",
-    "2020",
-  ];
+interface DividendChartProps {
+  context: any;
+}
 
-  const labelsA = Array(500)
-    .fill(null)
-    .map((_, index) => {
-      return;
-      // year: (2011 + Math.floor(index / 10)).toString(), // increment year every 10 items
-      // value: index,
-      2011 + Math.floor(index / 10); // increment year every 10 items
-    });
-
+const DividendChart: FC<DividendChartProps> = ({ context }) => {
   const chartRef = useRef(null);
 
-  const totalCount = 500;
-  const [data_labels, setData_Labels] = useState<string[]>([]);
-  const [data_datasets, setData_Datasets] = useState<number[]>([]);
-  const [data_datasetsA, setData_DatasetsA] = useState<number[]>([]);
-  const [max_datasets, setMaxx_Datasets] = useState(0);
-  const [max_datasetsA, setMaxx_DatasetsA] = useState(0);
+  let maxDataSetsA = 0;
 
-  const generateRandom = () => {
-    const myArray: number[] = [];
-    const myArrayA: number[] = [];
-    const myArrayB: number[] = [];
-
-    const loopArray: number[] = Array(totalCount).fill(0);
-    loopArray.map((idx) => {
-      myArray.push(Math.floor(Math.random() * 10));
-      myArrayA.push(Math.floor(Math.random() * 10));
-      myArrayB.push(Math.floor(Math.random() * 10 + 2012));
-    });
-    myArrayB.sort((a, b) => a - b);
-
-    setData_Datasets(myArray);
-    setData_DatasetsA(myArrayA);
-    setData_Labels(myArrayB.map(String));
-
-    setMaxx_Datasets(Math.max(...myArray));
-    setMaxx_DatasetsA(Math.max(...myArrayA));
+  const getDataLabels = () => {
+    const arr: string[] = [];
+    if (context && context.dividends && context.dividends.divHistoryAnnual) {
+      context.dividends.divHistoryAnnual.map((idx: any) => {
+        arr.push(idx.year);
+      });
+      arr.reverse();
+    }
+    return arr;
+  };
+  const getDataSets = () => {
+    const arr: number[] = [];
+    if (context && context.dividends && context.dividends.divHistoryAnnual) {
+      let tmax = 0;
+      context.dividends.divHistoryAnnual.map((idx: any) => {
+        arr.push(idx.amount);
+        tmax = tmax < idx.earnings ? idx.earnings : tmax;
+      });
+      maxDataSetsA = tmax;
+      arr.reverse();
+    }
+    return arr;
   };
 
   const options = {
@@ -229,15 +209,15 @@ const DividendChart = () => {
   };
 
   const data = {
-    labels,
+    labels: getDataLabels(),
     datasets: [
       {
-        data: data_datasets,
+        data: getDataSets(),
         fill: true,
         backgroundColor: (context: any) => {
           const chart = context.chart;
           const ctx = chart.canvas.getContext("2d");
-          const gradient = ctx.createLinearGradient(0, 0, 0, max_datasets);
+          const gradient = ctx.createLinearGradient(0, 0, 0, maxDataSetsA);
           gradient.addColorStop(0, "rgba(28, 166, 94, 0.6)");
           gradient.addColorStop(1, "rgba(28, 166, 94, 0.1)");
           return gradient;
@@ -246,27 +226,23 @@ const DividendChart = () => {
         borderColor: "#2EBD85",
         // stack: "Stack 0",
       },
-      {
-        data: data_datasetsA,
-        fill: true,
-        backgroundColor: (context: any) => {
-          const chart = context.chart;
-          const ctx = chart.canvas.getContext("2d");
-          const gradient = ctx.createLinearGradient(0, 0, 0, max_datasetsA);
-          gradient.addColorStop(0, "rgba(184, 185, 187, 0.78)");
-          gradient.addColorStop(1, "rgba(184, 185, 187, 0.1)");
-          return gradient;
-        },
-        borderWidth: 1,
-        borderColor: "#B8B9BB",
-        // stack: "Stack 1",
-      },
+      // {
+      //   data: data_datasetsA,
+      //   fill: true,
+      //   backgroundColor: (context: any) => {
+      //     const chart = context.chart;
+      //     const ctx = chart.canvas.getContext("2d");
+      //     const gradient = ctx.createLinearGradient(0, 0, 0, max_datasetsA);
+      //     gradient.addColorStop(0, "rgba(184, 185, 187, 0.78)");
+      //     gradient.addColorStop(1, "rgba(184, 185, 187, 0.1)");
+      //     return gradient;
+      //   },
+      //   borderWidth: 1,
+      //   borderColor: "#B8B9BB",
+      //   // stack: "Stack 1",
+      // },
     ],
   };
-
-  useEffect(() => {
-    generateRandom();
-  }, []);
 
   return (
     <div className="bg-[#0B1620] flex flex-col p-4 h-full">
@@ -277,31 +253,50 @@ const DividendChart = () => {
       <div className="flex text-sm border-b-2 border-b-[#252A2D]">
         <div className="w-1/3 my-2">
           <div className="text-[#979797]">Dividend Amount (Recent)</div>
-          <div className="font-bold">$0.21</div>
+          <div className="font-bold">
+            {context && context.dividends
+              ? "$" + context.dividends.amount
+              : "N/A"}
+          </div>
         </div>
         <div className="w-1/3 px-2 border-l border-r border-l-[#252A2D] border-r-[#252A2D] my-2">
           <div className="text-[#979797]">Pay Date</div>
-          <div className="font-bold">02/11/2022</div>
+          <div className="font-bold">
+            {context && context.dividends ? context.dividends.payDate : "N/A"}
+          </div>
         </div>
         <div className="w-1/3 pl-2 my-2">
           <div className="text-[#979797]">Dividend Frequency</div>
-          <div className="font-bold">Quarterly</div>
+          <div className="font-bold">
+            {context && context.dividends ? context.dividends.frequency : "N/A"}
+          </div>
         </div>
       </div>
       <div className="grow flex py-2">
         <div className="w-1/3 text-sm text-white">
           <div className="text-white py-2">Strength Dividend Yield</div>
           <div className="py-2">
-            <div className="py-3 font-medium">AAPL</div>
+            <div className="py-3 font-medium">
+              {context && context.profile ? context.profile.symbol : "N/A"}
+            </div>
             <div className="flex w-full items-center">
               <div
                 style={{
-                  width: "6.2%",
+                  width: `${
+                    context && context.dividends
+                      ? context.dividends.annDivRate * 10
+                      : 0
+                  }%`,
                   height: "26px",
                   background: "#0F69FE",
                 }}
               ></div>
-              <div className="text-[28px] pl-2">0.62%</div>
+              <div className="text-[28px] pl-2">
+                {context && context.dividends
+                  ? context.dividends.annDivRate
+                  : 0}
+                %
+              </div>
             </div>
             <div className="py-2 text-xs text-[#979797]">Ann. Div. / Yield</div>
           </div>
@@ -310,12 +305,21 @@ const DividendChart = () => {
             <div className="flex w-full items-center">
               <div
                 style={{
-                  width: "23%",
+                  width: `${
+                    context && context.dividends
+                      ? parseFloat(context.dividends.annDivYield) * 10
+                      : 0
+                  }%`,
                   height: "26px",
                   background: "#B8B9BB",
                 }}
               ></div>
-              <div className="text-[28px] pl-2">2.38%</div>
+              <div className="text-[28px] pl-2">
+                {context && context.dividends
+                  ? parseFloat(context.dividends.annDivYield).toFixed(2)
+                  : 0}
+                %
+              </div>
             </div>
             <div className="py-2 text-xs text-[#979797]">Ann. Div. / Yield</div>
           </div>
@@ -397,7 +401,9 @@ const DividendChart = () => {
           <div className="py-2 text-xs">
             <div className="flex items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-[#0F69FE]"></div>
-              <div className="px-2">AAPL</div>
+              <div className="px-2">
+                {context && context.profile ? context.profile.symbol : "N/A"}
+              </div>
             </div>
             <div className="flex items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-[#B8B9BB]"></div>

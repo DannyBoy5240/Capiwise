@@ -72,7 +72,7 @@ const StockSummary = () => {
           <FinancialHealthChart context={stockData} />
         </div>
         <div className="w-1/2 pl-2">
-          <DividendChart />
+          <DividendChart context={stockData} />
         </div>
       </div>
       {/* Company Profile & Equity Summary & Fundamental Event & Technical Analysis */}
