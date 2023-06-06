@@ -64,7 +64,7 @@ const login: FC = () => {
           console.log("Handle MFA setup here!");
         },
       });
-      navigate("/search");
+      navigate("/");
       // Save to localStorage
       if (rememberMe) {
         localStorage.setItem("useremail", email);

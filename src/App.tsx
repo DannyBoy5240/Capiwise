@@ -42,7 +42,7 @@ const MainRoute: React.FunctionComponent = () => (
   <BrowserRouter>
     <Routes>
       <Route
-        path="/search"
+        path="/"
         element={
           <div className="flex flex-col h-screen justify-between">
             <div className="flex flex-col">

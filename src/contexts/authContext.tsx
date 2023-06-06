@@ -58,20 +58,23 @@ type Props = {
 export const AuthContext = React.createContext(defaultState);
 
 export const AuthIsSignedIn = ({ children }: Props) => {
+  console.log("AuthIsSignedIn called!");
   const { authStatus }: IAuth = useContext(AuthContext);
-
-  console.log("authStatus --> ", authStatus);
 
   return <>{authStatus === AuthStatus.SignedIn ? children : null}</>;
 };
 
 export const AuthIsNotSignedIn = ({ children }: Props) => {
+  console.log("AuthIsNotSigned called!");
+
   const { authStatus }: IAuth = useContext(AuthContext);
 
   return <>{authStatus === AuthStatus.SignedOut ? children : null}</>;
 };
 
 const AuthProvider = ({ children }: Props) => {
+  console.log("AuthProvider called!");
+
   const [authStatus, setAuthStatus] = useState(AuthStatus.Loading);
   const [sessionInfo, setSessionInfo] = useState({});
   const [attrInfo, setAttrInfo] = useState([]);
@@ -79,6 +82,8 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     async function getSessionInfo() {
+      console.log("AuthProvider getSessionInfo called!");
+
       try {
         const session: any = await getSession();
         setSessionInfo({

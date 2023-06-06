@@ -88,7 +88,7 @@ const StockSummary = () => {
           <EquitySummaryScore />
         </div>
         <div className="w-1/4 px-2">
-          <FundamentalEvents />
+          <FundamentalEvents context={stockData} />
         </div>
         <div className="w-1/4 pl-2">
           <TechnicalAnalysis />
