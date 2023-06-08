@@ -80,7 +80,10 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
               ? context.events.divPast.amount
               : "N/A"}{" "}
             on{" "}
-            {context && context.events && context.events.divPast
+            {context &&
+            context.events &&
+            context.events.divPast &&
+            context.events.divPast.payment_date
               ? updateDateFormat(context.events.divPast.payment_date)
               : "N/A"}
             <ul className="pt-2">
@@ -94,7 +97,10 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
           <div className="relative">
             <img src={calendarGrayIcon} className="max-w-none" />
             <div className="absolute top-[3px] left-[10px] text-[8px] text-[#040B11] font-semibold">
-              {context && context.events && context.events.divPast
+              {context &&
+              context.events &&
+              context.events.divPast &&
+              context.events.divPast.payment_date
                 ? new Date(
                     0,
                     context.events.divPast.payment_date.split("-")[1] - 1
@@ -102,7 +108,10 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
                 : "N/A"}
             </div>
             <div className="absolute top-[16px] left-[12px] text-xs text-[#979797] font-semibold">
-              {context && context.events && context.events.divPast
+              {context &&
+              context.events &&
+              context.events.divPast &&
+              context.events.divPast.payment_date
                 ? context.events.divPast.payment_date.split("-")[2]
                 : "N/A"}
             </div>
@@ -110,7 +119,10 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
           <div className="pl-3 text-xs">
             {context && context.profile ? context.profile.symbol : "N/A"}{" "}
             announced{" "}
-            {context && context.events && context.events.earningsPast
+            {context &&
+            context.events &&
+            context.events.earningsPast &&
+            context.events.earningsPast.quarter
               ? context.events.earningsPast.quarter.split(" ")[0]
               : "N/A"}{" "}
             earnings.
