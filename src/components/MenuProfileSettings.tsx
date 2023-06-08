@@ -22,13 +22,17 @@ const MenuProfileSettings: FC = () => {
     <div className="flex items-center">
       <div className="p-2.5 rounded-full bg-[#040B11] hover:cursor-pointer">
         <p className="text-[#2EBD85] font-bold text-base">
-          {(
-            localStorage.useremail[0] + localStorage.useremail[1]
-          ).toUpperCase()}
+          {localStorage.useremail
+            ? (
+                localStorage.useremail[0] + localStorage.useremail[1]
+              ).toUpperCase()
+            : "CP"}
         </p>
       </div>
       <div className="flex items-center hover:cursor-pointer">
-        <p className="text-sm font-bold mx-2">{localStorage.useremail}</p>
+        <p className="text-sm font-bold mx-2">
+          {localStorage.useremail ? localStorage.useremail : ""}
+        </p>
         <svg
           width="12"
           height="8"
