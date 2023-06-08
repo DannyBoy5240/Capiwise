@@ -331,7 +331,11 @@ const DividendChart: FC<DividendChartProps> = ({ context }) => {
           </div>
           <div className="py-3 flex">
             <div className="relative w-1/2 pr-2">
-              <Doughnut options={options1} data={data1} />
+              <div className="w-full flex justify-center">
+                <div className="w-5/6">
+                  <Doughnut options={options1} data={data1} />
+                </div>
+              </div>
               <div className="text-xs text-center pt-2 pb-1">
                 Last Year Payout
               </div>
@@ -354,7 +358,11 @@ const DividendChart: FC<DividendChartProps> = ({ context }) => {
               </div>
             </div>
             <div className="relative w-1/2 pl-2">
-              <Doughnut options={options1} data={data1} />
+              <div className="w-full flex justify-center">
+                <div className="w-5/6">
+                  <Doughnut options={options1} data={data1} />
+                </div>
+              </div>
               <div className="text-xs text-center pt-2 pb-1">
                 Current Payout
               </div>

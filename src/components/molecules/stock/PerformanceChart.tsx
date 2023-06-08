@@ -165,13 +165,13 @@ const PerformanceChart: FC<PerformanceChartProps> = ({ context }) => {
       <div className="border-b-2 border-b-[#252A2D] py-2 text-base font-bold">
         Performance
       </div>
-      <div className="flex py-2">
+      <div className="flex pb-10 h-full">
         <div className="w-2/3 flex flex-col pr-2 border-r-2 border-r-[#252A2D] h-full">
           <div className="font-medium text-sm pt-2 pb-1">
             Earnings and Revenue History
           </div>
-          <div className="flex flex-col">
-            <div className="py-2 grow flex items-center h-[240px]">
+          <div className="grow flex flex-col h-full">
+            <div className="grow py-2 flex items-center h-[240px]">
               <Line options={options} data={data} />
             </div>
             <div className="flex justify-end">

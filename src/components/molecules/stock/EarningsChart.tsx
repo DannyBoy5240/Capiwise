@@ -173,14 +173,14 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
             <span className="font-bold">Expected Report Date</span> N/A
           </div>
         </div>
-        <div className="grow pl-2 text-xs">
+        <div className="grow pl-2 text-xs  flex flex-col">
           <div className="text-[#979797] pt-2 pb-1">
             <span className="text-white text-sm">Earnings Metrics</span> GAAP
           </div>
           <div className="text-[#979797]">
             vs. Industry: Technology Hardware, Storage & Periphera
           </div>
-          <div className="text-sm text-white font-bold">
+          <div className="grow flex flex-col text-sm text-white font-bold">
             <div className="flex border-b-2 border-b-white">
               <div className="w-2/3 flex justify-end">
                 {context && context["profile"]
@@ -189,7 +189,7 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
               </div>
               <div className="w-1/3 flex text-right">Industry Average</div>
             </div>
-            <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
+            <div className="grow flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
               <div className="w-1/3 text-left">
                 EPS<span className="font-normal text-xs">(TTM)</span>
               </div>
@@ -201,7 +201,7 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
               </div>
               <div className="w-1/3 text-right">$3.53</div>
             </div>
-            <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
+            <div className="grow flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
               <div className="w-1/3 text-left">
                 P/E<span className="font-normal text-xs">(TTM)</span>
               </div>
@@ -212,7 +212,7 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
               </div>
               <div className="w-1/3 text-right">35.18</div>
             </div>
-            <div className="flex border-b-[0.6px] border-b-[#252A2D] py-2">
+            <div className="grow flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
               <div className="w-1/3 text-left">
                 P/E<span className="font-normal text-xs">(5-Year Avg)</span>
               </div>
@@ -223,7 +223,7 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
               </div>
               <div className="w-1/3 text-right">19.96</div>
             </div>
-            <div className="flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
+            <div className="grow flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
               <div className="w-1/3 text-left">
                 <div>EPS Growth</div>
                 <div className="font-normal text-xs">(TTM vs Prior TTM)</div>
@@ -245,7 +245,7 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
               </div>
               <div className="w-1/3 text-right text-[#2EBD85]">+12.28%</div>
             </div>
-            <div className="flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
+            <div className="grow flex items-center border-b-[0.6px] border-b-[#252A2D] py-2">
               <div className="w-1/3 text-left">
                 <div>EPS Growth</div>
                 <div className="font-normal text-xs">

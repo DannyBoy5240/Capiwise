@@ -207,21 +207,17 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
     ],
   };
 
-  // useEffect(() => {
-  //   generateRandom();
-  // }, []);
-
   return (
     <div className="bg-[#0B1620] p-4 h-full">
       <div className="border-b-2 border-b-[#252A2D] py-2 text-base font-bold">
         Financial Health
       </div>
       <div className="flex py-2">
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <div className="font-medium text-sm pt-2 pb-1">
             Debt to Equity History and Analysis
           </div>
-          <div className="py-2 grow flex items-center h-[240px]">
+          <div className="py-2 grow flex items-center w-full h-[240px]">
             <Line options={options} data={data} />
           </div>
           <div className="flex justify-end">
