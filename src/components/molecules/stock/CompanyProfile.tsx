@@ -11,7 +11,7 @@ const CompanyProfile: FC<CompanyProfileProps> = ({ context }) => {
         Company Profile
       </div>
       {/* Sector & Industry */}
-      <div className="py-2 border-b border-b-[#040B11] text-xs">
+      <div className="py-2 border-b border-b-[#252A2D] text-xs">
         <div className="flex py-1">
           <div className="text-[#979797]">Sector</div>
           <div className="pl-2 text-[#20A5F1]">
@@ -26,7 +26,7 @@ const CompanyProfile: FC<CompanyProfileProps> = ({ context }) => {
         </div>
       </div>
       {/* Biography */}
-      <div className="py-2 border-b border-b-[#040B11] text-xs">
+      <div className="py-2 border-b border-b-[#252A2D] text-xs">
         <div className="font-bold text-[#979797]">Biography</div>
         <div className="py-1">
           {context ? context["biography"].slice(0, 250) : "N/A"}
@@ -54,7 +54,11 @@ const CompanyProfile: FC<CompanyProfileProps> = ({ context }) => {
         <div className="font-bold text-[#979797]">
           Headquarters
           <span className="pl-1 text-white font-normal">
-            {context ? context["headquarter"] : "N/A"}
+            {context
+              ? context["headquarter"].substring(
+                  context["headquarter"].indexOf(",") + 2
+                )
+              : "N/A"}
           </span>
         </div>
         <div className="font-bold text-[#979797]">
@@ -66,7 +70,11 @@ const CompanyProfile: FC<CompanyProfileProps> = ({ context }) => {
         <div className="font-bold text-[#979797]">
           Website
           <span className="pl-1 text-[#20A5F1] font-normal">
-            {context ? context["website"] : "N/A"}
+            {context
+              ? context["website"].substring(
+                  context["website"].indexOf("https://www") + 12
+                )
+              : "N/A"}
           </span>
         </div>
       </div>

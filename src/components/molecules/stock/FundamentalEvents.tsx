@@ -27,7 +27,7 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
         <div className="flex py-3 items-center border-b border-b-[#252A2D]">
           <div className="relative">
             <img src={calendarIcon} className="max-w-none" />
-            <div className="absolute top-[3px] left-[10px] text-[8px] text-black font-semibold">
+            <div className="absolute top-[3px] w-full text-center text-[8px] text-black font-semibold">
               {context && context.events && context.events.earningsUpcoming
                 ? new Date(
                     0,
@@ -35,9 +35,12 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
                   ).toLocaleString("en-US", { month: "short" })
                 : "N/A"}
             </div>
-            <div className="absolute top-[16px] left-[12px] text-xs text-[#2EBD85] font-semibold">
+            <div className="absolute top-[16px] w-full text-center text-xs text-[#2EBD85] font-semibold">
               {context && context.events && context.events.earningsUpcoming
-                ? context.events.earningsUpcoming.date.split("-")[2]
+                ? parseInt(
+                    context.events.earningsUpcoming.date.split("-")[2],
+                    10
+                  )
                 : "N/A"}
             </div>
           </div>
@@ -59,17 +62,17 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
         <div className="flex py-3 border-b border-b-[#252A2D]">
           <div className="relative">
             <img src={calendarGrayIcon} className="max-w-none" />
-            <div className="absolute top-[3px] left-[10px] text-[8px] text-[#040B11] font-semibold">
-              {context && context.events && context.events.earningsPast
+            <div className="absolute top-[3px] w-full text-center text-[8px] text-[#040B11] font-semibold">
+              {context && context.events && context.events.divPast
                 ? new Date(
                     0,
-                    context.events.earningsPast.date.split("-")[1] - 1
+                    context.events.divPast.exdivDate.split("-")[1] - 1
                   ).toLocaleString("en-US", { month: "short" })
                 : "N/A"}
             </div>
-            <div className="absolute top-[16px] left-[14px] text-xs text-[#979797] font-semibold">
-              {context && context.events && context.events.earningsPast
-                ? context.events.earningsPast.date.split("-")[2]
+            <div className="absolute top-[16px] w-full text-center text-xs text-[#979797] font-semibold">
+              {context && context.events && context.events.divPast
+                ? parseInt(context.events.divPast.exdivDate.split("-")[2], 10)
                 : "N/A"}
             </div>
           </div>
@@ -83,36 +86,57 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
             {context &&
             context.events &&
             context.events.divPast &&
-            context.events.divPast.payment_date
-              ? updateDateFormat(context.events.divPast.payment_date)
+            context.events.divPast.exdivDate
+              ? updateDateFormat(context.events.divPast.exdivDate)
               : "N/A"}
-            <ul className="pt-2">
-              <li>Announce Date: 01/27/2023</li>
-              <li>Record Date: 02/08/2023</li>
-              <li>Pay Date: 02/11/2023</li>
+            <ul className="pt-2 pl-4 list-disc">
+              <li>
+                Ex-Dividend Date:{" "}
+                {context && context.events && context.events.divPast
+                  ? new Date(
+                      context.events.divPast.exdivDate
+                    ).toLocaleDateString("en-US")
+                  : "N/A"}
+              </li>
+              <li>
+                Record Date:{" "}
+                {context && context.events && context.events.divPast
+                  ? new Date(
+                      context.events.divPast.recordDate
+                    ).toLocaleDateString("en-US")
+                  : "N/A"}
+              </li>
+              <li>
+                Pay Date:{" "}
+                {context && context.events && context.events.divPast
+                  ? new Date(context.events.divPast.payDate).toLocaleDateString(
+                      "en-US"
+                    )
+                  : "N/A"}
+              </li>
             </ul>
           </div>
         </div>
         <div className="flex py-3 border-b border-b-[#252A2D]">
           <div className="relative">
             <img src={calendarGrayIcon} className="max-w-none" />
-            <div className="absolute top-[3px] left-[10px] text-[8px] text-[#040B11] font-semibold">
+            <div className="absolute top-[3px] w-full text-center text-[8px] text-[#040B11] font-semibold">
               {context &&
               context.events &&
-              context.events.divPast &&
-              context.events.divPast.payment_date
+              context.events.earningsPast &&
+              context.events.earningsPast.date
                 ? new Date(
                     0,
-                    context.events.divPast.payment_date.split("-")[1] - 1
+                    context.events.earningsPast.date.split("-")[1] - 1
                   ).toLocaleString("en-US", { month: "short" })
                 : "N/A"}
             </div>
-            <div className="absolute top-[16px] left-[12px] text-xs text-[#979797] font-semibold">
+            <div className="absolute top-[16px] w-full text-center text-xs text-[#979797] font-semibold">
               {context &&
               context.events &&
-              context.events.divPast &&
-              context.events.divPast.payment_date
-                ? context.events.divPast.payment_date.split("-")[2]
+              context.events.earningsPast &&
+              context.events.earningsPast.date
+                ? parseInt(context.events.earningsPast.date.split("-")[2], 10)
                 : "N/A"}
             </div>
           </div>
