@@ -106,7 +106,7 @@ const login: FC = () => {
         client_id:
           "1068316747994-l0ftul2edhuccgepq3dglljhkb5et48k.apps.googleusercontent.com", //"your-client-id",
         client_secret: "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", //"your-client-secret",
-        redirect_uri: "https://capiwise.vercel.app",
+        redirect_uri: "http://localhost:3000",
         grant_type: "authorization_code",
         code: code,
       }),
@@ -117,20 +117,21 @@ const login: FC = () => {
         const decoded_token: any = jwt_decode(idToken);
         console.log("decoded_token.email", decoded_token.email);
         await authContext.googleLogin(decoded_token.email, idToken);
-        navigate("/search");
+        // login
+        navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        console.log("---", error);
       });
   }
 
-  // const googleLoginHandle = useGoogleLogin({
-  //   flow: "auth-code",
-  //   onSuccess: async (code: any) => {
-  //     await getIdToken(code.code);
-  //   },
-  //   onError: (errorResponse: any) => console.log(errorResponse),
-  // });
+  const googleLoginHandle = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: async (code: any) => {
+      await getIdToken(code.code);
+    },
+    onError: (errorResponse: any) => console.log(errorResponse),
+  });
 
   return (
     <div className="w-full h-screen flex">
@@ -249,7 +250,7 @@ const login: FC = () => {
                 <div className="w-1/3 px-1">
                   <div
                     className="rounded-full bg-transparent hover:bg-[#0053AA33] hover:cursor-pointer border-[#979797] border flex justify-center py-2"
-                    // onClick={() => googleLoginHandle()}
+                    onClick={() => googleLoginHandle()}
                   >
                     <img src={googleIcon} className="w-5 h-5" />
                   </div>

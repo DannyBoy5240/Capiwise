@@ -106,19 +106,19 @@ const AuthProvider = ({ children }: Props) => {
         setAttrInfo(attr);
         setAuthStatus(AuthStatus.SignedIn);
       } catch (err) {
-        // console.log("useEffect authStatus error --> ", err);
+        console.log("useEffect authStatus error --> ", err);
         setAuthStatus(AuthStatus.SignedOut);
       }
     }
 
-    // if (
-    //   !localStorage.socialAuthStatus ||
-    //   localStorage.socialAuthStatus == "false"
-    // )
-    getSessionInfo();
-    // else {
-    //   setAuthStatus(AuthStatus.SignedIn);
-    // }
+    if (
+      !localStorage.socialAuthStatus ||
+      localStorage.socialAuthStatus == "false"
+    )
+      getSessionInfo();
+    else {
+      setAuthStatus(AuthStatus.SignedIn);
+    }
   }, [setAuthStatus, authStatus]);
 
   if (authStatus === AuthStatus.Loading) {
@@ -227,18 +227,18 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   async function googleLogin(email: string, googleToken: string) {
-    // try {
-    //   await cognito.googleLogin(email, googleToken);
-    //   setAuthStatus(AuthStatus.SignedIn);
-    //   setSocialStatus(SocialAuthStatus.GoogleSign);
-    //   window.localStorage.setItem("useremail", email);
-    //   window.localStorage.setItem("socialAuthStatus", "true");
-    // } catch (err) {
-    //   setAuthStatus(AuthStatus.SignedOut);
-    //   setSocialStatus(SocialAuthStatus.SignOut);
-    //   window.localStorage.setItem("socialAuthStatus", "false");
-    //   throw err;
-    // }
+    try {
+      await cognito.googleLogin(email, googleToken);
+      setAuthStatus(AuthStatus.SignedIn);
+      setSocialStatus(SocialAuthStatus.GoogleSign);
+      window.localStorage.setItem("useremail", email);
+      window.localStorage.setItem("socialAuthStatus", "true");
+    } catch (err) {
+      setAuthStatus(AuthStatus.SignedOut);
+      setSocialStatus(SocialAuthStatus.SignOut);
+      window.localStorage.setItem("socialAuthStatus", "false");
+      throw err;
+    }
   }
 
   const state: IAuth = {
