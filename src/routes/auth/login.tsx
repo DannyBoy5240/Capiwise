@@ -88,14 +88,6 @@ const login: FC = () => {
     navigate(`/forgetpassword`, { state: { email: email } });
   };
 
-  // const googleLoginHandleSucceed = async (credentialResponse: any) => {
-  //   const decoded_token: any = jwt_decode(credentialResponse.credential);
-  //   console.log("decoded_token => ", decoded_token);
-  //   const googleToken = decoded_token.iat;
-  //   const email = decoded_token.email;
-  //   await authContext.googleLogin(email, googleToken, true);
-  // };
-
   async function getIdToken(code: string) {
     const response = await fetch("https://oauth2.googleapis.com/token", {
       method: "POST",
@@ -121,7 +113,7 @@ const login: FC = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log("---", error);
+        console.log(error);
       });
   }
 

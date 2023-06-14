@@ -31,7 +31,7 @@ const ETFSummary = () => {
       <ETFPriceSummary context={context} />
       <div className="pt-4 pb-2 flex">
         <div className="w-1/2 pr-2">
-          <SummaryChart code={context.symbol} />
+          <SummaryChart code={context.symbol} stockData={null} />
         </div>
         <div className="w-1/4 px-2">
           <AnalysisDetails code={context.symbol} />

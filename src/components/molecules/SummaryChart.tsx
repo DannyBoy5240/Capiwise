@@ -22,6 +22,7 @@ interface SummaryChartProps {
   // viewMode: number;
   // isFullScreen: boolean;
   code: string;
+  stockData: any;
 }
 
 type positionType = "left" | "center" | "top" | "right" | "bottom" | undefined;
@@ -30,6 +31,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
   // viewMode,
   // isFullScreen,
   code,
+  stockData,
 }) => {
   // Chart View Mode
   const [viewMode, setViewMode] = useState(3);
@@ -299,9 +301,14 @@ const SummaryChart: FC<SummaryChartProps> = ({
           .then((response) => response.json())
           .then((data) => {
             if (data && data["Valuation::FairPrice"]) {
-              const fair_price = parseFloat(
-                data["Valuation::FairPrice"].toFixed(2)
-              );
+              // const fair_price = parseFloat(
+              //   data["Valuation::FairPrice"].toFixed(2)
+              // );
+              const fair_price =
+                stockData && stockData.statistics
+                  ? stockData.statistics.fairPrice
+                  : 0;
+              console.log("fairPrice -> ", fair_price);
               const fair_price_temp = (fair_price * 4) / 5;
 
               chart_min =
