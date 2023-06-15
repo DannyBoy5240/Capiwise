@@ -117,7 +117,7 @@ const FundamentalEvents: FC<FundamentalEventsProps> = ({ context }) => {
             </ul>
           </div>
         </div>
-        <div className="flex py-3 border-b border-b-[#252A2D]">
+        <div className="flex py-3">
           <div className="relative">
             <img src={calendarGrayIcon} className="max-w-none" />
             <div className="absolute top-[3px] w-full text-center text-[8px] text-[#040B11] font-semibold">

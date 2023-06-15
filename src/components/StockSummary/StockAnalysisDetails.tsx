@@ -14,9 +14,13 @@ import fairvalueIcon from "../../assets/fair_value_icon.svg";
 
 interface StockAnalysisDetailsProps {
   code: string;
+  stockData: any;
 }
 
-const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
+const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({
+  code,
+  stockData,
+}) => {
   const [stockSummary, setStockSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
 
@@ -29,33 +33,41 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
 
   const getAnalysticInfo = async () => {
     // Get Stock Live Data
-    const stockURL =
-      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
-      code +
-      ".US&token=demo";
 
-    fetch(stockURL)
-      .then((response) => response.json())
-      .then((data) => {
-        // setStockSummary(data);
-        if (data && data["Valuation::FairPrice"])
-          setFairPrice(data["Valuation::FairPrice"]);
-      })
-      .catch((error) => console.log(error));
+    // const stockURL =
+    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
+    //   code +
+    //   ".US&token=demo";
 
-    // Get Stock Live Data
-    const stockLiveURL =
-      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
-      code +
-      ".US";
+    // fetch(stockURL)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // setStockSummary(data);
+    //     if (data && data["Valuation::FairPrice"])
+    //       setFairPrice(data["Valuation::FairPrice"]);
+    //   })
+    //   .catch((error) => console.log(error));
 
-    fetch(stockLiveURL)
-      .then((response) => response.json())
-      .then((data) => {
-        // setStockLiveData(data);
-        if (data && data["high"]) setCurrentPrice(data["high"]);
-      })
-      .catch((error) => console.log(error));
+    setFairPrice(
+      stockData && stockData.statistics ? stockData.statistics.fairPrice : 0
+    );
+    setCurrentPrice(
+      stockData && stockData.day1Range ? stockData.day1Range.open : 0
+    );
+
+    // // Get Stock Live Data
+    // const stockLiveURL =
+    //   "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockLiveData?ticker=" +
+    //   code +
+    //   ".US";
+
+    // fetch(stockLiveURL)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // setStockLiveData(data);
+    //     if (data && data["high"]) setCurrentPrice(data["high"]);
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   const getCurrentPriceValuation = () => {
@@ -139,7 +151,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                     <div>Current Price</div>
                     <div className="font-bold">
                       US$
-                      {currentPrice}
+                      {parseFloat(currentPrice.toString()).toFixed(2)}
                     </div>
                   </div>
                 </div>
@@ -164,7 +176,8 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                   <span>
                     <span className="px-4"></span>
                     <span>
-                      {code}(${currentPrice}) have no value data available
+                      {code}(${parseFloat(currentPrice.toString()).toFixed(2)})
+                      have no value data available
                     </span>
                   </span>
                 ) : (
@@ -179,7 +192,8 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({ code }) => {
                   </span>
                 )}
                 {code} ($
-                {currentPrice}) is trading above our estimate of fair value ($
+                {parseFloat(currentPrice.toString()).toFixed(2)}) is trading
+                above our estimate of fair value ($
                 {fairPrice})
               </div>
             </div>

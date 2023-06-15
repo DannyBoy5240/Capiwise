@@ -51,7 +51,7 @@ const StockSummary = () => {
           <SummaryChart code={context.symbol} stockData={stockData} />
         </div>
         <div className="pt-4 w-1/4 px-2">
-          <StockAnalysisDetails code={context.symbol} />
+          <StockAnalysisDetails code={context.symbol} stockData={stockData} />
         </div>
         <div className="pt-4 w-1/4 pl-2">
           <FundementalChart />

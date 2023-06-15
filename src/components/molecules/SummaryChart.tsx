@@ -292,65 +292,105 @@ const SummaryChart: FC<SummaryChartProps> = ({
         if (count > 0) tlabels[0] = "";
         setLabels(tlabels);
 
-        const stockSummaryURL =
-          "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
-          code +
-          ".US";
+        //   const stockSummaryURL =
+        //     "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
+        //     code +
+        //     ".US";
 
-        fetch(stockSummaryURL)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data && data["Valuation::FairPrice"]) {
-              // const fair_price = parseFloat(
-              //   data["Valuation::FairPrice"].toFixed(2)
-              // );
-              const fair_price =
-                stockData && stockData.statistics
-                  ? stockData.statistics.fairPrice
-                  : 0;
-              console.log("fairPrice -> ", fair_price);
-              const fair_price_temp = (fair_price * 4) / 5;
+        //   fetch(stockSummaryURL)
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //       // if (data && data["Valuation::FairPrice"]) {
+        //         // const fair_price = parseFloat(
+        //         //   data["Valuation::FairPrice"].toFixed(2)
+        //         // );
+        //         const fair_price =
+        //           stockData && stockData.statistics
+        //             ? stockData.statistics.fairPrice
+        //             : 0;
+        //         console.log("fairPrice -> ", fair_price);
+        //         const fair_price_temp = (fair_price * 4) / 5;
 
-              chart_min =
-                chart_min > fair_price_temp ? fair_price_temp : chart_min;
-              setChartMin(chart_min);
-              chart_max = chart_max < fair_price ? fair_price : chart_max;
-              setChartMax(chart_max);
-              setFairPrice(fair_price);
+        //         chart_min =
+        //           chart_min > fair_price_temp ? fair_price_temp : chart_min;
+        //         setChartMin(chart_min);
+        //         chart_max = chart_max < fair_price ? fair_price : chart_max;
+        //         setChartMax(chart_max);
+        //         setFairPrice(fair_price);
 
-              // update custom fair line position
-              if (chartRef.current) {
-                const width = chartRef.current["width"];
-                const height = chartRef.current["scales"]["y"]["height"];
+        //         // update custom fair line position
+        //         if (chartRef.current) {
+        //           const width = chartRef.current["width"];
+        //           const height = chartRef.current["scales"]["y"]["height"];
 
-                const maxY = chartRef.current["scales"]["y"]["max"];
-                const minY = chartRef.current["scales"]["y"]["min"];
-                const deltaY = maxY - minY;
+        //           const maxY = chartRef.current["scales"]["y"]["max"];
+        //           const minY = chartRef.current["scales"]["y"]["min"];
+        //           const deltaY = maxY - minY;
 
-                console.log("deltaY -> ", deltaY);
+        //           console.log("deltaY -> ", deltaY);
 
-                const offsetX = width - 45;
-                const offsetY =
-                  (height * (nums[count - 1] - minY)) / deltaY +
-                  (chartRef.current["height"] -
-                    chartRef.current["chartArea"]["height"]);
+        //           const offsetX = width - 45;
+        //           const offsetY =
+        //             (height * (nums[count - 1] - minY)) / deltaY +
+        //             (chartRef.current["height"] -
+        //               chartRef.current["chartArea"]["height"]);
 
-                console.log("offsetY ->", offsetY);
+        //           console.log("offsetY ->", offsetY);
 
-                const fairA = document.getElementById("fair1_id");
-                if (fairA) {
-                  fairA.style.display = "flex";
-                  fairA.style.position = "relative";
-                  fairA.style.left = offsetX + "px";
-                  fairA.style.bottom = offsetY + "px";
-                  fairA.innerHTML =
-                    parseFloat(nums[count - 1].toString()).toFixed(2) +
-                    "<div style='position: absolute;  left: -10px; top: 0px; width: 0px; height: 0px; border-top: 12px solid transparent; border-right: 10px solid white; border-bottom: 12px solid transparent;'></div>";
-                }
-              }
-            }
-          })
-          .catch((error) => console.log(error));
+        //           const fairA = document.getElementById("fair1_id");
+        //           if (fairA) {
+        //             fairA.style.display = "flex";
+        //             fairA.style.position = "relative";
+        //             fairA.style.left = offsetX + "px";
+        //             fairA.style.bottom = offsetY + "px";
+        //             fairA.innerHTML =
+        //               parseFloat(nums[count - 1].toString()).toFixed(2) +
+        //               "<div style='position: absolute;  left: -10px; top: 0px; width: 0px; height: 0px; border-top: 12px solid transparent; border-right: 10px solid white; border-bottom: 12px solid transparent;'></div>";
+        //           }
+        //         }
+        //       }
+        //     })
+        //     .catch((error) => console.log(error));
+
+        // set variables for fair price data
+        const fair_price =
+          stockData && stockData.statistics
+            ? stockData.statistics.fairPrice
+            : 0;
+        const fair_price_temp = (fair_price * 4) / 5;
+
+        chart_min = chart_min > fair_price_temp ? fair_price_temp : chart_min;
+        setChartMin(chart_min);
+        chart_max = chart_max < fair_price ? fair_price : chart_max;
+        setChartMax(chart_max);
+        setFairPrice(fair_price);
+
+        // update custom fair line position
+        if (chartRef.current) {
+          const width = chartRef.current["width"];
+          const height = chartRef.current["scales"]["y"]["height"];
+
+          const maxY = chartRef.current["scales"]["y"]["max"];
+          const minY = chartRef.current["scales"]["y"]["min"];
+          const deltaY = maxY - minY;
+
+          const offsetX = width - 45;
+          const offsetY =
+            (height * (nums[count - 1] - minY)) / deltaY +
+            (chartRef.current["height"] -
+              chartRef.current["chartArea"]["height"]);
+
+          const fairA = document.getElementById("fair1_id");
+          if (fairA) {
+            fairA.style.display = "flex";
+            fairA.style.position = "relative";
+            fairA.style.left = offsetX + "px";
+            fairA.style.bottom = offsetY + "px";
+            fairA.innerHTML =
+              parseFloat(nums[count - 1].toString()).toFixed(2) +
+              "<div style='position: absolute;  left: -10px; top: 0px; width: 0px; height: 0px; border-top: 12px solid transparent; border-right: 10px solid white; border-bottom: 12px solid transparent;'></div>";
+          }
+        }
       })
       .catch((error) => console.log(error));
 

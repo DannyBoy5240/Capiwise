@@ -142,11 +142,11 @@ const EarningsChart: FC<EarningsChartProps> = ({ context }) => {
   };
 
   return (
-    <div className="bg-[#0B1620] p-4 h-full">
+    <div className="bg-[#0B1620] p-4 h-full flex flex-col">
       <div className="border-b-2 border-b-[#252A2D] py-2 text-base font-bold">
         Earnings
       </div>
-      <div className="flex py-2">
+      <div className="flex py-2 h-full">
         <div className="grow flex flex-col pr-2 border-r-2 border-r-[#252A2D]">
           <div className="font-medium text-sm pt-2 pb-1">
             Earnings Per Share

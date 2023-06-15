@@ -41,25 +41,26 @@ const FundermentalChart = () => {
   };
 
   const options = {
-    scale: {
-      gridLines: {
-        lineWidth: 2, // Set grid line width to make them thicker
-        color: "rgba(0, 0, 0, 0.1)", // Set grid line color
-      },
-      pointLabels: {
-        display: false, // Hide point labels
-      },
-      ticks: {
-        display: false, // Hide scale values
+    scales: {
+      r: {
+        grid: {
+          circular: true,
+          lineWidth: 1, // Set grid line width to make them thicker
+          color: "rgba(0, 0, 0, 0.5)", // Set grid line color
+          backgroundColor: ["#040B11", "#252A2D"],
+        },
+        // pointLabels: {
+        //   display: false, // Hide point labels
+        // },
+        ticks: {
+          display: false, // Hide tick value labels
+        },
       },
     },
     plugins: {
       legend: {
         display: false, // Hide legend
       },
-    },
-    tooltips: {
-      enabled: false, // Disable tooltips
     },
   };
 
