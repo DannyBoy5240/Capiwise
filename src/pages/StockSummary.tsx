@@ -25,7 +25,6 @@ const StockSummary = () => {
   const [stockData, setStockData] = useState(null);
 
   const getStockDetails = async () => {
-    console.log("---", context.symbol);
     const stockURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
       context.symbol;

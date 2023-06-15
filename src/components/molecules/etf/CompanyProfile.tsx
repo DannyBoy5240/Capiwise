@@ -1,6 +1,12 @@
 import { FC } from "react";
 
-const CompanyProfile = () => {
+interface CompanyProfileProps {
+  context: any;
+}
+
+const CompanyProfile: FC<CompanyProfileProps> = ({ context }) => {
+  console.log("company profiel context -> ", context);
+
   return (
     <div className="bg-[#0B1620] flex flex-col p-4 h-full text-xs">
       <div className="text-base font-bold py-2 border-b border-b-[#252A2D]">
@@ -10,10 +16,8 @@ const CompanyProfile = () => {
       <div className="py-2 border-b border-b-[#040B11]">
         <div className="font-bold py-1">Biography</div>
         <div className="py-1">
-          The investment seeks investment results that generally correspond to
-          the price and yield performance of the NASDAQ-100 Index®. To maintain
-          the correspondence between the composition and weights…
-          <span className="text-[#20A5F1]">Show more</span>
+          {context ? context["biography"].slice(0, 250) : "N/A"}
+          <span className="text-[#20A5F1] pl-2">Show more</span>
         </div>
       </div>
       {/* What is it holding */}
@@ -22,13 +26,13 @@ const CompanyProfile = () => {
         <div className="font-bold text-[#979797]">
           Top Sector
           <span className="pl-1 text-[#20A5F1] font-normal">
-            Information Technology
+            {context ? context["topSector"] : ""}
           </span>
         </div>
         <div className="font-bold text-[#979797]">
           Top Industry
           <span className="pl-1 text-[#20A5F1] font-normal">
-            Software, Semiconductors & Semicond...
+            {context ? context["topIndustry"] : ""}
           </span>
         </div>
       </div>
@@ -38,33 +42,48 @@ const CompanyProfile = () => {
         <div className="font-bold text-[#979797]">
           Sponsor
           <span className="pl-1 text-white font-normal">
-            Invesco Capital Management LLC
+            {context ? context["sponsor"] : ""}
           </span>
         </div>
         <div className="font-bold text-[#979797]">
           Inception
-          <span className="pl-1 text-white font-normal">03/10/1999</span>
+          <span className="pl-1 text-white font-normal">
+            {context ? context["inception"] : ""}
+          </span>
         </div>
         <div className="font-bold text-[#979797]">
           Country
-          <span className="pl-1 text-white font-normal">US</span>
+          <span className="pl-1 text-white font-normal">
+            {context ? context["country"] : ""}
+          </span>
         </div>
         <div className="font-bold text-[#979797]">
           ETF Structure
           <span className="pl-1 text-white font-normal">
-            Unit Investment Trust
+            {context ? context["etfStructure"] : ""}
           </span>
         </div>
         <div className="font-bold text-[#979797]">
-          Asset Class<span className="pl-1 text-white font-normal">Equity</span>
+          Asset Class
+          <span className="pl-1 text-white font-normal">
+            {context ? context["etfStructure"] : ""}
+          </span>
         </div>
         <div className="font-bold text-[#979797]">
           Investment Philosophy
-          <span className="pl-1 text-white font-normal">Passively Managed</span>
+          <span className="pl-1 text-white font-normal">
+            {context ? context["investmentPhilosophy"] : ""}
+          </span>
         </div>
         <div className="font-bold text-[#979797]">
           Website
-          <span className="pl-1 text-[#20A5F1] font-normal">invesco.com</span>
+          <span className="pl-1 text-[#20A5F1] font-normal">
+            {context
+              ? context["website"].substring(
+                  context["website"].indexOf("https://www") + 12
+                )
+              : "N/A"}
+          </span>
         </div>
       </div>
     </div>

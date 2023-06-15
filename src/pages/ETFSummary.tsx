@@ -29,6 +29,8 @@ const ETFSummary = () => {
   const [etfData, setETFData] = useState(null);
 
   const getETFDetails = async () => {
+    console.log("context.symbol -> ", context.symbol);
+
     const etfURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/ETFSummary?ticker=" +
       context.symbol;
@@ -37,7 +39,6 @@ const ETFSummary = () => {
       .then((response) => response.json())
       .then((data) => {
         setETFData(data);
-        console.log("stockData -> ", etfData);
       })
       .catch((error) => console.log(error));
   };
@@ -48,7 +49,7 @@ const ETFSummary = () => {
 
   return (
     <div className="p-5">
-      <ETFPriceSummary context={context} />
+      <ETFPriceSummary context={etfData} />
       <div className="pt-4 pb-2 flex">
         <div className="w-1/2 pr-2">
           <SummaryChart code={context.symbol} stockData={null} />
@@ -99,7 +100,11 @@ const ETFSummary = () => {
       {/* Company Profile & Equity Summary & Fundamental Event & Technical Analysis */}
       <div className="flex py-2 justify-items-stretch">
         <div className="w-1/4 pr-2">
-          <CompanyProfile />
+          {etfData && etfData["companyProfile"] ? (
+            <CompanyProfile context={etfData["companyProfile"]} />
+          ) : (
+            <CompanyProfile context={null} />
+          )}
         </div>
         <div className="w-1/4 px-2">
           <AnalystRatings />
