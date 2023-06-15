@@ -19,13 +19,13 @@ import FundamentalEvents from "../components/molecules/stock/FundamentalEvents";
 
 const StockSummary = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const context = location.state.item;
-
-  console.log("stockSummary -> ", context);
 
   const [stockData, setStockData] = useState(null);
 
   const getStockDetails = async () => {
+    console.log("---", context.symbol);
     const stockURL =
       "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/stockSummary?ticker=" +
       context.symbol;
@@ -34,14 +34,13 @@ const StockSummary = () => {
       .then((response) => response.json())
       .then((data) => {
         setStockData(data);
-        console.log("stockData -> ", stockData);
       })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
     getStockDetails();
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="p-5">

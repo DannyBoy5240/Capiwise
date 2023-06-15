@@ -140,7 +140,7 @@ const DividendChart: FC<DividendChartProps> = ({ context }) => {
     const arr: string[] = [];
     if (context && context.dividends && context.dividends.divHistoryAnnual) {
       context.dividends.divHistoryAnnual.map((idx: any) => {
-        arr.push(idx.year);
+        if (idx.year != new Date().getFullYear()) arr.push(idx.year);
       });
       arr.reverse();
     }
@@ -151,8 +151,10 @@ const DividendChart: FC<DividendChartProps> = ({ context }) => {
     if (context && context.dividends && context.dividends.divHistoryAnnual) {
       let tmax = 0;
       context.dividends.divHistoryAnnual.map((idx: any) => {
-        arr.push(idx.amount);
-        tmax = tmax < idx.amount ? idx.amount : tmax;
+        if (idx.year != new Date().getFullYear()) {
+          arr.push(idx.amount);
+          tmax = tmax < idx.amount ? idx.amount : tmax;
+        }
       });
       maxDataSetsA = tmax;
       arr.reverse();

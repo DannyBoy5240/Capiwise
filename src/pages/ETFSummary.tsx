@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -25,6 +25,26 @@ import TechnicalAnalysis from "../components/molecules/etf/TechnicalAnalysis";
 const ETFSummary = () => {
   const location = useLocation();
   const context = location.state.item;
+
+  const [etfData, setETFData] = useState(null);
+
+  const getETFDetails = async () => {
+    const etfURL =
+      "https://ijqbfeko49.execute-api.eu-central-1.amazonaws.com/dev/api/v1/ETFSummary?ticker=" +
+      context.symbol;
+
+    await fetch(etfURL)
+      .then((response) => response.json())
+      .then((data) => {
+        setETFData(data);
+        console.log("stockData -> ", etfData);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getETFDetails();
+  }, []);
 
   return (
     <div className="p-5">

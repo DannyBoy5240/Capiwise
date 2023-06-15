@@ -399,7 +399,7 @@ const SummaryChart: FC<SummaryChartProps> = ({
 
   useEffect(() => {
     getETFHistoryData();
-  }, [viewMode, isFullScreen]);
+  }, [viewMode, isFullScreen, stockData]);
 
   useEffect(() => {
     console.log("refreshed!!!");

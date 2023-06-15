@@ -16,6 +16,8 @@ const StockPriceSummary: FC<StockPriceSummaryProps> = ({ context }) => {
   const [stockSummary, setStockSummary] = useState(null);
   const [stockLiveData, setStockLiveData] = useState(null);
 
+  console.log("context --- ", context);
+
   const getNumber = (num: any) => {
     if (num > 0) return "+" + num;
     else return num;

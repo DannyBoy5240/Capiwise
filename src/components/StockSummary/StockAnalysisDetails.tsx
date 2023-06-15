@@ -29,7 +29,7 @@ const StockAnalysisDetails: FC<StockAnalysisDetailsProps> = ({
 
   useEffect(() => {
     getAnalysticInfo();
-  }, []);
+  }, [stockData]);
 
   const getAnalysticInfo = async () => {
     // Get Stock Live Data
