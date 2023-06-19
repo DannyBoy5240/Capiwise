@@ -22,15 +22,15 @@ const MenuProfileSettings: FC = () => {
     <div className="flex items-center">
       <div className="p-2.5 rounded-full bg-[#040B11] hover:cursor-pointer">
         <p className="text-[#2EBD85] font-bold text-base">
-          {/* {localStorage.useremail
+          {localStorage.useremail
             ? (
                 localStorage.useremail[0] + localStorage.useremail[1]
               ).toUpperCase()
-            : "CP"} */}
-          CP
+            : "CP"}
+          {/* CP */}
         </p>
       </div>
-      {/* <div className="flex items-center hover:cursor-pointer">
+      <div className="flex items-center hover:cursor-pointer">
         <p className="text-sm font-bold mx-2">
           {localStorage.useremail ? localStorage.useremail : ""}
         </p>
@@ -52,7 +52,7 @@ const MenuProfileSettings: FC = () => {
         onClick={() => logOutClicked()}
       >
         <img src={logoutIcon} />
-      </div> */}
+      </div>
     </div>
   );
 };

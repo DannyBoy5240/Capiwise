@@ -36,13 +36,15 @@ interface FinancialHealthChartProps {
 const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
   const chartRef = useRef(null);
 
+  console.log("finContext -> ", context);
+
   let maxDataSetsA = 0;
   let maxDataSetsB = 0;
   let maxDataSetsC = 0;
 
   const getDataLabels = () => {
     const arr: string[] = [];
-    if (context && context.finHealth) {
+    if (context && context.finHealth && context.finHealth.length > 0) {
       context.finHealth.map((idx: any) => {
         arr.push(idx.fiscal_date);
       });
@@ -52,7 +54,7 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
   };
   const getDataSetsA = () => {
     const arr: number[] = [];
-    if (context && context.finHealth) {
+    if (context && context.finHealth && context.finHealth.length > 0) {
       let tmax = 0;
       context.finHealth.map((idx: any) => {
         arr.push(idx.debt);
@@ -65,7 +67,7 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
   };
   const getDataSetsB = () => {
     const arr: number[] = [];
-    if (context && context.finHealth) {
+    if (context && context.finHealth && context.finHealth.length > 0) {
       let tmax = 0;
       context.finHealth.map((idx: any) => {
         arr.push(idx.equity);
@@ -78,7 +80,7 @@ const FinancialHealthChart: FC<FinancialHealthChartProps> = ({ context }) => {
   };
   const getDataSetsC = () => {
     const arr: number[] = [];
-    if (context && context.finHealth) {
+    if (context && context.finHealth && context.finHealth.length > 0) {
       let tmax = 0;
       context.finHealth.map((idx: any) => {
         arr.push(idx.cash_and_cash_equivalents);
